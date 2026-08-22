@@ -22,34 +22,6 @@
             </p>
         </div>
 
-        <!-- Local Development Test Accounts (Super convenient for local testing) -->
-        <div class="pt-6 border-t border-gray-100 text-left space-y-3">
-            <span class="text-xs font-bold text-primary block">
-                <i class="fas fa-flask mr-1"></i> 로컬 테스트용 원클릭 빠른 로그인
-            </span>
-            <p class="text-[11px] text-gray-500 leading-relaxed">
-                카카오 API 키 없이 로컬에서 바로 성도 및 교역자 권한으로 테스트해 보실 수 있습니다:
-            </p>
-
-            <div class="grid grid-cols-2 gap-2">
-                <a href="/auth/mock?mock_id=member_01&name=김은혜+성도&role=등록성도" class="p-2.5 rounded-xl border border-gray-200 hover:bg-gray-50 text-xs font-semibold text-gray-700 flex items-center gap-2 transition-colors">
-                    <span class="w-2 h-2 rounded-full bg-green-500"></span>
-                    <span>김은혜 성도님</span>
-                </a>
-                <a href="/auth/mock?mock_id=member_02&name=이믿음+청년&role=등록성도" class="p-2.5 rounded-xl border border-gray-200 hover:bg-gray-50 text-xs font-semibold text-gray-700 flex items-center gap-2 transition-colors">
-                    <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-                    <span>이믿음 청년</span>
-                </a>
-                <a href="/auth/mock?mock_id=member_03&name=박사랑+권사&role=등록성도" class="p-2.5 rounded-xl border border-gray-200 hover:bg-gray-50 text-xs font-semibold text-gray-700 flex items-center gap-2 transition-colors">
-                    <span class="w-2 h-2 rounded-full bg-purple-500"></span>
-                    <span>박사랑 권사님</span>
-                </a>
-                <a href="/auth/mock?mock_id=pastor_01&name=심민보+목사&role=교역자" class="p-2.5 rounded-xl border border-gray-200 hover:bg-gray-50 text-xs font-semibold text-gray-700 flex items-center gap-2 transition-colors">
-                    <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                    <span>심민보 목사님</span>
-                </a>
-            </div>
-        </div>
 
     </div>
 
