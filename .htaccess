@@ -1,0 +1,35 @@
+# =========================================================================
+# 푸른나무교회 (Green Tree Church) Apache Web Server Configuration
+# =========================================================================
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # 1. レガシー XE URL -> 新規 URL 301 Permanent Redirect
+    RewriteRule ^page_QUYQ27/?$ /about [R=301,L]
+    RewriteRule ^page_tYfP94/?$ /pastor [R=301,L]
+    RewriteRule ^board_rIml75/?$ /sermons [R=301,L]
+    RewriteRule ^board_rIml75/([0-9]+)/?$ /sermons/$1 [R=301,L]
+    RewriteRule ^board_eqqA48/?$ /notices [R=301,L]
+    RewriteRule ^board_eqqA48/([0-9]+)/?$ /notices/$1 [R=301,L]
+    RewriteRule ^board_CBHH38/?$ /gallery [R=301,L]
+    RewriteRule ^board_CBHH38/([0-9]+)/?$ /gallery/$1 [R=301,L]
+    RewriteRule ^board_xtmO59/?$ /calligraphy [R=301,L]
+
+    # 2. Front-Controller Routing
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
+
+# Security: Block direct PHP execution inside uploads folder
+<IfModule mod_php.c>
+    <FilesMatch "\.(php|phtml|php3|php4|php5|php7|php8|phps)$">
+        Order Deny,Allow
+        Deny from all
+    </FilesMatch>
+</IfModule>
+
+# Options
+Options -Indexes

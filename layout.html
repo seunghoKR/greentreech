@@ -1,0 +1,88 @@
+<include target="templates/preferences.html" />
+<div class="skip"><a href="#content">{$lang->skip_to_content}</a></div>
+<div id="login-alert" class="hidden-xs-block" cond="$XE_VALIDATOR_MESSAGE">
+	<div class="alert alert-login alert-dismissable {$XE_VALIDATOR_MESSAGE_TYPE}">
+		<p>{$XE_VALIDATOR_MESSAGE} <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></p>
+	</div>
+</div>
+<div id="kso-container" class="edge-space header-space">
+	<header class="kso-header {$li->header_position} sps sps--abv">
+		<include target="templates/header.html" />
+	</header>
+	<section class="sub-header parallaxer {$li->sub_header_color}" cond="$li->layout_type!='main' && $li->sub_header!='N'">	
+		<div class="container">
+			<div class="row align-items-center" style="height: {$li->sub_header_height}px">
+				<div class="col sub-header-caption">
+					<h2 cond="$li->sub_header_h1">{$li->sub_header_h1}</h2>
+					<div class="br-none font-lato" cond="$li->sub_header_p">{$li->sub_header_p}</div>
+				</div>
+				<div class="col-lg-6 d-none d-lg-block" cond="$li->bread_crumb_top=='Y'">
+					<div class="bread-crumb-top float-right d-none d-md-block">
+						<a href="{getSiteUrl()}" class="path-home"><strong>Home</strong></a>&nbsp;
+						<block loop="$main_menu->list=>$key1,$val1" cond="$val1['selected']">
+							<i class="xi-angle-right"></i>&nbsp; <a href="{$val1['href']}">{$val1['text']}</a>&nbsp;
+							<block loop="$val1['list']=>$key2,$val2" cond="$val2['selected']">
+								<i class="xi-angle-right"></i>&nbsp; <a href="{$val2['href']}">{$val2['text']}</a>&nbsp;
+								<block loop="$val2['list']=>$key3,$val3" cond="$val3['selected']">
+									<i class="xi-angle-right"></i>&nbsp; <a href="{$val3['href']}">{$val3['text']}</a>
+								</block>
+							</block>
+						</block>
+					</div><!--//bread_crumb -->	
+				</div>						
+			</div>
+		</div>
+	</section>
+	<article class="kso-contents" id="content" cond="$li->layout_type!='main'">		
+		<include target="templates/submenu.html" cond="$li->submenu!='N'" />		
+		<div class="{$li->sub_wrap}">
+			<div class="row">
+				<div class="{$_content_class} content-space">
+					{$content}
+				</div>
+				<div class="{$_aside_class} d-none d-lg-block" cond="$li->layout_type!='main' && $li->layout_type!='sub'">
+					<include target="templates/aside.html" />
+				</div><!--//aside -->
+			</div>
+		</div>
+	</article><!--//contents -->
+
+	<div class="nav-fixed d-none d-lg-block" cond="$li->nav_fixed!='N'">
+		<ul class="nav flex-column">
+			<li class="nav-item" cond="$li->nav_login!='N' && !$is_logged">
+				<a href="{getUrl('act','dispMemberLoginForm')}" class="nav-link point-hover" data-toggle="tooltip" data-placement="left" title="{$li->nav_item_login}">{$li->nav_item_login_icon}</a>
+			</li>
+			<li class="nav-item" cond="$li->nav_login!='N' && $is_logged">
+				<a href="{getUrl('act','dispMemberLogout')}" class="nav-link point-hover" data-toggle="tooltip" data-placement="left" title="{$li->nav_item_logout}">{$li->nav_item_logout_icon}</a>
+			</li>
+			<li class="nav-item" data-toggle="tooltip" data-placement="left" title="{$li->nav_item_title1}" cond="$li->nav_item_icon1">
+				<block cond="$li->nav_item_link1"><a href="{$li->nav_item_link1}" class="nav-link point-hover" target="{$li->nav_item_target1}"></block>
+					{$li->nav_item_icon1}
+				<block cond="$li->nav_item_link1"></a></block>
+			</li>
+			<li class="nav-item" data-toggle="tooltip" data-placement="left" title="{$li->nav_item_title2}" cond="$li->nav_item_icon2">
+				<block cond="$li->nav_item_link2"><a href="{$li->nav_item_link2}" class="nav-link point-hover" target="{$li->nav_item_target2}"></block>
+					{$li->nav_item_icon2}
+				<block cond="$li->nav_item_link2"></a></block>
+			</li>
+			<li class="nav-item" data-toggle="tooltip" data-placement="left" title="{$li->nav_item_title3}"  cond="$li->nav_item_icon3">
+				<block cond="$li->nav_item_link3"><a href="{$li->nav_item_link3}" class="nav-link point-hover"target="{$li->nav_item_target3}"></block>
+					{$li->nav_item_icon3}
+				<block cond="$li->nav_item_link3"></a></block>
+			</li>
+			<li class="nav-item" data-toggle="tooltip" data-placement="left" title="{$li->nav_item_title4}" cond="$li->nav_item_icon4">
+				<block cond="$li->nav_item_link4"><a href="{$li->nav_item_link4}" class="nav-link point-hover" target="{$li->nav_item_target4}"></block>
+					{$li->nav_item_icon4}
+				<block cond="$li->nav_item_link4"></a></block>
+			</li>
+			<li class="nav-item" data-toggle="tooltip" data-placement="left" title="{$li->nav_item_title5}" cond="$li->nav_item_icon5">
+				<block cond="$li->nav_item_link5"><a href="{$li->nav_item_link5}" class="nav-link point-hover" target="{$li->nav_item_target5}"></block>
+					{$li->nav_item_icon5}
+				<block cond="$li->nav_item_link5"></a></block>
+			</li>
+		</ul>
+	</div>
+
+	<!--@if($li->template_name=='default')-->
+	<include target="./templates/gravity_default.html" />
+	<!--@end-->
