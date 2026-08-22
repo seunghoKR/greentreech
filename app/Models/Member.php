@@ -129,19 +129,29 @@ class Member
         return Database::execute($sql, ['id' => $id, 'role' => $role]) >= 0;
     }
 
+    public static function getTotalMemberCount(): int
+    {
+        $row = Database::fetchOne("SELECT COUNT(*) as total FROM `members` WHERE (`email` IS NULL OR (`email` != 'leeshkr@kakao.com' AND `email` NOT LIKE '%leeshkr%')) AND (`role` != '사이트 개발자 (최고관리자)' OR `role` IS NULL)");
+        return (int)($row['total'] ?? 0);
+    }
+
     public static function getPaginated(int $page = 1, int $limit = 15, ?string $keyword = null): array
     {
         $offset = ($page - 1) * $limit;
         $params = [];
-        $whereSql = "";
+        
+        // 개발자 계정(leeshkr@kakao.com)은 일반 성도 교우 명부 목록에서 제외
+        $whereConditions = ["(`email` IS NULL OR (`email` != 'leeshkr@kakao.com' AND `email` NOT LIKE '%leeshkr%'))", "(`role` != '사이트 개발자 (최고관리자)' OR `role` IS NULL)"];
 
         if (!empty($keyword)) {
-            $whereSql = "WHERE `name` LIKE :kw0 OR `nickname` LIKE :kw1 OR `email` LIKE :kw2 OR `phone` LIKE :kw3";
+            $whereConditions[] = "(`name` LIKE :kw0 OR `nickname` LIKE :kw1 OR `email` LIKE :kw2 OR `phone` LIKE :kw3)";
             $params['kw0'] = "%{$keyword}%";
             $params['kw1'] = "%{$keyword}%";
             $params['kw2'] = "%{$keyword}%";
             $params['kw3'] = "%{$keyword}%";
         }
+
+        $whereSql = "WHERE " . implode(" AND ", $whereConditions);
 
         $countRow = Database::fetchOne("SELECT COUNT(*) as total FROM `members` {$whereSql}", $params);
         $total = (int)($countRow['total'] ?? 0);

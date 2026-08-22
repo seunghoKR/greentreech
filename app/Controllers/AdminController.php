@@ -89,7 +89,7 @@ class AdminController
             'pendingInquiries' => $pendingInquiriesCount,
             'pendingMembers' => $pendingMembersCount,
             'todayCommunity' => $todayCommunityCount,
-            'totalMembers' => (int)(Database::fetchOne("SELECT COUNT(*) as c FROM `members`")['c'] ?? 0),
+            'totalMembers' => Member::getTotalMemberCount(),
             'totalSermons' => (int)(Database::fetchOne("SELECT COUNT(*) as c FROM `sermons` WHERE `category` != '말씀쇼츠' OR `category` IS NULL")['c'] ?? 0),
             'totalShorts' => (int)(Database::fetchOne("SELECT COUNT(*) as c FROM `sermons` WHERE `category` = '말씀쇼츠' OR `video_type` = 'shorts'")['c'] ?? 0),
             'totalGallery' => (int)(Database::fetchOne("SELECT COUNT(*) as c FROM `gallery`")['c'] ?? 0),
