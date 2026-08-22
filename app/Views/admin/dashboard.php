@@ -24,6 +24,12 @@
 
         <!-- Header Actions (Live Stream Toggle & Web Link) -->
         <div class="flex flex-wrap items-center gap-3 shrink-0">
+            <!-- Pastor Guide Book Button -->
+            <a href="/admin/guide" class="px-4 py-2.5 bg-amber-400/30 hover:bg-amber-400/50 text-white border border-amber-300/50 rounded-2xl text-xs font-bold shadow-sm transition-all flex items-center gap-2">
+                <i class="fas fa-book-open text-amber-300"></i>
+                <span>📖 목회자 사용 설명서</span>
+            </a>
+
             <!-- Bulletin Planning Quick Button -->
             <a href="/admin/bulletin-settings" class="px-4 py-2.5 bg-green-500/30 hover:bg-green-500/50 text-white border border-green-400/40 rounded-2xl text-xs font-bold shadow-sm transition-all flex items-center gap-2">
                 <i class="fas fa-clipboard-list text-green-300"></i>
@@ -40,6 +46,24 @@
                 <i class="fas fa-external-link-alt text-[10px]"></i> 홈페이지
             </a>
         </div>
+    </div>
+
+    <!-- 💡 Quick Help Guide Banner for Pastors & Admins -->
+    <div class="bg-gradient-to-r from-amber-500/10 via-amber-400/5 to-transparent border border-amber-200/80 rounded-3xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-xl shrink-0 shadow-xs">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <div>
+                <h3 class="font-bold text-sm text-gray-900">목회자 & 사역자 웹사이트 사용 설명서</h3>
+                <p class="text-xs text-gray-600 mt-0.5">주간 사역 루틴, 실시간 중계 띠배너, 스마트 주보, 유튜브 1초 동기화 방법을 언제든 확인하실 수 있습니다.</p>
+            </div>
+        </div>
+        <a href="/admin/guide" class="px-4 py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-1.5 shrink-0">
+            <i class="fas fa-book-open text-xs"></i>
+            <span>설명서 열어보기</span>
+            <i class="fas fa-arrow-right text-[10px]"></i>
+        </a>
     </div>
 
     <!-- 🚨 Section 1: 즉시 처리가 필요한 긴급 목회 업무 (To-Do Alert Cards) -->

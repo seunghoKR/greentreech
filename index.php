@@ -152,6 +152,7 @@ $router->post('/admin/login', [AdminController::class, 'doLogin']);
 $router->get('/admin/logout', [AdminController::class, 'logout']);
 
 $router->get('/admin', [AdminController::class, 'dashboard']);
+$router->get('/admin/guide', [AdminController::class, 'guide']);
 $router->get('/admin/live-toggle', [AdminController::class, 'toggleLiveStream']);
 $router->get('/admin/hero', [AdminController::class, 'hero']);
 $router->post('/admin/hero', [AdminController::class, 'saveHero']);

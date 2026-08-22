@@ -93,6 +93,10 @@
                         <i class="fas fa-th-large w-5 text-center"></i> 대시보드
                     </a>
 
+                    <a href="/admin/guide" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition-all <?= ($adminNav ?? '') === 'guide' ? 'bg-amber-600 text-white shadow-sm' : 'text-amber-800 bg-amber-50 hover:bg-amber-100' ?>">
+                        <i class="fas fa-book-open w-5 text-center text-amber-600"></i> 목회자 사용 설명서
+                    </a>
+
                     <!-- 주일예배 & 주보 기획 -->
                     <?php if ($isSuperAdmin || \App\Models\Admin::hasPermission($curAdmin, 'bulletin')): ?>
                     <a href="/admin/bulletin-settings" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition-all <?= ($adminNav ?? '') === 'bulletin_settings' ? 'bg-primary text-white shadow-sm' : 'text-gray-700 hover:bg-gray-100' ?>">

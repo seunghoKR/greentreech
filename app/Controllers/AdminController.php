@@ -132,6 +132,16 @@ class AdminController
         exit;
     }
 
+    public function guide(): void
+    {
+        Auth::requireAuth();
+
+        View::render('admin/guide', [
+            'title' => '푸른나무교회 목회자 사이트 사용 설명서 - 푸른나무교회',
+            'adminNav' => 'guide',
+        ], 'layouts/admin');
+    }
+
     // ==========================================
     // 3. Site Settings
     // ==========================================
