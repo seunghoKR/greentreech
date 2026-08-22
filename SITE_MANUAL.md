@@ -231,6 +231,18 @@ php -S 127.0.0.1:8000 index.php
   - Apache: `.htaccess` 파일이 활성화되도록 `AllowOverride All` 설정
   - Nginx: `try_files $uri $uri/ /index.php?$query_string;` 설정
 
+### 6.4. 🌐 공식 운영 서버 (iwinv) 접속 및 배포 정보
+| 항목 | 설정값 | 비고 |
+| :--- | :--- | :--- |
+| **운영 도메인** | `https://greentreech.iwinv.net/` | SSL 항상 사용 (*HTTPS) |
+| **서버 IP** | `115.68.168.246` | iwinv 클라우드 호스팅 |
+| **서버 언어셋 / 스크립트** | `UTF-8` / `PHP 8.4` | |
+| **웹 서비스 루트 폴더** | `/public_html/` | FTP 최상위 웹 경로 |
+| **DB Host / Ver.** | `localhost` / `MariaDB 10.X` | 포트 3306 |
+| **DB 계정 / DB명** | `greentreech` / `greentreech` | UTF-8mb4 |
+| **FTP 계정 / 프로토콜** | `greentreech` / FTP (포트 21), SFTP (포트 22) | |
+
+
 ---
 
 ## 7. 레거시 XE(XpressEngine) URL 호환성 안내
