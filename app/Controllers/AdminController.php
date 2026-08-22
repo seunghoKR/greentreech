@@ -457,8 +457,8 @@ class AdminController
         Auth::requireAuth();
 
         $curUser = Auth::user();
-        $name = $curUser['name'] ?? '이승호';
-        $email = $curUser['username'] ?? 'leeshkr@kakao.com';
+        $name = $curUser['name'] ?? '관리자';
+        $email = $curUser['username'] ?? '';
 
         $result = \App\Services\KakaoNotificationService::sendYoungjaTestNotification($name, $email);
 
@@ -468,7 +468,7 @@ class AdminController
             exit;
         }
 
-        Session::setFlash('success', "💌 영자가 대표님({$email})께 테스트 알림을 성공적으로 발송했습니다! 발송 로그를 확인해 보세요. ✨");
+        Session::setFlash('success', "💌 관리자({$name}) 계정으로 테스트 알림을 발송/기록했습니다. 발송 로그를 확인해 보세요. ✨");
         header('Location: /admin/notifications');
         exit;
     }

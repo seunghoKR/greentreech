@@ -28,7 +28,7 @@
                     <h3 class="font-bold text-sm text-emerald-950">알림 시스템 작동 상태: 정상 대기 중 (Active)</h3>
                 </div>
                 <p class="text-xs text-emerald-800 leading-relaxed">
-                    수신자: <strong><?= e($curUser['name'] ?? '대표님') ?> (<?= e($curUser['username'] ?? 'leeshkr@kakao.com') ?>)</strong> | 버튼을 클릭하시면 영자가 작성한 테스트 축복 알림이 즉시 발송/기록됩니다.
+                    수신자: <strong><?= e($curUser['name'] ?? '관리자') ?> (<?= e($curUser['username'] ?? '') ?>)</strong> | 버튼을 클릭하시면 테스트 축복 알림이 즉시 발송/기록됩니다.
                 </p>
             </div>
             <a href="/admin/notifications/test" class="px-6 py-3 bg-[#154212] hover:bg-[#0d2b0b] text-white rounded-2xl text-xs sm:text-sm font-bold shadow-md transition-all shrink-0 flex items-center gap-2">

@@ -35,7 +35,7 @@
                 <tr class="hover:bg-gray-50/60 transition-colors">
                     <td class="py-4 px-5">
                         <p class="font-bold text-gray-900 text-sm"><?= e($a['name']) ?></p>
-                        <p class="text-[11px] text-gray-400">@<?= e($a['username']) ?></p>
+                        <p class="text-[11px] text-gray-400"><?= e($a['username']) ?></p>
                     </td>
                     <td class="py-4 px-4">
                         <span class="px-2.5 py-1 rounded-full text-xs font-bold <?= $a['role'] === '담임목사 (최고관리자)' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800' ?>">

