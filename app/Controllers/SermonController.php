@@ -17,8 +17,8 @@ class SermonController
         $keyword = !empty($_GET['keyword']) ? trim((string)$_GET['keyword']) : null;
         $lastSync = Setting::get('youtube_last_sync', '');
 
-        // Exclusively fetch Sunday Sermons ('주일 설교')
-        $pagination = Sermon::getPaginated($page, 9, '주일 설교', $keyword);
+        // Exclusively fetch Sunday Worship Sermons ('설교 영상' / '주일 설교')
+        $pagination = Sermon::getSundaySermonsPaginated($page, 9, $keyword);
         $latestSermon = Sermon::getLatest();
 
         View::render('sermons/index', [

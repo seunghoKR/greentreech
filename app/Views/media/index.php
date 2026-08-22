@@ -36,6 +36,19 @@
         </div>
     </div>
 
+    <!-- Banner to '주일 설교 말씀' -->
+    <div class="bg-surface-container-low rounded-2xl border border-outline-variant/30 p-4 mb-8 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
+        <div class="flex items-center gap-2.5 text-xs text-gray-700">
+            <span class="px-2 py-0.5 rounded-full bg-green-100 text-green-800 font-bold text-[10px]">주일 설교</span>
+            <span>심민보 담임목사님의 <strong>[주일예배 설교 본문 말씀]</strong> 전체 영상은 주일 설교 메뉴에서 만나보실 수 있습니다!</span>
+        </div>
+        <a href="/sermons" class="px-4 py-1.5 bg-primary hover:bg-primary-container text-white rounded-xl text-xs font-bold transition-all shadow-xs shrink-0 flex items-center gap-1">
+            <i class="fas fa-book-bible text-xs"></i>
+            <span>주일 설교 보러가기</span>
+            <i class="fas fa-arrow-right text-[10px]"></i>
+        </a>
+    </div>
+
     <!-- Category Filter Tabs & Search Bar -->
     <div class="flex flex-col gap-4 mb-8">
         

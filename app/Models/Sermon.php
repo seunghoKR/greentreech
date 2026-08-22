@@ -79,6 +79,102 @@ class Sermon
         return $sermon;
     }
 
+    public static function getMediaCategoryCounts(): array
+    {
+        $mediaCats = ['설교 쇼츠', '예배 쇼츠', '예배 영상', '듣는 성경', '교회 행사/일상', '기타'];
+        $rows = Database::query("SELECT `category`, COUNT(*) as c FROM `sermons` WHERE `category` NOT IN ('설교 영상', '주일 설교', '주일예배') GROUP BY `category`");
+        
+        $counts = [];
+        $mediaTotal = 0;
+        foreach ($rows as $r) {
+            $cat = $r['category'] ?? '기타';
+            $counts[$cat] = (int)$r['c'];
+            $mediaTotal += (int)$r['c'];
+        }
+
+        $result = [];
+        foreach ($mediaCats as $mc) {
+            $result[$mc] = $counts[$mc] ?? 0;
+        }
+        $result['전체'] = $mediaTotal;
+
+        return $result;
+    }
+
+    public static function getSundaySermonsPaginated(int $page = 1, int $limit = 9, ?string $keyword = null): array
+    {
+        $offset = ($page - 1) * $limit;
+        $params = [];
+        $wheres = ["`category` IN ('설교 영상', '주일 설교', '주일예배')"];
+
+        if (!empty($keyword)) {
+            $wheres[] = "(`title` LIKE :kw1 OR `scripture` LIKE :kw2 OR `preacher` LIKE :kw3 OR `content` LIKE :kw4)";
+            $params['kw1'] = "%{$keyword}%";
+            $params['kw2'] = "%{$keyword}%";
+            $params['kw3'] = "%{$keyword}%";
+            $params['kw4'] = "%{$keyword}%";
+        }
+
+        $whereSql = "WHERE " . implode(" AND ", $wheres);
+
+        $countRow = Database::fetchOne("SELECT COUNT(*) as total FROM `sermons` {$whereSql}", $params);
+        $total = (int)($countRow['total'] ?? 0);
+
+        $sql = "SELECT * FROM `sermons` {$whereSql} ORDER BY `sermon_date` DESC, `id` DESC LIMIT {$limit} OFFSET {$offset}";
+        $items = Database::query($sql, $params);
+
+        $totalPages = (int)ceil($total / $limit);
+
+        return [
+            'items' => $items,
+            'total' => $total,
+            'page' => $page,
+            'limit' => $limit,
+            'totalPages' => max(1, $totalPages),
+        ];
+    }
+
+    public static function getMediaPaginated(int $page = 1, int $limit = 12, ?string $category = null, ?string $keyword = null): array
+    {
+        $offset = ($page - 1) * $limit;
+        $params = [];
+        $wheres = [];
+
+        if (!empty($category) && $category !== '전체') {
+            $wheres[] = "`category` = :cat";
+            $params['cat'] = $category;
+        } else {
+            // '전체' 미디어 목록에서는 주일 설교('설교 영상', '주일 설교') 제외
+            $wheres[] = "`category` NOT IN ('설교 영상', '주일 설교', '주일예배')";
+        }
+
+        if (!empty($keyword)) {
+            $wheres[] = "(`title` LIKE :kw1 OR `scripture` LIKE :kw2 OR `preacher` LIKE :kw3 OR `content` LIKE :kw4)";
+            $params['kw1'] = "%{$keyword}%";
+            $params['kw2'] = "%{$keyword}%";
+            $params['kw3'] = "%{$keyword}%";
+            $params['kw4'] = "%{$keyword}%";
+        }
+
+        $whereSql = !empty($wheres) ? "WHERE " . implode(" AND ", $wheres) : "";
+
+        $countRow = Database::fetchOne("SELECT COUNT(*) as total FROM `sermons` {$whereSql}", $params);
+        $total = (int)($countRow['total'] ?? 0);
+
+        $sql = "SELECT * FROM `sermons` {$whereSql} ORDER BY `sermon_date` DESC, `id` DESC LIMIT {$limit} OFFSET {$offset}";
+        $items = Database::query($sql, $params);
+
+        $totalPages = (int)ceil($total / $limit);
+
+        return [
+            'items' => $items,
+            'total' => $total,
+            'page' => $page,
+            'limit' => $limit,
+            'totalPages' => max(1, $totalPages),
+        ];
+    }
+
     public static function getPaginated(int $page = 1, int $limit = 9, ?string $category = null, ?string $keyword = null): array
     {
         $offset = ($page - 1) * $limit;

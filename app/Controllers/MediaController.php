@@ -15,11 +15,10 @@ class MediaController
     {
         return [
             '전체',
-            '설교 영상',
-            '예배 영상',
-            '듣는 성경',
             '설교 쇼츠',
             '예배 쇼츠',
+            '예배 영상',
+            '듣는 성경',
             '교회 행사/일상',
             '기타',
         ];
@@ -32,22 +31,16 @@ class MediaController
         $keyword = !empty($_GET['keyword']) ? trim((string)$_GET['keyword']) : null;
         $lastSync = Setting::get('youtube_last_sync', '');
 
-        // Standard paginated query for selected category
-        $pagination = Sermon::getPaginated($page, 12, ($category === '전체' ? null : $category), $keyword);
-
-        $categories = self::getMediaCategories();
-        $allCounts = Sermon::getCategoryCounts();
-        
-        // Calculate category counts for media page
-        $categoryCounts = [];
-        $mediaTotal = 0;
-        foreach ($categories as $cat) {
-            if ($cat === '전체') continue;
-            $c = $allCounts[$cat] ?? 0;
-            $categoryCounts[$cat] = $c;
-            $mediaTotal += $c;
+        // 설교 영상 요청 시 주일 설교 말씀 페이지(/sermons)로 자동 리다이렉트
+        if ($category === '설교 영상' || $category === '주일 설교' || $category === '주일예배') {
+            header('Location: /sermons');
+            exit;
         }
-        $categoryCounts['전체'] = $mediaTotal;
+
+        // 푸른나무 영상 전용 쿼리 (주일 설교 영상 제외)
+        $pagination = Sermon::getMediaPaginated($page, 12, ($category === '전체' ? null : $category), $keyword);
+        $categories = self::getMediaCategories();
+        $categoryCounts = Sermon::getMediaCategoryCounts();
 
         View::render('media/index', [
             'title' => '푸른나무 영상 & 쇼츠 - 푸른나무교회',
