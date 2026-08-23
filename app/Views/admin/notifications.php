@@ -10,9 +10,11 @@
             <p class="text-xs text-gray-500 mt-1">나눔터 새 글, 댓글, 새가족/기도 접수 및 주보 소식 알림 로그를 실시간으로 확인합니다.</p>
         </div>
         <div class="flex items-center gap-2 self-start sm:self-auto">
-            <a href="/admin/kakao" class="px-4 py-2.5 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 rounded-2xl text-xs font-bold shadow-2xs transition-all inline-flex items-center gap-1.5">
-                <i class="fas fa-cog text-gray-500"></i> 카카오 설정
+            <?php if (!empty($isDeveloper)): ?>
+            <a href="/admin/kakao" class="px-4 py-2.5 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 rounded-2xl text-xs font-bold shadow-2xs transition-all inline-flex items-center gap-1.5" title="개발자 전용 API 설정">
+                <i class="fas fa-code text-gray-500"></i> 카카오 API 설정
             </a>
+            <?php endif; ?>
             <a href="/admin/notifications/test" class="px-5 py-2.5 bg-[#FEE500] hover:bg-[#FDD835] text-[#191919] rounded-2xl text-xs font-bold shadow-sm transition-all inline-flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98]">
                 <i class="fas fa-paper-plane text-amber-900"></i> 누리오에게 테스트 알림 요청하기 💌
             </a>

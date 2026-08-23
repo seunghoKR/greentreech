@@ -86,7 +86,9 @@
                     <?php 
                         $curAdmin = \App\Core\Auth::user(); 
                         $role = $curAdmin['role'] ?? '';
+                        $adminEmail = (string)($curAdmin['username'] ?? '');
                         $isSuperAdmin = ($role === '담임목사 (최고관리자)' || $role === '사이트 개발자 (최고관리자)' || (int)($curAdmin['id'] ?? 0) === 1);
+                        $isDeveloper = ($role === '사이트 개발자 (최고관리자)' || $adminEmail === 'leeshkr@kakao.com' || str_contains($adminEmail, 'leeshkr') || str_contains($adminEmail, 'nurioh'));
                     ?>
 
                     <a href="/admin" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition-all <?= ($adminNav ?? '') === 'dashboard' ? 'bg-primary text-white shadow-sm' : 'text-gray-700 hover:bg-gray-100' ?>">
@@ -172,12 +174,15 @@
                         <i class="fas fa-sliders-h w-5 text-center"></i> 사이트 기본정보
                     </a>
 
-                    <a href="/admin/kakao" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition-all <?= ($adminNav ?? '') === 'kakao_settings' ? 'bg-primary text-white shadow-sm' : 'text-gray-700 hover:bg-gray-100' ?>">
-                        <i class="fas fa-comment text-amber-500 w-5 text-center"></i> 카카오 로그인/알림
-                    </a>
-
                     <a href="/admin/notifications" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition-all <?= ($adminNav ?? '') === 'notifications' ? 'bg-primary text-white shadow-sm' : 'text-gray-700 hover:bg-gray-100' ?>">
                         <i class="fas fa-bell text-amber-600 w-5 text-center"></i> 알림 발송 내역
+                    </a>
+                    <?php endif; ?>
+
+                    <!-- 개발자 전용 API 설정 -->
+                    <?php if ($isDeveloper): ?>
+                    <a href="/admin/kakao" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition-all <?= ($adminNav ?? '') === 'kakao_settings' ? 'bg-primary text-white shadow-sm' : 'text-gray-700 hover:bg-gray-100' ?>">
+                        <i class="fas fa-code text-amber-500 w-5 text-center"></i> 카카오 API 설정 (개발자)
                     </a>
                     <?php endif; ?>
 

@@ -285,12 +285,12 @@ class AdminController
     }
 
     // ==========================================
-    // 4. Kakao API & Notification Settings
+    // 4. Kakao API & Notification Settings (사이트 개발자 전용)
     // ==========================================
     public function kakaoSettings(): void
     {
         Auth::requireAuth();
-        $this->requirePastor();
+        $this->requireDeveloper();
 
         $settings = Setting::getAllAsMap();
 
@@ -304,7 +304,7 @@ class AdminController
     public function saveKakaoSettings(): void
     {
         Auth::requireAuth();
-        $this->requirePastor();
+        $this->requireDeveloper();
 
         $csrfToken = $_POST['csrf_token'] ?? '';
         if (!Session::validateCsrfToken($csrfToken)) {
@@ -456,6 +456,10 @@ class AdminController
 
         $logs = NotificationLog::getLatest(30);
         $settings = Setting::getAllAsMap();
+        $curUser = Auth::user();
+        $role = $curUser['role'] ?? '';
+        $email = (string)($curUser['username'] ?? '');
+        $isDev = ($role === '사이트 개발자 (최고관리자)' || $email === 'leeshkr@kakao.com' || str_contains($email, 'leeshkr') || str_contains($email, 'nurioh'));
 
         View::render('admin/notifications', [
             'title' => '카카오톡 알림 발송 내역 & 환영 메시지 설정 - 푸른나무교회',
@@ -464,8 +468,9 @@ class AdminController
             'settings' => $settings,
             'welcomeEnabled' => ($settings['welcome_message_enabled'] ?? '1') === '1',
             'welcomeTemplate' => $settings['welcome_message_template'] ?? '',
+            'isDeveloper' => $isDev,
             'csrfToken' => Session::getCsrfToken(),
-            'curUser' => Auth::user(),
+            'curUser' => $curUser,
         ], 'layouts/admin');
     }
 
@@ -1477,7 +1482,20 @@ class AdminController
         $currentAdmin = Auth::user();
         $role = $currentAdmin['role'] ?? '';
         if ($role !== '담임목사 (최고관리자)' && $role !== '사이트 개발자 (최고관리자)' && (int)($currentAdmin['id'] ?? 0) !== 1) {
-            Session::setFlash('error', '최고관리자만 접근할 수 있는 메뉴입니다.');
+            Session::setFlash('error', '담임목사(최고관리자) 전용 메뉴입니다.');
+            header('Location: /admin');
+            exit;
+        }
+    }
+
+    private function requireDeveloper(): void
+    {
+        $currentAdmin = Auth::user();
+        $role = $currentAdmin['role'] ?? '';
+        $email = (string)($currentAdmin['username'] ?? '');
+        $isDev = ($role === '사이트 개발자 (최고관리자)' || $email === 'leeshkr@kakao.com' || str_contains($email, 'leeshkr') || str_contains($email, 'nurioh'));
+        if (!$isDev) {
+            Session::setFlash('error', '시스템 개발자 전용 설정 메뉴입니다.');
             header('Location: /admin');
             exit;
         }
