@@ -474,7 +474,7 @@ class AdminController
         $name = $curUser['name'] ?? '관리자';
         $email = $curUser['username'] ?? '';
 
-        $result = \App\Services\KakaoNotificationService::sendYoungjaTestNotification($name, $email);
+        $result = \App\Services\KakaoNotificationService::sendNurioTestNotification($name, $email);
 
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
             header('Content-Type: application/json; charset=utf-8');
@@ -482,7 +482,7 @@ class AdminController
             exit;
         }
 
-        Session::setFlash('success', "💌 관리자({$name}) 계정으로 테스트 알림을 발송/기록했습니다. 발송 로그를 확인해 보세요. ✨");
+        Session::setFlash('success', "💌 관리자({$name}) 계정으로 누리오 테스트 알림을 발송/기록했습니다. 발송 로그를 확인해 보세요. ✨");
         header('Location: /admin/notifications');
         exit;
     }

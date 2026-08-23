@@ -1,7 +1,7 @@
 # 🎨 푸른나무교회 (Green Tree Church) UI/UX Design System
 
 > **버전**: `v1.4.0`  
-> **총괄 디자이너**: AI 디자인실장 영자 (Youngja)  
+> **총괄 디자이너**: 누리오 (Nurio)  
 > **디자인 철학**: "따뜻한 쉼과 푸르른 생명력이 넘치는 모던 크리스천 커뮤니티"
 
 ---
@@ -76,4 +76,4 @@
 
 ---
 
-**© 2026 푸른나무교회 Design System by Youngja**
+**© 2026 푸른나무교회 Design System by Nurio**

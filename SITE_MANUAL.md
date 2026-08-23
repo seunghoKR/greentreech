@@ -141,4 +141,4 @@
 
 ---
 
-**© 2026 푸른나무교회. Created with Youngja AI.**
+**© 2026 푸른나무교회. Created with Nurio AI.**

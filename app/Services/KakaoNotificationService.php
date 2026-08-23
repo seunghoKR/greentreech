@@ -9,12 +9,12 @@ use App\Models\NotificationLog;
 class KakaoNotificationService
 {
     /**
-     * 영자가 보내는 테스트 알림 발송 (실제 카카오톡 나와의 채팅방 전송 시도)
+     * 누리오가 보내는 테스트 알림 발송 (실제 카카오톡 나와의 채팅방 전송 시도)
      */
-    public static function sendYoungjaTestNotification(string $recipientName, string $email): array
+    public static function sendNurioTestNotification(string $recipientName, string $email): array
     {
         $time = date('Y-m-d H:i:s');
-        $message = "🌱 [푸른나무교회 알림]\n\n안녕하세요, {$recipientName} 대표님! 🎨✨\n\n카카오톡 실시간 알림 연동 테스트 메시지입니다.\n\n• 발송 대상: {$email}\n• 발송 시간: {$time}\n\n오늘도 은혜와 쉼이 넘치는 하루 되세요! 🌿💖";
+        $message = "🌱 [푸른나무교회 알림]\n\n안녕하세요, {$recipientName} 대표님! 🎨✨\n\n누리오 카카오톡 실시간 알림 연동 테스트 메시지입니다.\n\n• 발송 대상: {$email}\n• 발송 시간: {$time}\n\n오늘도 은혜와 쉼이 넘치는 하루 되세요! 🌿💖";
 
         // 카카오 세션 토큰 확인 후 실제 카카오톡 메시지 전송
         $accessToken = \App\Core\Session::get('kakao_access_token', '');
@@ -27,7 +27,7 @@ class KakaoNotificationService
         }
 
         $status = $talkSent ? 'SUCCESS (KAKAOTALK SENT)' : 'LOGGED';
-        $logged = NotificationLog::log(1, 'YOUNGJA_TEST_ALERT', $message, $status);
+        $logged = NotificationLog::log(1, 'NURIO_TEST_ALERT', $message, $status);
 
         return [
             'success' => true,
@@ -37,6 +37,11 @@ class KakaoNotificationService
             'log_id' => $logged,
             'time' => $time,
         ];
+    }
+
+    public static function sendYoungjaTestNotification(string $recipientName, string $email): array
+    {
+        return self::sendNurioTestNotification($recipientName, $email);
     }
 
     /**

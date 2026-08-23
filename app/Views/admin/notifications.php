@@ -14,7 +14,7 @@
                 <i class="fas fa-cog text-gray-500"></i> 카카오 설정
             </a>
             <a href="/admin/notifications/test" class="px-5 py-2.5 bg-[#FEE500] hover:bg-[#FDD835] text-[#191919] rounded-2xl text-xs font-bold shadow-sm transition-all inline-flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98]">
-                <i class="fas fa-paper-plane text-amber-900"></i> 영자에게 테스트 알림 요청하기 💌
+                <i class="fas fa-paper-plane text-amber-900"></i> 누리오에게 테스트 알림 요청하기 💌
             </a>
         </div>
     </div>
@@ -88,9 +88,9 @@
                         <?php 
                             $badgeClass = 'bg-gray-100 text-gray-800';
                             $typeName = '일반 알림';
-                            if ($log['type'] === 'YOUNGJA_TEST_ALERT') {
+                            if ($log['type'] === 'NURIO_TEST_ALERT' || $log['type'] === 'YOUNGJA_TEST_ALERT') {
                                 $badgeClass = 'bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold';
-                                $typeName = '영자 테스트';
+                                $typeName = '누리오 테스트';
                             } elseif ($log['type'] === 'COMMENT_ALERT') {
                                 $badgeClass = 'bg-amber-100 text-amber-800';
                                 $typeName = '댓글 알림';

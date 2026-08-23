@@ -10,7 +10,7 @@
 - **버전**: `v1.4.0` (최신 릴리즈: 2026-08-21)
 - **개발 환경**: PHP 8.4 (Strict Typing), MariaDB / SQLite (PDO), Tailwind CSS (모바일 퍼스트)
 - **공식 유튜브 채널**: [@greentreechurch0405](https://www.youtube.com/@greentreechurch0405)
-- **디자인 & 아키텍처**: AI 디자인실장 영자 (Youngja)
+- **디자인 & 아키텍처**: 누리오 (Nurio)
 
 ---
 
@@ -122,4 +122,4 @@ http://localhost:8000/media/sync
 
 ---
 
-**© 2026 푸른나무교회. Created with Youngja AI.**
+**© 2026 푸른나무교회. Created with Nurio AI.**
