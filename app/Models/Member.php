@@ -33,7 +33,7 @@ class Member
 
         $existing = self::findByKakaoId($kakaoId);
         $isSuperAdmin = ($email === 'leeshkr@kakao.com' || str_contains((string)$email, 'leeshkr'));
-        $role = $isSuperAdmin ? '사이트 개발자 (최고관리자)' : '등록성도';
+        $role = $isSuperAdmin ? '사이트 개발자 (최고관리자)' : '푸른나무가족';
         $defaultName = !empty($name) ? $name : ($isSuperAdmin ? '이승호 개발자' : $nickname);
 
         if ($existing) {

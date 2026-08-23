@@ -359,7 +359,7 @@ class AdminController
             exit;
         }
 
-        $role = trim((string)($_POST['role'] ?? '등록성도'));
+        $role = trim((string)($_POST['role'] ?? '푸른나무가족'));
         Member::updateRole((int)$id, $role);
 
         Session::setFlash('success', '회원 직분이 성공적으로 변경되었습니다.');
@@ -384,7 +384,7 @@ class AdminController
         $nickname = trim((string)($_POST['nickname'] ?? ''));
         $phone = trim((string)($_POST['phone'] ?? ''));
         $email = trim((string)($_POST['email'] ?? ''));
-        $role = trim((string)($_POST['role'] ?? '등록성도'));
+        $role = trim((string)($_POST['role'] ?? '푸른나무가족'));
         $notifyKakao = isset($_POST['notify_kakao']) ? 1 : 0;
 
         if ($id <= 0 || empty($name) || empty($nickname)) {

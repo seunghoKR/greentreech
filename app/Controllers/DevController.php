@@ -47,7 +47,7 @@ class DevController
                 break;
 
             case 'member':
-                // 3. 푸른나무가족 (등록성도 - 나눔터 글/댓글 작성 승인 정회원)
+                // 3. 푸른나무가족 (나눔터 글/댓글 작성 승인 정회원)
                 Auth::logout();
                 $verifiedMember = [
                     'id' => 9992,
@@ -56,13 +56,13 @@ class DevController
                     'nickname' => '믿음나무',
                     'email' => 'faith@example.com',
                     'phone' => '010-8765-4321',
-                    'role' => '등록성도',
+                    'role' => '푸른나무가족',
                     'profile_image' => 'https://api.dicebear.com/7.x/bottts/svg?seed=Faith',
                     'notify_kakao' => 1,
                     'created_at' => date('Y-m-d H:i:s'),
                 ];
                 Auth::loginMember($verifiedMember);
-                Session::setFlash('success', '🌿 [3. 푸른나무가족 (등록성도)] 상태로 전환되었습니다. (나눔터 자유 소통 가능)');
+                Session::setFlash('success', '🌿 [3. 푸른나무가족] 상태로 전환되었습니다. (나눔터 자유 소통 가능)');
                 $defaultRedirect = '/community';
                 break;
 

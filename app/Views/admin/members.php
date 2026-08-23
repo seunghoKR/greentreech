@@ -83,14 +83,16 @@
                             </td>
                             <td class="py-3.5 px-4">
                                 <?php 
-                                    $roleBadge = 'bg-gray-100 text-gray-700';
-                                    if ($m['role'] === '사이트 개발자 (최고관리자)') $roleBadge = 'bg-purple-100 text-purple-800 font-bold';
-                                    elseif ($m['role'] === '담임목사 (최고관리자)' || $m['role'] === '교역자') $roleBadge = 'bg-green-100 text-green-800 font-bold';
-                                    elseif ($m['role'] === '등록성도') $roleBadge = 'bg-blue-100 text-blue-800';
-                                    elseif (in_array($m['role'], ['장로', '권사', '집사'], true)) $roleBadge = 'bg-amber-100 text-amber-800 font-bold';
+                                    $roleBadge = 'bg-green-100 text-green-800 font-bold';
+                                    if ($m['role'] === '담임목사' || $m['role'] === '담임목사 (최고관리자)') $roleBadge = 'bg-emerald-100 text-emerald-800 font-black';
+                                    elseif ($m['role'] === '청년' || $m['role'] === '청년부') $roleBadge = 'bg-blue-100 text-blue-800 font-bold';
+                                    elseif ($m['role'] === '집사') $roleBadge = 'bg-amber-100 text-amber-800 font-bold';
+                                    elseif ($m['role'] === '권사') $roleBadge = 'bg-purple-100 text-purple-800 font-bold';
+                                    elseif ($m['role'] === '안수집사') $roleBadge = 'bg-indigo-100 text-indigo-800 font-bold';
+                                    elseif ($m['role'] === '푸른나무가족' || $m['role'] === '등록성도') $roleBadge = 'bg-green-100 text-green-800 font-bold';
                                 ?>
                                 <span class="px-2.5 py-1 rounded-full text-xs <?= $roleBadge ?>">
-                                    <?= e($m['role']) ?>
+                                    <?= e($m['role'] === '등록성도' ? '푸른나무가족' : ($m['role'] === '청년부' ? '청년' : $m['role'])) ?>
                                 </span>
                             </td>
                             <td class="py-3.5 px-3 text-center">
@@ -175,17 +177,12 @@
                 <div>
                     <label class="block text-xs font-bold text-gray-700 mb-1">직분 / 역할 구분</label>
                     <select name="role" id="modalMemberRole" class="w-full px-3.5 py-2.5 rounded-2xl border border-gray-200 text-xs focus:ring-2 focus:ring-primary font-bold">
-                        <option value="등록성도">등록성도</option>
-                        <option value="청년부">청년부</option>
+                        <option value="푸른나무가족">푸른나무가족</option>
+                        <option value="청년">청년</option>
                         <option value="집사">집사</option>
-                        <option value="안수집사">안수집사</option>
                         <option value="권사">권사</option>
-                        <option value="장로">장로</option>
-                        <option value="전도사">전도사</option>
-                        <option value="교역자">교역자</option>
-                        <option value="담임목사 (최고관리자)">담임목사 (최고관리자)</option>
-                        <option value="사이트 개발자 (최고관리자)">사이트 개발자 (최고관리자)</option>
-                        <option value="일반교우">일반교우</option>
+                        <option value="안수집사">안수집사</option>
+                        <option value="담임목사">담임목사</option>
                     </select>
                 </div>
             </div>
@@ -220,8 +217,12 @@
         document.getElementById('modalMemberName').value = member.name || member.nickname || '';
         document.getElementById('modalMemberNickname').value = member.nickname || '';
         document.getElementById('modalMemberPhone').value = member.phone || '';
-        document.getElementById('modalMemberEmail').value = member.email || '';
-        document.getElementById('modalMemberRole').value = member.role || '등록성도';
+        let roleVal = member.role || '푸른나무가족';
+        if (roleVal === '등록성도') roleVal = '푸른나무가족';
+        if (roleVal === '청년부') roleVal = '청년';
+        if (roleVal === '담임목사 (최고관리자)' || roleVal === '교역자' || roleVal === '전도사') roleVal = '담임목사';
+        if (roleVal === '장로') roleVal = '안수집사';
+        document.getElementById('modalMemberRole').value = roleVal;
         document.getElementById('modalMemberNotify').checked = (parseInt(member.notify_kakao, 10) === 1);
 
         document.getElementById('memberEditModal').classList.remove('hidden');
