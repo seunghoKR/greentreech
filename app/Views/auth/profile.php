@@ -9,7 +9,7 @@
                 <div>
                     <h1 class="font-serif-kr text-xl font-bold text-gray-900"><?= e($member['nickname']) ?> 성도님</h1>
                     <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-surface-container text-primary">
-                        <?= e($member['role'] ?? '등록성도') ?>
+                        <?= e($member['role'] === '등록성도' ? '푸른나무가족' : ($member['role'] ?? '푸른나무가족')) ?>
                     </span>
                 </div>
             </div>

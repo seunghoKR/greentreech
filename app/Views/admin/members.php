@@ -217,6 +217,7 @@
         document.getElementById('modalMemberName').value = member.name || member.nickname || '';
         document.getElementById('modalMemberNickname').value = member.nickname || '';
         document.getElementById('modalMemberPhone').value = member.phone || '';
+        document.getElementById('modalMemberEmail').value = member.email || '';
         let roleVal = member.role || '푸른나무가족';
         if (roleVal === '등록성도') roleVal = '푸른나무가족';
         if (roleVal === '청년부') roleVal = '청년';
