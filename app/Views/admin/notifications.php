@@ -9,35 +9,13 @@
             </h1>
             <p class="text-xs text-gray-500 mt-1">나눔터 새 글, 댓글, 새가족/기도 접수 및 주보 소식 알림 로그를 실시간으로 확인합니다.</p>
         </div>
+        <?php if (!empty($isDeveloper)): ?>
         <div class="flex items-center gap-2 self-start sm:self-auto">
-            <?php if (!empty($isDeveloper)): ?>
             <a href="/admin/kakao" class="px-4 py-2.5 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 rounded-2xl text-xs font-bold shadow-2xs transition-all inline-flex items-center gap-1.5" title="개발자 전용 API 설정">
                 <i class="fas fa-code text-gray-500"></i> 카카오 API 설정
             </a>
-            <?php endif; ?>
-            <a href="/admin/notifications/test" class="px-5 py-2.5 bg-[#FEE500] hover:bg-[#FDD835] text-[#191919] rounded-2xl text-xs font-bold shadow-sm transition-all inline-flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98]">
-                <i class="fas fa-paper-plane text-amber-900"></i> 누리오에게 테스트 알림 요청하기 💌
-            </a>
         </div>
-    </div>
-
-    <!-- Live Test Notification Banner -->
-    <div class="bg-gradient-to-r from-emerald-50 via-green-50 to-emerald-50 rounded-3xl border border-emerald-200/80 p-6 shadow-sm">
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div class="space-y-1">
-                <div class="flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
-                    <h3 class="font-bold text-sm text-emerald-950">알림 시스템 작동 상태: 정상 대기 중 (Active)</h3>
-                </div>
-                <p class="text-xs text-emerald-800 leading-relaxed">
-                    수신자: <strong><?= e($curUser['name'] ?? '관리자') ?> (<?= e($curUser['username'] ?? '') ?>)</strong> | 버튼을 클릭하시면 테스트 축복 알림이 즉시 발송/기록됩니다.
-                </p>
-            </div>
-            <a href="/admin/notifications/test" class="px-6 py-3 bg-[#154212] hover:bg-[#0d2b0b] text-white rounded-2xl text-xs sm:text-sm font-bold shadow-md transition-all shrink-0 flex items-center gap-2">
-                <i class="fas fa-comment-dots"></i>
-                <span>지금 테스트 알림 보내기</span>
-            </a>
-        </div>
+        <?php endif; ?>
     </div>
 
     <!-- Notification Service Use Cases -->

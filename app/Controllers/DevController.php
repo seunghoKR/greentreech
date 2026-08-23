@@ -133,18 +133,18 @@ class DevController
 
             case 'pastor':
             default:
-                // 5. 담임목사 (최고관리자 - 전체 대시보드 및 시스템 설정 총괄)
+                // 5. 심민보 담임목사 (전체 대시보드 및 시스템 설정 총괄)
                 Auth::logout();
                 $pastorUser = [
                     'id' => 1,
                     'username' => 'admin',
-                    'name' => '심민보 담임목사 (최고관리자)',
-                    'role' => '담임목사 (최고관리자)',
+                    'name' => '심민보 담임목사',
+                    'role' => '담임목사',
                     'permissions' => ['all'],
                     'login_type' => 'id_pw',
                 ];
                 Session::set('admin_user', $pastorUser);
-                Session::setFlash('success', '👑 [5. 담임목사 (최고관리자)] 권한으로 전환되었습니다. (모든 대시보드 및 시스템 설정 총괄)');
+                Session::setFlash('success', '👑 [5. 심민보 담임목사] 권한으로 전환되었습니다. (모든 대시보드 및 시스템 설정 총괄)');
                 $defaultRedirect = '/admin';
                 break;
         }

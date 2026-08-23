@@ -319,7 +319,7 @@
                 <?php if (\App\Core\Auth::isMember()): ?>
                     <?php 
                         $loginMember = \App\Core\Auth::member(); 
-                        $isPastorMember = ($loginMember['role'] ?? '') === '담임목사 (최고관리자)' || str_contains((string)($loginMember['email'] ?? ''), 'leeshkr');
+                        $isPastorMember = ($loginMember['role'] ?? '') === '담임목사' || ($loginMember['role'] ?? '') === '담임목사 (최고관리자)' || str_contains((string)($loginMember['email'] ?? ''), 'leeshkr');
                     ?>
                     <?php if ($isPastorMember): ?>
                     <a href="/admin" class="hidden lg:inline-flex items-center gap-1.5 bg-[#154212] hover:bg-[#0d2b0b] text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-sm transition-all animate-pulse">
@@ -366,7 +366,7 @@
                     <?php if (\App\Core\Auth::isMember()): ?>
                         <?php 
                             $loginMember = \App\Core\Auth::member(); 
-                            $isPastorMember = ($loginMember['role'] ?? '') === '담임목사 (최고관리자)' || str_contains((string)($loginMember['email'] ?? ''), 'leeshkr');
+                            $isPastorMember = ($loginMember['role'] ?? '') === '담임목사' || ($loginMember['role'] ?? '') === '담임목사 (최고관리자)' || str_contains((string)($loginMember['email'] ?? ''), 'leeshkr');
                         ?>
                         <div class="bg-surface-container-low p-3 rounded-2xl border border-outline-variant/30 flex items-center justify-between gap-2">
                             <div class="flex items-center gap-2.5 min-w-0">

@@ -10,8 +10,8 @@ $currentRoleBadgeClass = 'bg-gray-700 text-gray-200';
 
 if ($isLoggedInAdmin) {
     $role = $curAdmin['role'] ?? '';
-    if ($role === '담임목사 (최고관리자)' || (int)($curAdmin['id'] ?? 0) === 1) {
-        $currentRoleLabel = '👑 5. 담임목사 (최고관리자)';
+    if ($role === '담임목사' || $role === '담임목사 (최고관리자)' || (int)($curAdmin['id'] ?? 0) === 1) {
+        $currentRoleLabel = '👑 5. 심민보 담임목사';
         $currentRoleBadgeClass = 'bg-emerald-600 text-white font-bold animate-pulse';
     } else {
         $permsRaw = $curAdmin['permissions'] ?? [];
@@ -144,12 +144,12 @@ $currentUri = $_SERVER['REQUEST_URI'] ?? '/';
                 </div>
             </div>
 
-            <!-- 5. 담임목사 (최고관리자) -->
+            <!-- 5. 심민보 담임목사 -->
             <a href="/dev/switch-role?role=pastor&redirect=/admin" 
                class="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-gradient-to-r from-emerald-950/80 to-gray-900 hover:from-emerald-900/90 border border-emerald-800/60 hover:border-emerald-600 transition-all group shadow-sm">
                 <div class="flex items-center gap-2">
                     <span class="text-emerald-400">👑</span>
-                    <span class="font-bold text-emerald-200">5. 담임목사 (최고관리자)</span>
+                    <span class="font-bold text-emerald-200">5. 심민보 담임목사</span>
                 </div>
                 <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-800/80 text-emerald-100 font-bold">전체 마스터</span>
             </a>

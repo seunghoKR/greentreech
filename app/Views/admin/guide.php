@@ -322,7 +322,7 @@
                 <div class="p-3 bg-amber-50 border border-amber-200 rounded-2xl text-amber-800">3. 집사<br><span class="text-[10px] font-normal text-amber-600">(서리/봉사 집사)</span></div>
                 <div class="p-3 bg-purple-50 border border-purple-200 rounded-2xl text-purple-800">4. 권사<br><span class="text-[10px] font-normal text-purple-600">(기도/섬김 권사)</span></div>
                 <div class="p-3 bg-indigo-50 border border-indigo-200 rounded-2xl text-indigo-800">5. 안수집사<br><span class="text-[10px] font-normal text-indigo-600">(안수/중직자)</span></div>
-                <div class="p-3 bg-emerald-50 border border-emerald-300 rounded-2xl text-emerald-900">6. 담임목사<br><span class="text-[10px] font-normal text-emerald-700">(교회 최고관리자)</span></div>
+                <div class="p-3 bg-emerald-50 border border-emerald-300 rounded-2xl text-emerald-900">6. 담임목사<br><span class="text-[10px] font-normal text-emerald-700">(교회 총괄 관리)</span></div>
             </div>
 
             <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-2">
@@ -333,7 +333,6 @@
                     <li><strong>[성도 회원 관리]</strong>에서 해당 성도님의 <strong>[수정]</strong> 버튼을 누릅니다.</li>
                     <li><strong>성함(실명)</strong>과 <strong>활동 닉네임</strong>은 필수 항목으로 관리되며, <strong>카카오 이메일</strong>은 자동 연동되어 프리필됩니다.</li>
                     <li>직분 드롭다운에서 6대 직분 중 하나를 선택 후 저장하시면 나눔터 및 교우 명부에 즉시 반영됩니다.</li>
-                    <li><em>(참고: 개발자 계정은 목회자님의 편의를 위해 회원 목록에서 자동으로 보이지 않도록 깔끔하게 필터링되어 있습니다.)</em></li>
                 </ol>
             </div>
         </div>
@@ -367,10 +366,10 @@
 
             <div class="p-5 rounded-2xl bg-gray-50 border border-gray-200 space-y-2.5">
                 <div class="font-bold text-gray-900 flex items-center gap-2">
-                    <i class="fas fa-paper-plane text-emerald-600"></i> 원클릭 테스트 알림 발송
+                    <i class="fas fa-list-check text-emerald-600"></i> 실시간 발송 내역 & 로깅
                 </div>
                 <p class="text-gray-600 leading-relaxed">
-                    <strong>[누리오에게 테스트 알림 요청하기 💌]</strong> 버튼을 누르시면 카카오톡 메시지 발송 API가 정상적으로 작동하는지 즉시 점검하실 수 있습니다.
+                    나눔터 댓글 알림, 새가족 접수 알림, 첫 로그인 환영 메시지 등 시스템에서 발송된 모든 카카오톡 알림이 발송 일시, 수신자, 결과 상태와 함께 투명하게 기록됩니다.
                 </p>
             </div>
         </div>
@@ -405,7 +404,7 @@
                 <div class="p-2.5 bg-white rounded-xl border border-indigo-100 font-semibold text-gray-800">👥 성도 회원 직분 관리</div>
             </div>
             <p class="text-[11px] text-indigo-700 pt-1">
-                * 주일예배/온라인주보 기획, 4주 섬김이, 실시간 중계 배너, 사역자 권한 설정은 담임목사님(최고관리자) 전용으로 안전하게 보호됩니다.
+                * 주일예배/온라인주보 기획, 4주 섬김이, 실시간 중계 배너, 사역자 권한 설정은 심민보 담임목사님 전용으로 안전하게 보호됩니다.
             </p>
         </div>
     </div>

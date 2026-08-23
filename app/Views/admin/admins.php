@@ -6,7 +6,7 @@
                 <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#154212] text-white">권한 관리</span>
             </div>
             <h2 class="text-xl font-bold text-gray-900 mt-1">관리자 및 사역자 계정 관리</h2>
-            <p class="text-xs text-gray-500 mt-0.5">담임목사(최고관리자) 및 게시판/주보/미디어를 관리할 부관리자 계정을 지정하고 권한을 부여합니다.</p>
+            <p class="text-xs text-gray-500 mt-0.5">담임목사 및 게시판/주보/미디어를 관리할 부관리자 계정을 지정하고 권한을 부여합니다.</p>
         </div>
         <a href="/admin/admins/create" class="px-5 py-2.5 bg-[#154212] hover:bg-[#0d2b0b] text-white rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 self-start sm:self-auto">
             <i class="fas fa-plus"></i> 새 부관리자 등록
@@ -38,12 +38,12 @@
                         <p class="text-[11px] text-gray-400"><?= e($a['username']) ?></p>
                     </td>
                     <td class="py-4 px-4">
-                        <span class="px-2.5 py-1 rounded-full text-xs font-bold <?= $a['role'] === '담임목사 (최고관리자)' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800' ?>">
-                            <?= e($a['role'] ?? '부관리자') ?>
+                        <span class="px-2.5 py-1 rounded-full text-xs font-bold <?= ($a['role'] === '담임목사' || $a['role'] === '담임목사 (최고관리자)') ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800' ?>">
+                            <?= e($a['role'] === '담임목사 (최고관리자)' ? '담임목사' : ($a['role'] ?? '부관리자')) ?>
                         </span>
                     </td>
                     <td class="py-4 px-4">
-                        <?php if ($a['role'] === '담임목사 (최고관리자)' || in_array('all', $perms, true)): ?>
+                        <?php if ($a['role'] === '담임목사' || $a['role'] === '담임목사 (최고관리자)' || in_array('all', $perms, true)): ?>
                             <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-100 text-amber-800">모든 기능 전체 권한</span>
                         <?php elseif (empty($perms)): ?>
                             <span class="text-[11px] text-gray-400">부여된 권한 없음</span>

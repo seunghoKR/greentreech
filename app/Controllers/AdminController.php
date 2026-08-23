@@ -1116,8 +1116,8 @@ class AdminController
         } else {
             // 카카오 관리자 계정이 admins 테이블에 아직 없는 경우 새로 등록
             $username = $curUser['username'] ?? 'admin';
-            $name = $curUser['name'] ?? '담임목사 (최고관리자)';
-            $role = $curUser['role'] ?? '담임목사 (최고관리자)';
+            $name = $curUser['name'] ?? '심민보 담임목사';
+            $role = $curUser['role'] ?? '담임목사';
             Admin::create($username, $newPassword, $name, $role, ['all']);
         }
 
@@ -1485,8 +1485,8 @@ class AdminController
     {
         $currentAdmin = Auth::user();
         $role = $currentAdmin['role'] ?? '';
-        if ($role !== '담임목사 (최고관리자)' && $role !== '사이트 개발자 (최고관리자)' && (int)($currentAdmin['id'] ?? 0) !== 1) {
-            Session::setFlash('error', '담임목사(최고관리자) 전용 메뉴입니다.');
+        if ($role !== '담임목사' && $role !== '담임목사 (최고관리자)' && $role !== '사이트 개발자 (최고관리자)' && (int)($currentAdmin['id'] ?? 0) !== 1) {
+            Session::setFlash('error', '담임목사 전용 메뉴입니다.');
             header('Location: /admin');
             exit;
         }

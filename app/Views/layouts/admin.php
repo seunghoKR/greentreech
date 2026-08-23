@@ -87,7 +87,7 @@
                         $curAdmin = \App\Core\Auth::user(); 
                         $role = $curAdmin['role'] ?? '';
                         $adminEmail = (string)($curAdmin['username'] ?? '');
-                        $isSuperAdmin = ($role === '담임목사 (최고관리자)' || $role === '사이트 개발자 (최고관리자)' || (int)($curAdmin['id'] ?? 0) === 1);
+                        $isSuperAdmin = ($role === '담임목사' || $role === '담임목사 (최고관리자)' || $role === '사이트 개발자 (최고관리자)' || (int)($curAdmin['id'] ?? 0) === 1);
                         $isDeveloper = ($role === '사이트 개발자 (최고관리자)' || $adminEmail === 'leeshkr@kakao.com' || str_contains($adminEmail, 'leeshkr') || str_contains($adminEmail, 'nurioh'));
                     ?>
 

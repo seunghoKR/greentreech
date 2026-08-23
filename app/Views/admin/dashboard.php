@@ -6,7 +6,7 @@
             $curAdmin = \App\Core\Auth::user(); 
             $adminDisplayName = $curAdmin['name'] ?? '관리자';
             $adminRoleName = $curAdmin['role'] ?? '관리자';
-            $isSuperAdmin = ($adminRoleName === '담임목사 (최고관리자)' || $adminRoleName === '사이트 개발자 (최고관리자)' || (int)($curAdmin['id'] ?? 0) === 1);
+            $isSuperAdmin = ($adminRoleName === '담임목사' || $adminRoleName === '담임목사 (최고관리자)' || $adminRoleName === '사이트 개발자 (최고관리자)' || (int)($curAdmin['id'] ?? 0) === 1);
         ?>
         <div class="space-y-2">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-xs font-semibold backdrop-blur-sm">

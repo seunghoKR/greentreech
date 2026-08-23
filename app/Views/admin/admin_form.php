@@ -29,7 +29,7 @@
                 <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">관리자 구분 <span class="text-red-500">*</span></label>
                 <select name="role" class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm focus:ring-2 focus:ring-primary">
                     <option value="부관리자 (사역담당)" <?= ($editAdmin['role'] ?? '') === '부관리자 (사역담당)' ? 'selected' : '' ?>>부관리자 (사역담당)</option>
-                    <option value="담임목사 (최고관리자)" <?= ($editAdmin['role'] ?? '') === '담임목사 (최고관리자)' ? 'selected' : '' ?>>담임목사 (최고관리자)</option>
+                    <option value="담임목사" <?= ($editAdmin['role'] ?? '') === '담임목사' || ($editAdmin['role'] ?? '') === '담임목사 (최고관리자)' ? 'selected' : '' ?>>담임목사</option>
                     <option value="게시판 관리자" <?= ($editAdmin['role'] ?? '') === '게시판 관리자' ? 'selected' : '' ?>>게시판 관리자</option>
                     <option value="미디어 사역자" <?= ($editAdmin['role'] ?? '') === '미디어 사역자' ? 'selected' : '' ?>>미디어 사역자</option>
                 </select>

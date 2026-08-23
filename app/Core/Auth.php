@@ -41,7 +41,7 @@ class Auth
         $phone = (string)($member['phone'] ?? '');
 
         // 1. 역할 기반 승인
-        if (in_array($role, ['담임목사 (최고관리자)', '사이트 개발자 (최고관리자)', '교역자 (사역담당)', '부관리자 (사역담당)', '관리자'], true)) {
+        if (in_array($role, ['담임목사', '담임목사 (최고관리자)', '사이트 개발자 (최고관리자)', '교역자 (사역담당)', '부관리자 (사역담당)', '관리자'], true)) {
             return true;
         }
 
@@ -67,15 +67,15 @@ class Auth
 
     public static function loginAdminFromMember(array $member): void
     {
-        $role = $member['role'] ?? '담임목사 (최고관리자)';
-        if (!in_array($role, ['담임목사 (최고관리자)', '사이트 개발자 (최고관리자)', '부관리자 (사역담당)', '관리자'], true)) {
-            $role = '담임목사 (최고관리자)';
+        $role = $member['role'] ?? '담임목사';
+        if (!in_array($role, ['담임목사', '담임목사 (최고관리자)', '사이트 개발자 (최고관리자)', '부관리자 (사역담당)', '관리자'], true)) {
+            $role = '담임목사';
         }
 
         $adminData = [
             'id' => (int)$member['id'],
             'username' => $member['email'] ?: ($member['kakao_id'] ? "kakao_{$member['kakao_id']}" : 'kakao_admin'),
-            'name' => $member['name'] ?: ($member['nickname'] ?: '담임목사/관리자'),
+            'name' => $member['name'] ?: ($member['nickname'] ?: '심민보 담임목사'),
             'role' => $role,
             'permissions' => '["all"]',
             'login_type' => 'kakao',
@@ -97,8 +97,8 @@ class Auth
             return [
                 'id' => (int)$member['id'],
                 'username' => $member['email'] ?: "kakao_{$member['kakao_id']}",
-                'name' => $member['name'] ?: ($member['nickname'] ?: '관리자'),
-                'role' => ($member['role'] ?? '') ?: '담임목사 (최고관리자)',
+                'name' => $member['name'] ?: ($member['nickname'] ?: '심민보 담임목사'),
+                'role' => ($member['role'] ?? '') ?: '담임목사',
                 'permissions' => '["all"]',
                 'login_type' => 'kakao',
             ];
