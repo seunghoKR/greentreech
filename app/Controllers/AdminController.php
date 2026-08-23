@@ -561,7 +561,11 @@ class AdminController
 
         try {
             $result = \App\Services\YouTubeSyncService::syncChannelVideos();
-            $msg = "유튜브 채널 동기화 완료! (총 {$result['total']}개 탐색, 신규 등록 {$result['new']}개, 업데이트 {$result['synced']}개)";
+            if ($result['new'] > 0) {
+                $msg = "유튜브 채널 최신 영상 동기화 완료! (신규 영상 {$result['new']}개 등록 완료 · 기존 정리된 영상 {$result['existing']}개 안전 보존)";
+            } else {
+                $msg = "유튜브 채널 동기화 완료! (새로 올라온 신규 영상 없음 · 기존 정리된 영상 {$result['existing']}개 안전 보존)";
+            }
             Session::setFlash('success', $msg);
         } catch (\Throwable $e) {
             Session::setFlash('error', "유튜브 동기화 중 오류가 발생했습니다: " . $e->getMessage());

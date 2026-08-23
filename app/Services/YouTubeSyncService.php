@@ -12,19 +12,26 @@ class YouTubeSyncService
     private const CHANNEL_URL = 'https://www.youtube.com/@greentreechurch0405';
 
     /**
-     * 유튜브 채널에서 최신 영상 및 쇼츠를 가져와 5대 카테고리로 정밀 분류 후 동기화
+     * 유튜브 채널에서 새로 올라온 신규 영상/쇼츠만 탐색하여 안전하게 등록 (기존 분류/정리 데이터 보존)
      */
     public static function syncChannelVideos(): array
     {
         $videoItems = self::fetchChannelVideoList();
-        $syncedCount = 0;
+        $existingCount = 0;
         $newCount = 0;
 
         foreach ($videoItems as $item) {
             $youtubeId = $item['id'];
             $isShorts = $item['is_shorts'];
 
-            // Fetch oEmbed metadata for clean title and details
+            // 1. 이미 DB에 등록된 영상인지 먼저 확인 (기존 정리 및 분류된 영상은 100% 온전히 보존)
+            $existing = Database::fetchOne("SELECT id FROM `sermons` WHERE `youtube_id` = :yid", ['yid' => $youtubeId]);
+            if ($existing) {
+                $existingCount++;
+                continue; // 기존 데이터는 절대 수정/초기화하지 않고 스킵
+            }
+
+            // 2. 새로 올라온 신규 영상만 메타데이터를 조회하여 정밀 분류 후 등록
             $meta = self::fetchOEmbedData($youtubeId, $isShorts);
             $rawTitle = $meta['title'] ?? ($isShorts ? '푸른나무교회 쇼츠' : '푸른나무교회 주일 말씀');
             $title = html_entity_decode($rawTitle, ENT_QUOTES, 'UTF-8');
@@ -102,42 +109,20 @@ class YouTubeSyncService
                 $sermonDate = "{$dm[1]}-{$dm[2]}-{$dm[3]}";
             }
 
-            // Check if already exists in sermons
-            $existing = Database::fetchOne("SELECT id FROM `sermons` WHERE `youtube_id` = :yid", ['yid' => $youtubeId]);
-
-            if ($existing) {
-                $sql = "UPDATE `sermons` SET 
-                        `title` = :title, 
-                        `category` = :cat, 
-                        `video_type` = :vtype, 
-                        `preacher` = :preacher,
-                        `sermon_date` = :sdate 
-                        WHERE `id` = :id";
-                Database::execute($sql, [
-                    'id' => $existing['id'],
-                    'title' => $title,
-                    'cat' => $category,
-                    'vtype' => $videoType,
-                    'preacher' => $preacher,
-                    'sdate' => $sermonDate,
-                ]);
-                $syncedCount++;
-            } else {
-                $sql = "INSERT INTO `sermons` 
-                        (`title`, `category`, `video_type`, `preacher`, `sermon_date`, `youtube_id`, `content`, `view_count`, `created_at`) 
-                        VALUES (:title, :cat, :vtype, :preacher, :sdate, :yid, :content, 0, CURRENT_TIMESTAMP)";
-                Database::execute($sql, [
-                    'title' => $title,
-                    'cat' => $category,
-                    'vtype' => $videoType,
-                    'preacher' => $preacher,
-                    'sdate' => $sermonDate,
-                    'yid' => $youtubeId,
-                    'content' => "푸른나무교회 공식 유튜브 채널(@greentreechurch0405)에 게시된 콘텐츠입니다.",
-                ]);
-                $newCount++;
-                $syncedCount++;
-            }
+            // 신규 영상만 새로 INSERT
+            $sql = "INSERT INTO `sermons` 
+                    (`title`, `category`, `video_type`, `preacher`, `sermon_date`, `youtube_id`, `content`, `view_count`, `created_at`) 
+                    VALUES (:title, :cat, :vtype, :preacher, :sdate, :yid, :content, 0, CURRENT_TIMESTAMP)";
+            Database::execute($sql, [
+                'title' => $title,
+                'cat' => $category,
+                'vtype' => $videoType,
+                'preacher' => $preacher,
+                'sdate' => $sermonDate,
+                'yid' => $youtubeId,
+                'content' => "푸른나무교회 공식 유튜브 채널(@greentreechurch0405)에 게시된 콘텐츠입니다.",
+            ]);
+            $newCount++;
         }
 
         // Update last sync time
@@ -145,7 +130,7 @@ class YouTubeSyncService
 
         return [
             'total' => count($videoItems),
-            'synced' => $syncedCount,
+            'existing' => $existingCount,
             'new' => $newCount,
         ];
     }
