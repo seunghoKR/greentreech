@@ -82,19 +82,20 @@ class DevController
                 $defaultRedirect = '/admin';
                 break;
 
+            case 'admin_notices':
             case 'admin_bulletin':
-                // 4-B. 관리자 - 주일예배/주보 & 알리는소식 관리자
+                // 4-B. 관리자 - 알리는소식 관리자
                 Auth::logout();
                 $adminUser = [
                     'id' => 9982,
-                    'username' => 'manager_bulletin',
-                    'name' => '최주보 (예배기획)',
+                    'username' => 'manager_notices',
+                    'name' => '최소식 (소식사역)',
                     'role' => '부관리자 (사역담당)',
-                    'permissions' => ['bulletin', 'notices'],
+                    'permissions' => ['notices'],
                     'login_type' => 'id_pw',
                 ];
                 Session::set('admin_user', $adminUser);
-                Session::setFlash('success', '📋 [4-B. 주보/소식 관리자] 권한으로 전환되었습니다. (온라인주보 & 알리는소식 관리 가능)');
+                Session::setFlash('success', '📋 [4-B. 알리는 소식 관리자] 권한으로 전환되었습니다. (교회 공지 및 소식 관리 가능)');
                 $defaultRedirect = '/admin';
                 break;
 

@@ -34,14 +34,12 @@ class Admin
     public static function getAvailablePermissions(): array
     {
         return [
-            'bulletin' => ['label' => '주일예배 & 주보 기획', 'desc' => '예배순서, 담당자, 설교 기획'],
             'sermons' => ['label' => '설교 및 미디어 관리', 'desc' => '주일설교, 유튜브 쇼츠, 영상 등록'],
-            'notices' => ['label' => '알리는 말씀 (공지/주보)', 'desc' => '주보 파일, 공지사항 등록 및 AI 문체 변환'],
+            'notices' => ['label' => '알리는 소식 관리 (공지/주보)', 'desc' => '주보 파일, 공지사항 등록 및 AI 문체 변환'],
             'gallery' => ['label' => '사진첩 및 캘리 관리', 'desc' => '교회 사진, 캘리그라피 등록'],
             'community' => ['label' => '성도 나눔터 모니터링', 'desc' => '나눔터 게시글/댓글 관리 및 삭제'],
             'inquiries' => ['label' => '새가족/기도 접수 관리', 'desc' => '새가족 등록 및 기도/상담 내역 확인'],
             'members' => ['label' => '성도 회원 관리', 'desc' => '카카오 가입 회원 등급 및 알림 관리'],
-            'settings' => ['label' => '교회 기본정보 설정', 'desc' => '교회명, 연락처, 주소, 카카오 키 등'],
         ];
     }
 

@@ -1146,12 +1146,12 @@ class AdminController
     }
 
     // ==========================================
-    // 10. 주일예배 & 주보 기획 관리
+    // 10. 주일예배 & 주보 기획 관리 (담임목사 전용)
     // ==========================================
     public function bulletinSettings(): void
     {
         Auth::requireLogin();
-        $this->requirePermission('bulletin');
+        $this->requirePastor();
 
         $bulletin = \App\Services\BulletinService::generateCurrentWeekBulletin();
 
@@ -1166,7 +1166,7 @@ class AdminController
     public function saveBulletinSettings(): void
     {
         Auth::requireAuth();
-        $this->requirePermission('bulletin');
+        $this->requirePastor();
 
         $csrfToken = $_POST['csrf_token'] ?? '';
         if (!Session::validateCsrfToken($csrfToken)) {
@@ -1391,12 +1391,12 @@ class AdminController
     }
 
     /**
-     * 예배 순서 섬김이 (4주 관리 대시보드)
+     * 예배 순서 섬김이 (4주 관리 대시보드 - 담임목사 전용)
      */
     public function worshipServants(): void
     {
         Auth::requireLogin();
-        $this->requirePermission('bulletin');
+        $this->requirePastor();
 
         $scheduleWeeks = \App\Models\WorshipServant::get4WeeksSchedule();
 
@@ -1411,12 +1411,12 @@ class AdminController
     }
 
     /**
-     * 예배 순서 섬김이 스케줄 저장
+     * 예배 순서 섬김이 스케줄 저장 (담임목사 전용)
      */
     public function saveWorshipServants(): void
     {
         Auth::requireLogin();
-        $this->requirePermission('bulletin');
+        $this->requirePastor();
 
         $csrfToken = (string)($_POST['csrf_token'] ?? '');
         if (!Session::validateCsrfToken($csrfToken)) {

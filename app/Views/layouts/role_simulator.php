@@ -19,8 +19,8 @@ if ($isLoggedInAdmin) {
         
         if (in_array('sermons', $perms, true) && in_array('gallery', $perms, true) && count($perms) === 2) {
             $currentRoleLabel = '🎬 4-A. 영상/사진 관리자';
-        } elseif (in_array('bulletin', $perms, true) && in_array('notices', $perms, true) && count($perms) === 2) {
-            $currentRoleLabel = '📋 4-B. 주보/소식 관리자';
+        } elseif (in_array('notices', $perms, true) && count($perms) === 1) {
+            $currentRoleLabel = '📋 4-B. 알리는 소식 관리자';
         } elseif (in_array('community', $perms, true) && in_array('members', $perms, true) && count($perms) === 2) {
             $currentRoleLabel = '💬 4-C. 나눔터/성도 관리자';
         } elseif (in_array('inquiries', $perms, true) && count($perms) === 1) {
@@ -129,9 +129,9 @@ $currentUri = $_SERVER['REQUEST_URI'] ?? '/';
                        class="px-2 py-1.5 bg-gray-950 hover:bg-blue-900/50 border border-gray-800 hover:border-blue-500/50 rounded-xl text-[11px] font-bold text-gray-300 hover:text-white flex items-center gap-1.5 transition-all truncate" title="영상분류 & 사진첩 관리 권한">
                         <span>🎬</span> <span class="truncate">A. 영상/사진</span>
                     </a>
-                    <a href="/dev/switch-role?role=admin_bulletin&redirect=/admin" 
-                       class="px-2 py-1.5 bg-gray-950 hover:bg-blue-900/50 border border-gray-800 hover:border-blue-500/50 rounded-xl text-[11px] font-bold text-gray-300 hover:text-white flex items-center gap-1.5 transition-all truncate" title="주일예배/주보 & 알리는소식 관리 권한">
-                        <span>📋</span> <span class="truncate">B. 주보/소식</span>
+                    <a href="/dev/switch-role?role=admin_notices&redirect=/admin" 
+                       class="px-2 py-1.5 bg-gray-950 hover:bg-blue-900/50 border border-gray-800 hover:border-blue-500/50 rounded-xl text-[11px] font-bold text-gray-300 hover:text-white flex items-center gap-1.5 transition-all truncate" title="알리는 소식/공지 관리 권한">
+                        <span>📋</span> <span class="truncate">B. 알리는소식</span>
                     </a>
                     <a href="/dev/switch-role?role=admin_community&redirect=/admin" 
                        class="px-2 py-1.5 bg-gray-950 hover:bg-blue-900/50 border border-gray-800 hover:border-blue-500/50 rounded-xl text-[11px] font-bold text-gray-300 hover:text-white flex items-center gap-1.5 transition-all truncate" title="나눔터 & 성도회원 관리 권한">
