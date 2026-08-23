@@ -584,5 +584,7 @@
             });
         }
     </script>
+
+    <?php include __DIR__ . '/role_simulator.php'; ?>
 </body>
 </html>

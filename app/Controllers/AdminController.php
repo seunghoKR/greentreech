@@ -148,6 +148,7 @@ class AdminController
     public function settings(): void
     {
         Auth::requireAuth();
+        $this->requirePastor();
 
         $settings = Setting::getAllAsMap();
 
@@ -161,6 +162,7 @@ class AdminController
     public function saveSettings(): void
     {
         Auth::requireAuth();
+        $this->requirePastor();
 
         $csrfToken = $_POST['csrf_token'] ?? '';
         if (!Session::validateCsrfToken($csrfToken)) {
@@ -194,6 +196,7 @@ class AdminController
     public function hero(): void
     {
         Auth::requireAuth();
+        $this->requirePastor();
 
         $settings = Setting::getAllAsMap();
 
@@ -207,6 +210,7 @@ class AdminController
     public function saveHero(): void
     {
         Auth::requireAuth();
+        $this->requirePastor();
 
         $csrfToken = $_POST['csrf_token'] ?? '';
         if (!Session::validateCsrfToken($csrfToken)) {
@@ -286,6 +290,7 @@ class AdminController
     public function kakaoSettings(): void
     {
         Auth::requireAuth();
+        $this->requirePastor();
 
         $settings = Setting::getAllAsMap();
 
@@ -299,6 +304,7 @@ class AdminController
     public function saveKakaoSettings(): void
     {
         Auth::requireAuth();
+        $this->requirePastor();
 
         $csrfToken = $_POST['csrf_token'] ?? '';
         if (!Session::validateCsrfToken($csrfToken)) {
@@ -327,6 +333,7 @@ class AdminController
     public function members(): void
     {
         Auth::requireAuth();
+        $this->requirePermission('members');
 
         $page = max(1, (int)($_GET['page'] ?? 1));
         $keyword = !empty($_GET['keyword']) ? trim((string)$_GET['keyword']) : null;
@@ -343,6 +350,7 @@ class AdminController
     public function updateMemberRole(string $id): void
     {
         Auth::requireAuth();
+        $this->requirePermission('members');
 
         $csrfToken = $_POST['csrf_token'] ?? '';
         if (!Session::validateCsrfToken($csrfToken)) {
@@ -362,6 +370,7 @@ class AdminController
     public function memberSave(): void
     {
         Auth::requireAuth();
+        $this->requirePermission('members');
 
         $csrfToken = $_POST['csrf_token'] ?? '';
         if (!Session::validateCsrfToken($csrfToken)) {
@@ -393,6 +402,7 @@ class AdminController
     public function memberDelete(string $id): void
     {
         Auth::requireAuth();
+        $this->requirePermission('members');
 
         $memberId = (int)$id;
         Member::delete($memberId);
@@ -408,6 +418,7 @@ class AdminController
     public function community(): void
     {
         Auth::requireAuth();
+        $this->requirePermission('community');
 
         $page = max(1, (int)($_GET['page'] ?? 1));
         $category = !empty($_GET['category']) ? trim((string)$_GET['category']) : '전체';
@@ -427,6 +438,7 @@ class AdminController
     public function deleteCommunityPost(string $id): void
     {
         Auth::requireAuth();
+        $this->requirePermission('community');
 
         CommunityPost::delete((int)$id);
         Session::setFlash('success', '게시글이 삭제되었습니다.');
@@ -440,6 +452,7 @@ class AdminController
     public function notifications(): void
     {
         Auth::requireAuth();
+        $this->requirePastor();
 
         $logs = NotificationLog::getLatest(30);
 
@@ -455,6 +468,7 @@ class AdminController
     public function sendTestNotification(): void
     {
         Auth::requireAuth();
+        $this->requirePastor();
 
         $curUser = Auth::user();
         $name = $curUser['name'] ?? '관리자';
@@ -479,6 +493,7 @@ class AdminController
     public function sermons(): void
     {
         Auth::requireAuth();
+        $this->requirePermission('sermons');
 
         $page = max(1, (int)($_GET['page'] ?? 1));
         $category = !empty($_GET['category']) ? trim((string)$_GET['category']) : '전체';
@@ -502,6 +517,7 @@ class AdminController
     public function sermonSync(): void
     {
         Auth::requireAuth();
+        $this->requirePermission('sermons');
 
         try {
             $result = \App\Services\YouTubeSyncService::syncChannelVideos();
@@ -518,6 +534,7 @@ class AdminController
     public function sermonQuickUpdate(): void
     {
         Auth::requireAuth();
+        $this->requirePermission('sermons');
 
         $id = (int)($_POST['id'] ?? 0);
         $category = trim((string)($_POST['category'] ?? '주일 설교'));
@@ -543,6 +560,7 @@ class AdminController
     public function sermonBulkCategory(): void
     {
         Auth::requireAuth();
+        $this->requirePermission('sermons');
 
         $csrfToken = $_POST['csrf_token'] ?? '';
         $page = max(1, (int)($_POST['page'] ?? 1));
@@ -574,6 +592,7 @@ class AdminController
     public function sermonCreate(): void
     {
         Auth::requireAuth();
+        $this->requirePermission('sermons');
 
         $page = max(1, (int)($_GET['page'] ?? 1));
         $category = $_GET['category'] ?? '전체';
@@ -593,6 +612,7 @@ class AdminController
     public function sermonEdit(string $id): void
     {
         Auth::requireAuth();
+        $this->requirePermission('sermons');
 
         $sermon = Sermon::find((int)$id);
         $page = max(1, (int)($_GET['page'] ?? 1));
@@ -619,6 +639,7 @@ class AdminController
     public function sermonSave(): void
     {
         Auth::requireAuth();
+        $this->requirePermission('sermons');
 
         $csrfToken = $_POST['csrf_token'] ?? '';
         $returnPage = max(1, (int)($_POST['page'] ?? 1));
@@ -665,6 +686,7 @@ class AdminController
     public function sermonDelete(string $id): void
     {
         Auth::requireAuth();
+        $this->requirePermission('sermons');
 
         $page = max(1, (int)($_GET['page'] ?? 1));
         $category = $_GET['category'] ?? '전체';
@@ -683,6 +705,7 @@ class AdminController
     public function gallery(): void
     {
         Auth::requireAuth();
+        $this->requirePermission('gallery');
 
         $page = max(1, (int)($_GET['page'] ?? 1));
         $category = !empty($_GET['category']) ? trim((string)$_GET['category']) : '전체';
@@ -702,6 +725,7 @@ class AdminController
     public function galleryCreate(): void
     {
         Auth::requireAuth();
+        $this->requirePermission('gallery');
 
         View::render('admin/gallery_form', [
             'title' => '새 갤러리 게시물 등록 - 푸른나무교회',
@@ -714,6 +738,7 @@ class AdminController
     public function galleryEdit(string $id): void
     {
         Auth::requireAuth();
+        $this->requirePermission('gallery');
 
         $item = Gallery::find((int)$id);
         if (!$item) {
@@ -733,6 +758,7 @@ class AdminController
     public function gallerySave(): void
     {
         Auth::requireAuth();
+        $this->requirePermission('gallery');
 
         $csrfToken = $_POST['csrf_token'] ?? '';
         if (!Session::validateCsrfToken($csrfToken)) {
@@ -782,6 +808,7 @@ class AdminController
     public function galleryDelete(string $id): void
     {
         Auth::requireAuth();
+        $this->requirePermission('gallery');
 
         Gallery::delete((int)$id);
         Session::setFlash('success', '게시물이 삭제되었습니다.');
@@ -795,6 +822,7 @@ class AdminController
     public function notices(): void
     {
         Auth::requireAuth();
+        $this->requirePermission('notices');
 
         $page = max(1, (int)($_GET['page'] ?? 1));
         $category = !empty($_GET['category']) ? trim((string)$_GET['category']) : '전체';
@@ -814,6 +842,7 @@ class AdminController
     public function noticeCreate(): void
     {
         Auth::requireAuth();
+        $this->requirePermission('notices');
 
         View::render('admin/notice_form', [
             'title' => '새 소식 등록 - 푸른나무교회',
@@ -826,6 +855,7 @@ class AdminController
     public function noticeEdit(string $id): void
     {
         Auth::requireAuth();
+        $this->requirePermission('notices');
 
         $notice = Notice::find((int)$id);
         if (!$notice) {
@@ -845,6 +875,7 @@ class AdminController
     public function noticeSave(): void
     {
         Auth::requireAuth();
+        $this->requirePermission('notices');
 
         $csrfToken = $_POST['csrf_token'] ?? '';
         if (!Session::validateCsrfToken($csrfToken)) {
@@ -892,6 +923,7 @@ class AdminController
     public function noticeDelete(string $id): void
     {
         Auth::requireAuth();
+        $this->requirePermission('notices');
 
         Notice::delete((int)$id);
         Session::setFlash('success', '게시글이 삭제되었습니다.');
@@ -905,6 +937,7 @@ class AdminController
     public function inquiries(): void
     {
         Auth::requireAuth();
+        $this->requirePermission('inquiries');
 
         $page = max(1, (int)($_GET['page'] ?? 1));
         $type = !empty($_GET['type']) ? trim((string)$_GET['type']) : '전체';
@@ -925,6 +958,7 @@ class AdminController
     public function inquiryDetail(string $id): void
     {
         Auth::requireAuth();
+        $this->requirePermission('inquiries');
 
         $inquiry = Inquiry::find((int)$id);
         if (!$inquiry) {
@@ -944,6 +978,7 @@ class AdminController
     public function inquiryUpdateStatus(string $id): void
     {
         Auth::requireAuth();
+        $this->requirePermission('inquiries');
 
         $csrfToken = $_POST['csrf_token'] ?? '';
         if (!Session::validateCsrfToken($csrfToken)) {
@@ -964,6 +999,7 @@ class AdminController
     public function inquiryDelete(string $id): void
     {
         Auth::requireAuth();
+        $this->requirePermission('inquiries');
 
         Inquiry::delete((int)$id);
         Session::setFlash('success', '접수 내역이 삭제되었습니다.');
@@ -1130,6 +1166,7 @@ class AdminController
     public function saveBulletinSettings(): void
     {
         Auth::requireAuth();
+        $this->requirePermission('bulletin');
 
         $csrfToken = $_POST['csrf_token'] ?? '';
         if (!Session::validateCsrfToken($csrfToken)) {
@@ -1359,6 +1396,7 @@ class AdminController
     public function worshipServants(): void
     {
         Auth::requireLogin();
+        $this->requirePermission('bulletin');
 
         $scheduleWeeks = \App\Models\WorshipServant::get4WeeksSchedule();
 
@@ -1378,6 +1416,7 @@ class AdminController
     public function saveWorshipServants(): void
     {
         Auth::requireLogin();
+        $this->requirePermission('bulletin');
 
         $csrfToken = (string)($_POST['csrf_token'] ?? '');
         if (!Session::validateCsrfToken($csrfToken)) {

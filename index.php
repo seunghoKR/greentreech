@@ -56,6 +56,7 @@ use App\Controllers\AdminController;
 use App\Controllers\CaptchaController;
 use App\Controllers\CommunityController;
 use App\Controllers\AuthController;
+use App\Controllers\DevController;
 
 // 3. Start Session
 Session::start();
@@ -224,6 +225,9 @@ $router->get('/admin/admins/create', [AdminController::class, 'adminCreate']);
 $router->get('/admin/admins/edit/{id}', [AdminController::class, 'adminEdit']);
 $router->post('/admin/admins/save', [AdminController::class, 'adminSave']);
 $router->get('/admin/admins/delete/{id}', [AdminController::class, 'adminDelete']);
+
+// Developer Role Simulator Route
+$router->get('/dev/switch-role', [DevController::class, 'switchRole']);
 
 // 6. Dispatch Request
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
