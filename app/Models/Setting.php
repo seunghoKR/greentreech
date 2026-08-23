@@ -54,6 +54,9 @@ class Setting
             'hero_image_link' => '',
             'hero_image_target' => '_self',
             'hero_image_alt' => '푸른나무교회 메인 배너',
+            // Welcome Message Settings (첫 카카오 로그인 성도 자동 환영)
+            'welcome_message_enabled' => '1',
+            'welcome_message_template' => "🌿 [푸른나무교회 환영 메시지]\n\n{name} 성도님, 주님의 이름으로 진심으로 환영하고 축복합니다! ✨\n\n푸른나무교회는 지친 일상 속, 작은 쉼과 주님의 참된 사랑을 함께 나누는 믿음의 가족 공동체입니다.\n\n• 담임목사: {pastor_name}\n• 주일예배: {worship_sunday}\n• 교회 위치: {address}\n\n궁금하신 점이나 기도제목이 있으시면 언제든 [성도 나눔터] 또는 [새가족/기도] 메뉴를 통해 말씀해 주세요.\n\n주님의 은혜와 평강이 성도님의 삶 속에 늘 가득하시기를 소망합니다. 💖",
         ];
 
         try {

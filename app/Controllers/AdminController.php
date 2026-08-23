@@ -447,7 +447,7 @@ class AdminController
     }
 
     // ==========================================
-    // 7. Notification Logs
+    // 7. Notification Logs & Welcome Message Settings
     // ==========================================
     public function notifications(): void
     {
@@ -455,14 +455,49 @@ class AdminController
         $this->requirePastor();
 
         $logs = NotificationLog::getLatest(30);
+        $settings = Setting::getAllAsMap();
 
         View::render('admin/notifications', [
-            'title' => '카카오톡 알림 발송 내역 - 푸른나무교회',
+            'title' => '카카오톡 알림 발송 내역 & 환영 메시지 설정 - 푸른나무교회',
             'adminNav' => 'notifications',
             'logs' => $logs,
+            'settings' => $settings,
+            'welcomeEnabled' => ($settings['welcome_message_enabled'] ?? '1') === '1',
+            'welcomeTemplate' => $settings['welcome_message_template'] ?? '',
             'csrfToken' => Session::getCsrfToken(),
             'curUser' => Auth::user(),
         ], 'layouts/admin');
+    }
+
+    public function saveWelcomeMessageSettings(): void
+    {
+        Auth::requireAuth();
+        $this->requirePastor();
+
+        $csrfToken = (string)($_POST['csrf_token'] ?? '');
+        if (!Session::validateCsrfToken($csrfToken)) {
+            Session::setFlash('error', '보안 토큰이 만료되었습니다. 다시 시도해 주세요.');
+            header('Location: /admin/notifications');
+            exit;
+        }
+
+        $enabled = isset($_POST['welcome_message_enabled']) ? '1' : '0';
+        $template = trim((string)($_POST['welcome_message_template'] ?? ''));
+
+        if (empty($template)) {
+            Session::setFlash('error', '환영 메시지 문구를 입력해 주세요.');
+            header('Location: /admin/notifications');
+            exit;
+        }
+
+        Setting::updateMultiple([
+            'welcome_message_enabled' => $enabled,
+            'welcome_message_template' => $template,
+        ]);
+
+        Session::setFlash('success', '🌿 첫 로그인 성도 자동 환영 메시지 설정이 성공적으로 저장되었습니다!');
+        header('Location: /admin/notifications');
+        exit;
     }
 
     public function sendTestNotification(): void

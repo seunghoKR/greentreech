@@ -62,10 +62,17 @@ class AuthController
             exit;
         }
 
+        $isFirstLogin = (Member::findByKakaoId((string)$profile['id']) === null);
+
         // Save or update member in database
         $member = Member::createOrUpdateKakao($profile);
         Auth::loginMember($member);
         Session::set('kakao_access_token', $tokenData['access_token']);
+
+        // 최초 로그인 시 자동 환영 메시지 발송
+        if ($isFirstLogin) {
+            \App\Services\KakaoNotificationService::sendWelcomeMessage($member, $tokenData['access_token']);
+        }
 
         $redirect = Session::get('auth_redirect_after_login', '/community');
         Session::remove('auth_redirect_after_login');

@@ -45,6 +45,65 @@ class KakaoNotificationService
     }
 
     /**
+     * 최초 카카오 로그인 성도에게 자동 환영 메시지 발송
+     */
+    public static function sendWelcomeMessage(array $member, ?string $accessToken = null): array
+    {
+        $enabled = Setting::get('welcome_message_enabled', '1');
+        if ($enabled !== '1') {
+            return ['success' => false, 'reason' => 'disabled'];
+        }
+
+        $template = Setting::get('welcome_message_template', '');
+        if (empty($template)) {
+            $template = "🌿 [푸른나무교회 환영 메시지]\n\n{name} 성도님, 주님의 이름으로 진심으로 환영하고 축복합니다! ✨\n\n푸른나무교회는 지친 일상 속, 작은 쉼과 주님의 참된 사랑을 함께 나누는 믿음의 가족 공동체입니다.\n\n• 담임목사: {pastor_name}\n• 주일예배: {worship_sunday}\n• 교회 위치: {address}\n\n궁금하신 점이나 기도제목이 있으시면 언제든 [성도 나눔터] 또는 [새가족/기도] 메뉴를 통해 말씀해 주세요.\n\n주님의 은혜와 평강이 성도님의 삶 속에 늘 가득하시기를 소망합니다. 💖";
+        }
+
+        $memberName = !empty($member['name']) ? $member['name'] : ($member['nickname'] ?? '성도');
+        $siteSettings = Setting::getAllAsMap();
+
+        $search = [
+            '{name}',
+            '{nickname}',
+            '{church_name}',
+            '{pastor_name}',
+            '{worship_sunday}',
+            '{address}',
+            '{phone}',
+        ];
+        $replace = [
+            $memberName,
+            $member['nickname'] ?? $memberName,
+            $siteSettings['site_name'] ?? '푸른나무교회',
+            $siteSettings['pastor_name'] ?? '심민보',
+            $siteSettings['worship_sunday'] ?? '주일 오전 11:00',
+            $siteSettings['address'] ?? '전라북도 익산시 선화로73길 25 (3층)',
+            $siteSettings['phone'] ?? '010-9559-8623',
+        ];
+
+        $message = str_replace($search, $replace, $template);
+
+        // 카카오톡 나와의 채팅방(Talk Memo) 메시지 전송 시도
+        $talkSent = false;
+        $talkResult = null;
+        if (!empty($accessToken)) {
+            $talkResult = KakaoAuthService::sendTalkMemo($accessToken, $message, 'https://greentreech.iwinv.net/community');
+            $talkSent = !empty($talkResult['success']);
+        }
+
+        $status = $talkSent ? 'SUCCESS (KAKAOTALK SENT)' : 'LOGGED';
+        $logId = NotificationLog::log((int)$member['id'], 'WELCOME_ALERT', $message, $status);
+
+        return [
+            'success' => true,
+            'talk_sent' => $talkSent,
+            'talk_result' => $talkResult,
+            'message' => $message,
+            'log_id' => $logId,
+        ];
+    }
+
+    /**
      * 내 글에 새 댓글이 달렸을 때 글 작성자에게 카카오톡 알림 발송
      */
     public static function notifyNewComment(array $post, array $comment, array $commenter): bool

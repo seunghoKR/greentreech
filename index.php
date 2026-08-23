@@ -174,6 +174,7 @@ $router->get('/admin/community/delete/{id}', [AdminController::class, 'deleteCom
 $router->get('/admin/kakao', [AdminController::class, 'kakaoSettings']);
 $router->post('/admin/kakao', [AdminController::class, 'saveKakaoSettings']);
 $router->get('/admin/notifications', [AdminController::class, 'notifications']);
+$router->post('/admin/notifications/welcome', [AdminController::class, 'saveWelcomeMessageSettings']);
 $router->get('/admin/notifications/test', [AdminController::class, 'sendTestNotification']);
 $router->post('/admin/notifications/test', [AdminController::class, 'sendTestNotification']);
 
