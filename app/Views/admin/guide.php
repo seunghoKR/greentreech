@@ -7,17 +7,17 @@
         <div class="relative z-10 space-y-3">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-xs font-semibold backdrop-blur-sm">
                 <i class="fas fa-book-open text-amber-300"></i>
-                <span class="text-white">목회자 & 사역자 전용 가이드북</span>
+                <span class="text-white">푸른나무교회 공식 가이드북</span>
                 <span class="text-white/40">·</span>
-                <span class="text-emerald-200">v2.4.0</span>
+                <span class="text-emerald-200">v2.5.0 최신판</span>
             </div>
             
             <h1 class="font-serif-kr text-2xl sm:text-4xl font-bold leading-tight">
-                🌿 푸른나무교회 목회자 사이트 사용 설명서
+                🌿 푸른나무교회 홈페이지 사용 설명서
             </h1>
             
             <p class="text-xs sm:text-sm text-white/85 max-w-2xl leading-relaxed">
-                심민보 담임목사님과 사역자님들께서 교회의 모든 미디어, 주보, 성도 소통, 새가족 접수를 손쉽고 편리하게 관리하실 수 있도록 친절하게 안내해 드립니다.
+                심민보 담임목사님과 교역자, 사역자님들께서 교회의 모든 미디어, 스마트 주보, 4주 섬김이, 성도 소통, 카카오톡 알림을 손쉽고 편리하게 운영하실 수 있도록 친절하게 안내해 드립니다.
             </p>
 
             <div class="pt-2 flex flex-wrap gap-2.5">
@@ -41,33 +41,45 @@
                 <i class="fas fa-calendar-check text-green-600"></i>
                 <span>1. 주간 사역 루틴</span>
             </a>
-            <a href="#live-banner" class="p-3 rounded-2xl bg-red-50/70 hover:bg-red-100 text-red-900 flex items-center gap-2 transition-colors">
-                <i class="fas fa-broadcast-tower text-red-600"></i>
-                <span>2. 실시간 생중계 배너</span>
-            </a>
             <a href="#bulletin" class="p-3 rounded-2xl bg-blue-50/70 hover:bg-blue-100 text-blue-900 flex items-center gap-2 transition-colors">
                 <i class="fas fa-newspaper text-blue-600"></i>
-                <span>3. 온라인 주보 & A4 인쇄</span>
+                <span>2. 주일예배 & 주보 기획</span>
+            </a>
+            <a href="#servants" class="p-3 rounded-2xl bg-emerald-50/70 hover:bg-emerald-100 text-emerald-900 flex items-center gap-2 transition-colors">
+                <i class="fas fa-hands-holding-child text-emerald-600"></i>
+                <span>3. 4주 섬김이 관리</span>
+            </a>
+            <a href="#live-banner" class="p-3 rounded-2xl bg-red-50/70 hover:bg-red-100 text-red-900 flex items-center gap-2 transition-colors">
+                <i class="fas fa-broadcast-tower text-red-600"></i>
+                <span>4. 실시간 생중계 배너</span>
             </a>
             <a href="#youtube" class="p-3 rounded-2xl bg-amber-50/70 hover:bg-amber-100 text-amber-900 flex items-center gap-2 transition-colors">
                 <i class="fab fa-youtube text-amber-600"></i>
-                <span>4. 유튜브 설교/쇼츠 동기화</span>
-            </a>
-            <a href="#inquiry" class="p-3 rounded-2xl bg-purple-50/70 hover:bg-purple-100 text-purple-900 flex items-center gap-2 transition-colors">
-                <i class="fas fa-heart text-purple-600"></i>
-                <span>5. 새가족 & 기도 접수</span>
+                <span>5. 유튜브 설교/쇼츠 동기화</span>
             </a>
             <a href="#members" class="p-3 rounded-2xl bg-emerald-50/70 hover:bg-emerald-100 text-emerald-900 flex items-center gap-2 transition-colors">
                 <i class="fas fa-user-check text-emerald-600"></i>
-                <span>6. 성도 회원 등급 승인</span>
+                <span>6. 성도 6대 직분 관리</span>
             </a>
-            <a href="#community" class="p-3 rounded-2xl bg-yellow-50/70 hover:bg-yellow-100 text-yellow-900 flex items-center gap-2 transition-colors">
-                <i class="fas fa-comments text-yellow-600"></i>
-                <span>7. 나눔터 & 카톡 알림</span>
+            <a href="#notifications" class="p-3 rounded-2xl bg-yellow-50/70 hover:bg-yellow-100 text-yellow-900 flex items-center gap-2 transition-colors">
+                <i class="fas fa-bell text-yellow-600"></i>
+                <span>7. 카톡 알림 & 환영 메시지</span>
             </a>
-            <a href="#faq" class="p-3 rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-800 flex items-center gap-2 transition-colors">
+            <a href="#admins" class="p-3 rounded-2xl bg-indigo-50/70 hover:bg-indigo-100 text-indigo-900 flex items-center gap-2 transition-colors">
+                <i class="fas fa-users-gear text-indigo-600"></i>
+                <span>8. 사역자별 권한 분담</span>
+            </a>
+            <a href="#inquiry" class="p-3 rounded-2xl bg-purple-50/70 hover:bg-purple-100 text-purple-900 flex items-center gap-2 transition-colors">
+                <i class="fas fa-heart text-purple-600"></i>
+                <span>9. 새가족 & 기도 접수</span>
+            </a>
+            <a href="#navigation" class="p-3 rounded-2xl bg-teal-50/70 hover:bg-teal-100 text-teal-900 flex items-center gap-2 transition-colors">
+                <i class="fas fa-map-location-dot text-teal-600"></i>
+                <span>10. 내비 길안내 & 캘리</span>
+            </a>
+            <a href="#faq" class="p-3 rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-800 flex items-center gap-2 transition-colors col-span-2 sm:col-span-2">
                 <i class="fas fa-question-circle text-gray-600"></i>
-                <span>8. 자주 묻는 질문 (FAQ)</span>
+                <span>11. 자주 묻는 질문 (FAQ) & 문제 해결</span>
             </a>
         </div>
     </div>
@@ -102,7 +114,7 @@
                     </p>
                 </div>
                 <div class="pt-2 border-t border-gray-200/60 text-[11px] text-gray-500 font-semibold">
-                    메뉴: <span class="text-primary font-bold">설교 및 영상 관리</span>
+                    메뉴: <span class="text-primary font-bold">유튜브 영상 분류 & 관리</span>
                 </div>
             </div>
 
@@ -112,13 +124,13 @@
                     <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-purple-100 text-purple-800 text-[11px] font-bold">
                         <i class="fas fa-calendar-day"></i> 토요일
                     </div>
-                    <h3 class="font-bold text-sm text-gray-900 mt-2">스마트 주보 & 공지 확정</h3>
+                    <h3 class="font-bold text-sm text-gray-900 mt-2">스마트 주보 & 섬김이 확정</h3>
                     <p class="text-xs text-gray-600 leading-relaxed mt-1">
-                        예배 순서, 찬양, 4주 봉사위원을 점검하고, A4 인쇄 출력 및 금주 소식을 등록합니다.
+                        예배 순서, 찬양, 4주 섬김이를 점검하고, A4 인쇄 출력 및 금주 소식을 확정합니다.
                     </p>
                 </div>
                 <div class="pt-2 border-t border-gray-200/60 text-[11px] text-gray-500 font-semibold">
-                    메뉴: <span class="text-primary font-bold">주일예배 & 주보 기획</span>
+                    메뉴: <span class="text-primary font-bold">주일예배 & 주보 기획 (담임목사)</span>
                 </div>
             </div>
 
@@ -134,7 +146,7 @@
                     </p>
                 </div>
                 <div class="pt-2 border-t border-red-200/60 text-[11px] text-red-800 font-semibold">
-                    위치: <span class="font-bold">대시보드 상단 스위치</span>
+                    위치: <span class="font-bold">대시보드 상단 원클릭 스위치</span>
                 </div>
             </div>
 
@@ -146,7 +158,7 @@
                     </div>
                     <h3 class="font-bold text-sm text-gray-900 mt-2">유튜브 동기화 & 사진첩</h3>
                     <p class="text-xs text-gray-600 leading-relaxed mt-1">
-                        유튜브에 올라간 최신 설교/쇼츠 영상을 <strong>[1초 동기화]</strong>하고 주일 은혜 사진을 올립니다.
+                        유튜브에 업로드된 주일 설교/쇼츠 영상을 <strong>[1초 동기화]</strong>하고 주일 은혜 사진을 올립니다.
                     </p>
                 </div>
                 <div class="pt-2 border-t border-gray-200/60 text-[11px] text-gray-500 font-semibold">
@@ -157,53 +169,20 @@
         </div>
     </div>
 
-    <!-- Section 2: 주일예배 실시간 생중계 띠배너 제어 -->
-    <div id="live-banner" class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-5">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center text-lg font-bold">
-                2
-            </div>
-            <div>
-                <span class="text-xs font-bold text-red-600 uppercase tracking-wider">Live Broadcast Control</span>
-                <h2 class="text-lg sm:text-xl font-bold text-gray-900">주일예배 실시간 생중계 띠배너 제어</h2>
-            </div>
-        </div>
-
-        <div class="p-4 rounded-2xl bg-red-50 border border-red-100 text-xs sm:text-sm text-red-900 leading-relaxed flex items-start gap-3">
-            <i class="fas fa-info-circle text-red-500 text-base mt-0.5 shrink-0"></i>
-            <div>
-                <strong>생중계 배너 기능이란?</strong><br>
-                주일예배 시간에 성도님들이 홈페이지에 접속했을 때 최상단에 붉은색 <em>"🔴 지금은 푸른나무교회 주일예배 실시간 생중계 시간입니다"</em> 알림 띠배너를 띄워 유튜브 라이브 방송 시청을 유도하는 기능입니다.
-            </div>
-        </div>
-
-        <div class="space-y-3 text-xs sm:text-sm text-gray-700">
-            <div class="flex items-center gap-2 font-bold text-gray-900">
-                <i class="fas fa-toggle-on text-primary text-base"></i>
-                <span>사용 방법 (원클릭 토글 스위치)</span>
-            </div>
-            <ol class="list-decimal list-inside space-y-2 pl-2 text-gray-600 leading-relaxed">
-                <li>관리자 대시보드 메인 우측 상단의 <strong>[실시간 중계: ON / OFF]</strong> 버튼을 클릭합니다.</li>
-                <li><strong>ON 상태</strong>일 때는 버튼이 붉은색으로 깜빡이며 홈페이지 최상단에 라이브 띠배너가 활성화됩니다.</li>
-                <li>예배가 끝난 후 다시 클릭하면 <strong>OFF 상태</strong>로 안전하게 전환됩니다.</li>
-            </ol>
-        </div>
-    </div>
-
-    <!-- Section 3: 스마트 주보 & A4 인쇄 / AI 문장 다듬기 -->
+    <!-- Section 2: 스마트 주보 & A4 인쇄 / AI 문장 다듬기 -->
     <div id="bulletin" class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-5">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center text-lg font-bold">
-                3
+                2
             </div>
             <div>
                 <span class="text-xs font-bold text-blue-700 uppercase tracking-wider">Digital & Print Bulletin</span>
-                <h2 class="text-lg sm:text-xl font-bold text-gray-900">스마트 주보 기획 & A4 인쇄 / AI 문장 다듬기</h2>
+                <h2 class="text-lg sm:text-xl font-bold text-gray-900">주일예배 & 온라인 스마트 주보 기획 (담임목사 전용)</h2>
             </div>
         </div>
 
         <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
-            성도님들이 스마트폰에서 터치 한 번으로 보는 <strong>모바일 스마트 주보</strong>와, 현장 인쇄용 <strong>A4 2단 주보</strong>를 동시에 관리할 수 있습니다.
+            성도님들이 스마트폰에서 터치 한 번으로 보는 <strong>모바일 스마트 주보</strong>와, 현장 인쇄용 <strong>A4 2단 주보</strong>를 하나의 관리 화면에서 기획하고 발행합니다.
         </p>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
@@ -228,26 +207,78 @@
                 </p>
             </div>
         </div>
+    </div>
 
-        <div class="p-5 rounded-2xl bg-emerald-50/50 border border-emerald-100 space-y-2 text-xs sm:text-sm">
-            <div class="font-bold text-emerald-900 flex items-center gap-2">
-                <i class="fas fa-users-gear text-emerald-600"></i> 4주간 예배 순서 섬김이 로테이션 관리
+    <!-- Section 3: 4주 섬김이 로테이션 관리 -->
+    <div id="servants" class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-5">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg font-bold">
+                3
             </div>
-            <p class="text-emerald-800 leading-relaxed">
-                <code>예배 순서 섬김이 (4주 관리)</code> 메뉴에서 기도, 헌금, 안내, 친교식사 등 4주 순환 일정을 한 번만 입력해 두시면, 매주 주보에 해당 주차의 봉사위원 성함이 자동으로 표시됩니다.
-            </p>
+            <div>
+                <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">Worship Servants</span>
+                <h2 class="text-lg sm:text-xl font-bold text-gray-900">예배 순서 섬김이 (4주 로테이션 관리 · 담임목사 전용)</h2>
+            </div>
+        </div>
+
+        <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+            기도, 헌금, 안내, 친교식사 등 4주 순환 섬김이 일정을 사전에 미리 입력해 두시면, 매주 주보 및 예배 순서표에 해당 주차의 봉사위원 성함이 자동으로 연동되어 표시됩니다.
+        </p>
+
+        <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs sm:text-sm text-emerald-900 leading-relaxed space-y-2">
+            <div class="font-bold flex items-center gap-2">
+                <i class="fas fa-circle-check text-emerald-600"></i> 주요 특징 및 혜택:
+            </div>
+            <ul class="list-disc list-inside space-y-1 text-emerald-800">
+                <li>1주차 ~ 4주차 봉사위원을 한 화면에서 4주 단위로 일괄 기획</li>
+                <li>주일예배 순서표와 스마트 주보에 이번 주차 섬김이가 실시간 자동 반영</li>
+                <li>오프라인 주보 인쇄 시에도 최신 섬김이 명단이 자동으로 반영되어 누락 방지</li>
+            </ul>
         </div>
     </div>
 
-    <!-- Section 4: 유튜브 영상 & 쇼츠 1초 동기화 -->
-    <div id="youtube" class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-5">
+    <!-- Section 4: 주일예배 실시간 생중계 띠배너 제어 -->
+    <div id="live-banner" class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-5">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-lg font-bold">
+            <div class="w-10 h-10 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center text-lg font-bold">
                 4
             </div>
             <div>
+                <span class="text-xs font-bold text-red-600 uppercase tracking-wider">Live Broadcast Control</span>
+                <h2 class="text-lg sm:text-xl font-bold text-gray-900">주일예배 실시간 생중계 띠배너 제어 (담임목사 전용)</h2>
+            </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-red-50 border border-red-100 text-xs sm:text-sm text-red-900 leading-relaxed flex items-start gap-3">
+            <i class="fas fa-info-circle text-red-500 text-base mt-0.5 shrink-0"></i>
+            <div>
+                <strong>생중계 배너 기능이란?</strong><br>
+                주일예배 시간에 성도님들이 홈페이지에 접속했을 때 최상단에 붉은색 <em>"🔴 지금은 푸른나무교회 주일예배 실시간 생중계 시간입니다"</em> 알림 띠배너를 띄워 유튜브 라이브 방송 시청을 유도하는 기능입니다.
+            </div>
+        </div>
+
+        <div class="space-y-3 text-xs sm:text-sm text-gray-700">
+            <div class="flex items-center gap-2 font-bold text-gray-900">
+                <i class="fas fa-toggle-on text-primary text-base"></i>
+                <span>사용 방법 (원클릭 토글 스위치)</span>
+            </div>
+            <ol class="list-decimal list-inside space-y-2 pl-2 text-gray-600 leading-relaxed">
+                <li>관리자 대시보드 메인 우측 상단의 <strong>[실시간 중계: ON / OFF]</strong> 버튼을 클릭합니다.</li>
+                <li><strong>ON 상태</strong>일 때는 버튼이 붉은색으로 깜빡이며 홈페이지 최상단에 라이브 띠배너가 활성화됩니다.</li>
+                <li>예배가 끝난 후 다시 클릭하면 <strong>OFF 상태</strong>로 안전하게 전환됩니다.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Section 5: 유튜브 영상 & 쇼츠 1초 동기화 -->
+    <div id="youtube" class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-5">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-lg font-bold">
+                5
+            </div>
+            <div>
                 <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">YouTube Auto Sync</span>
-                <h2 class="text-lg sm:text-xl font-bold text-gray-900">유튜브 공식 채널(@greentreechurch0405) 실시간 동기화</h2>
+                <h2 class="text-lg sm:text-xl font-bold text-gray-900">유튜브 공식 채널(@greentreechurch0405) 실시간 동기화 & 분류</h2>
             </div>
         </div>
 
@@ -261,18 +292,129 @@
                 <strong>[유튜브 영상 동기화] 버튼 하나로 자동 처리되는 일:</strong>
                 <ul class="list-disc list-inside mt-1.5 space-y-1 text-amber-800">
                     <li>유튜브 채널의 최신 영상 60개 이상을 1초 만에 자동 수집</li>
-                    <li>가로 영상(16:9 주일설교)과 세로 영상(9:16 쇼츠)을 자동 감지하여 분리</li>
-                    <li>5대 카테고리(주일 설교, 설교 쇼츠, 식탁교제 쇼츠, 간증, 행사/찬양)로 자동 분류</li>
+                    <li><strong>주일설교말씀</strong>은 설교 아카이브 메뉴(<code>/sermons</code>)로 깔끔하게 분리되어 성경 본문/요약과 함께 표시</li>
+                    <li>가로 영상(16:9)과 세로 영상(9:16 쇼츠)을 자동 감지하여 <strong>5대 카테고리</strong>(주일 설교, 말씀 쇼츠, 식탁교제 쇼츠, 간증, 행사/찬양)로 스마트 분류</li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <!-- Section 5: 새가족 등록 및 온라인 기도/상담 접수 -->
+    <!-- Section 6: 성도 회원 6대 직분 관리 -->
+    <div id="members" class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-5">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg font-bold">
+                6
+            </div>
+            <div>
+                <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">Member Roles & Profile</span>
+                <h2 class="text-lg sm:text-xl font-bold text-gray-900">성도 회원 6대 직분 체계 & 회원 정보 관리</h2>
+            </div>
+        </div>
+
+        <div class="space-y-3 text-xs sm:text-sm text-gray-700 leading-relaxed">
+            <p>
+                푸른나무교회의 성도 직분은 명확하고 일관된 <strong>6대 직분 체계</strong>로 표준화되어 있습니다.
+            </p>
+
+            <div class="grid grid-cols-2 sm:grid-cols-6 gap-2 text-center text-xs font-bold">
+                <div class="p-3 bg-green-50 border border-green-200 rounded-2xl text-green-800">1. 푸른나무가족<br><span class="text-[10px] font-normal text-green-600">(기본 등록성도)</span></div>
+                <div class="p-3 bg-blue-50 border border-blue-200 rounded-2xl text-blue-800">2. 청년<br><span class="text-[10px] font-normal text-blue-600">(청년부 교우)</span></div>
+                <div class="p-3 bg-amber-50 border border-amber-200 rounded-2xl text-amber-800">3. 집사<br><span class="text-[10px] font-normal text-amber-600">(서리/봉사 집사)</span></div>
+                <div class="p-3 bg-purple-50 border border-purple-200 rounded-2xl text-purple-800">4. 권사<br><span class="text-[10px] font-normal text-purple-600">(기도/섬김 권사)</span></div>
+                <div class="p-3 bg-indigo-50 border border-indigo-200 rounded-2xl text-indigo-800">5. 안수집사<br><span class="text-[10px] font-normal text-indigo-600">(안수/중직자)</span></div>
+                <div class="p-3 bg-emerald-50 border border-emerald-300 rounded-2xl text-emerald-900">6. 담임목사<br><span class="text-[10px] font-normal text-emerald-700">(교회 최고관리자)</span></div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-2">
+                <div class="font-bold text-gray-900 flex items-center gap-2">
+                    <i class="fas fa-user-edit text-primary"></i> 회원 정보 수정 및 직분 지정:
+                </div>
+                <ol class="list-decimal list-inside space-y-1.5 pl-1 text-gray-600">
+                    <li><strong>[성도 회원 관리]</strong>에서 해당 성도님의 <strong>[수정]</strong> 버튼을 누릅니다.</li>
+                    <li><strong>성함(실명)</strong>과 <strong>활동 닉네임</strong>은 필수 항목으로 관리되며, <strong>카카오 이메일</strong>은 자동 연동되어 프리필됩니다.</li>
+                    <li>직분 드롭다운에서 6대 직분 중 하나를 선택 후 저장하시면 나눔터 및 교우 명부에 즉시 반영됩니다.</li>
+                    <li><em>(참고: 개발자 계정은 목회자님의 편의를 위해 회원 목록에서 자동으로 보이지 않도록 깔끔하게 필터링되어 있습니다.)</em></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 7: 카카오톡 알림 센터 & 첫 로그인 환영 메시지 -->
+    <div id="notifications" class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-5">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-yellow-100 text-yellow-700 flex items-center justify-center text-lg font-bold">
+                7
+            </div>
+            <div>
+                <span class="text-xs font-bold text-yellow-700 uppercase tracking-wider">KakaoTalk Notification Center</span>
+                <h2 class="text-lg sm:text-xl font-bold text-gray-900">카카오톡 실시간 알림 센터 & 첫 로그인 성도 자동 환영 메시지</h2>
+            </div>
+        </div>
+
+        <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+            성도 나눔터 새 글/댓글 및 새가족 접수 실시간 알림은 물론, <strong>카카오톡으로 처음 로그인한 성도님께 담임목사님의 따뜻한 환영 인사 메시지가 자동으로 발송</strong>됩니다.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
+            <div class="p-5 rounded-2xl bg-yellow-50/70 border border-yellow-200 space-y-2.5">
+                <div class="font-bold text-yellow-900 flex items-center gap-2">
+                    <i class="fas fa-envelope-open-text text-amber-600"></i> 자동 환영 메시지 기획 & 문구 편집
+                </div>
+                <p class="text-yellow-800 leading-relaxed">
+                    <code>/admin/notifications</code> 메뉴에서 자동 발송 ON/OFF 토글, 스마트 치환 태그(<code>{name}</code>, <code>{pastor_name}</code>, <code>{worship_sunday}</code>, <code>{address}</code>), 그리고 <strong>카카오톡 수신 화면 실시간 미리보기</strong>를 통해 환영 문구를 자유롭게 수정 및 저장하실 수 있습니다.
+                </p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-gray-50 border border-gray-200 space-y-2.5">
+                <div class="font-bold text-gray-900 flex items-center gap-2">
+                    <i class="fas fa-paper-plane text-emerald-600"></i> 원클릭 테스트 알림 발송
+                </div>
+                <p class="text-gray-600 leading-relaxed">
+                    <strong>[누리오에게 테스트 알림 요청하기 💌]</strong> 버튼을 누르시면 카카오톡 메시지 발송 API가 정상적으로 작동하는지 즉시 점검하실 수 있습니다.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 8: 사역자별 세분화 권한 관리 -->
+    <div id="admins" class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-5">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-lg font-bold">
+                8
+            </div>
+            <div>
+                <span class="text-xs font-bold text-indigo-700 uppercase tracking-wider">Admin Permissions</span>
+                <h2 class="text-lg sm:text-xl font-bold text-gray-900">관리자 / 사역자별 세분화 권한 관리 (담임목사 전용)</h2>
+            </div>
+        </div>
+
+        <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+            사역자님마다 담당하시는 사역 분야에 맞춰 필요한 메뉴에만 접근할 수 있도록 권한을 세분화하여 안전하게 분담할 수 있습니다.
+        </p>
+
+        <div class="p-4 rounded-2xl bg-indigo-50/70 border border-indigo-200 text-xs sm:text-sm text-indigo-900 leading-relaxed space-y-2">
+            <div class="font-bold flex items-center gap-2">
+                <i class="fas fa-shield-halved text-indigo-600"></i> 사역 분야별 개별 권한 옵션:
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 text-xs">
+                <div class="p-2.5 bg-white rounded-xl border border-indigo-100 font-semibold text-gray-800">📺 유튜브 영상 및 설교 관리</div>
+                <div class="p-2.5 bg-white rounded-xl border border-indigo-100 font-semibold text-gray-800">📢 알리는 소식 (공지사항) 관리</div>
+                <div class="p-2.5 bg-white rounded-xl border border-indigo-100 font-semibold text-gray-800">📸 사진첩 & 말씀 캘리 관리</div>
+                <div class="p-2.5 bg-white rounded-xl border border-indigo-100 font-semibold text-gray-800">💬 성도 나눔터 게시글 관리</div>
+                <div class="p-2.5 bg-white rounded-xl border border-indigo-100 font-semibold text-gray-800">💌 새가족 & 중보기도 접수</div>
+                <div class="p-2.5 bg-white rounded-xl border border-indigo-100 font-semibold text-gray-800">👥 성도 회원 직분 관리</div>
+            </div>
+            <p class="text-[11px] text-indigo-700 pt-1">
+                * 주일예배/온라인주보 기획, 4주 섬김이, 실시간 중계 배너, 사역자 권한 설정은 담임목사님(최고관리자) 전용으로 안전하게 보호됩니다.
+            </p>
+        </div>
+    </div>
+
+    <!-- Section 9: 새가족 등록 및 온라인 기도/상담 접수 -->
     <div id="inquiry" class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-5">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center text-lg font-bold">
-                5
+                9
             </div>
             <div>
                 <span class="text-xs font-bold text-purple-700 uppercase tracking-wider">New Family & Prayer Care</span>
@@ -285,10 +427,6 @@
         </p>
 
         <div class="space-y-2 text-xs sm:text-sm text-gray-700">
-            <div class="flex items-center gap-2 font-bold text-gray-900">
-                <i class="fas fa-check-circle text-primary"></i>
-                <span>처리 단계 가이드</span>
-            </div>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div class="p-4 rounded-2xl bg-red-50 border border-red-100">
                     <span class="text-xs font-bold text-red-700 block">1단계 [접수]</span>
@@ -306,63 +444,44 @@
         </div>
     </div>
 
-    <!-- Section 6: 성도 회원 등급 승인 -->
-    <div id="members" class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-5">
+    <!-- Section 10: 3대 스마트 내비게이션 & 말씀 캘리 -->
+    <div id="navigation" class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-5">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg font-bold">
-                6
+            <div class="w-10 h-10 rounded-2xl bg-teal-100 text-teal-700 flex items-center justify-center text-lg font-bold">
+                10
             </div>
             <div>
-                <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">Member Role Approval</span>
-                <h2 class="text-lg sm:text-xl font-bold text-gray-900">성도 회원 등급 승인 & 직분 관리</h2>
+                <span class="text-xs font-bold text-teal-700 uppercase tracking-wider">Navigation & Media</span>
+                <h2 class="text-lg sm:text-xl font-bold text-gray-900">3대 스마트 내비게이션 연동 길안내 & 말씀 캘리</h2>
             </div>
         </div>
 
-        <div class="space-y-3 text-xs sm:text-sm text-gray-700 leading-relaxed">
-            <p>
-                카카오 계정으로 처음 로그인한 회원은 스팸 방지를 위해 기본적으로 <strong>`일반교우`</strong> 등급으로 지정됩니다.
-            </p>
-            <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-2">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
+            <div class="p-5 rounded-2xl bg-gray-50 border border-gray-200 space-y-2">
                 <div class="font-bold text-gray-900 flex items-center gap-2">
-                    <i class="fas fa-user-edit text-primary"></i> 직분 변경 방법:
+                    <i class="fas fa-location-dot text-primary"></i> 3대 내비게이션 원클릭 길안내
                 </div>
-                <ol class="list-decimal list-inside space-y-1.5 pl-1 text-gray-600">
-                    <li>관리자 메뉴에서 <strong>[성도 회원 관리]</strong>를 클릭합니다.</li>
-                    <li>신규 가입 성도님의 행에서 <strong>[직분 변경]</strong> 드롭다운을 누릅니다.</li>
-                    <li><code>등록성도</code>, <code>권사</code>, <code>집사</code>, <code>장로</code>, <code>교역자</code> 중 적절한 직분을 선택하시면 즉시 반영됩니다.</li>
-                    <li><em>(참고: 개발자 계정은 목회자님의 편의를 위해 회원 목록에서 자동으로 보이지 않도록 깔끔하게 필터링되어 있습니다.)</em></li>
-                </ol>
+                <p class="text-gray-600 leading-relaxed">
+                    교회 찾아오시는 길(<code>/about/location</code>)에서 <strong>카카오내비, 티맵(TMAP), 네이버지도</strong> 앱이 스마트폰에서 원클릭으로 바로 실행되어 길안내를 시작합니다.
+                </p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-gray-50 border border-gray-200 space-y-2">
+                <div class="font-bold text-gray-900 flex items-center gap-2">
+                    <i class="fas fa-mobile-screen text-amber-600"></i> 스마트폰 말씀 캘리 배경화면
+                </div>
+                <p class="text-gray-600 leading-relaxed">
+                    사진첩/캘리(<code>/gallery</code>) 메뉴에 등록된 아름다운 말씀 캘리그라피 이미지를 성도님들이 스마트폰 배경화면으로 원터치 다운로드하실 수 있습니다.
+                </p>
             </div>
         </div>
     </div>
 
-    <!-- Section 7: 성도 나눔터 & 카톡 알림 -->
-    <div id="community" class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-5">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-2xl bg-yellow-100 text-yellow-700 flex items-center justify-center text-lg font-bold">
-                7
-            </div>
-            <div>
-                <span class="text-xs font-bold text-yellow-700 uppercase tracking-wider">KakaoTalk Notifications</span>
-                <h2 class="text-lg sm:text-xl font-bold text-gray-900">성도 나눔터 소통 & 실시간 카카오톡 알림톡</h2>
-            </div>
-        </div>
-
-        <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
-            성도 나눔터(<code>/community</code>)에 성도님들이 은혜 나눔 글을 올리거나 목사님께서 따뜻한 댓글을 남기시면, 글 작성자 성도님의 카카오톡으로 실시간 알림 메시지가 자동 발송됩니다.
-        </p>
-
-        <div class="p-4 rounded-2xl bg-yellow-50/70 border border-yellow-200 text-xs sm:text-sm text-yellow-900 leading-relaxed">
-            <strong>💡 카카오 설정 안내:</strong><br>
-            관리자 메뉴의 <strong>[카카오 설정]</strong>에서 카카오 디벨로퍼스 REST API 키를 등록해 두시면 나눔터와 문의 접수 시 카카오톡 알림 기능이 24시간 자동으로 작동합니다.
-        </div>
-    </div>
-
-    <!-- Section 8: 자주 묻는 질문 (FAQ) -->
+    <!-- Section 11: 자주 묻는 질문 (FAQ) -->
     <div id="faq" class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-6">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-2xl bg-gray-100 text-gray-700 flex items-center justify-center text-lg font-bold">
-                8
+                11
             </div>
             <div>
                 <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">FAQ & Troubleshooting</span>
@@ -392,19 +511,19 @@
 
             <div class="p-5 rounded-2xl bg-gray-50 border border-gray-200/80 space-y-2">
                 <h3 class="font-bold text-sm text-gray-900 flex items-center gap-2">
-                    <span class="text-primary font-black">Q.</span> 관리자 비밀번호를 변경하고 싶어요.
+                    <span class="text-primary font-black">Q.</span> 부교역자나 담당 성도님께 관리자 권한을 나눠주고 싶어요.
                 </h3>
                 <p class="text-xs sm:text-sm text-gray-600 leading-relaxed pl-5">
-                    <strong>A.</strong> 관리자 페이지 상단 우측의 <strong>[비밀번호 변경]</strong> 메뉴를 누르시면 새로운 비밀번호로 즉시 안전하게 변경하실 수 있습니다.
+                    <strong>A.</strong> <strong>[관리자/사역자 권한]</strong> 메뉴에서 새 관리자 아이디를 생성하고, 주보만 관리할 수 있는 권한이나 사진첩만 관리할 수 있는 권한을 선택하여 부여하실 수 있습니다.
                 </p>
             </div>
 
             <div class="p-5 rounded-2xl bg-gray-50 border border-gray-200/80 space-y-2">
                 <h3 class="font-bold text-sm text-gray-900 flex items-center gap-2">
-                    <span class="text-primary font-black">Q.</span> 부교역자나 담당 성도님께 관리자 권한을 나눠주고 싶어요.
+                    <span class="text-primary font-black">Q.</span> 카카오 API 연동 설정 메뉴는 어디에 있나요?
                 </h3>
                 <p class="text-xs sm:text-sm text-gray-600 leading-relaxed pl-5">
-                    <strong>A.</strong> <strong>[관리자/사역자 권한]</strong> 메뉴에서 새 관리자 아이디를 생성하고, 주보만 관리할 수 있는 권한이나 사진첩만 관리할 수 있는 권한을 선택하여 부여하실 수 있습니다.
+                    <strong>A.</strong> 카카오 REST API 키 및 인증 관련 메뉴는 안전한 운영을 위해 <strong>시스템 개발자 전용 메뉴로 격리</strong>되어 있습니다. 일반 목회 운영 중에는 신경 쓰지 않으셔도 안전하게 자동 동작합니다.
                 </p>
             </div>
 

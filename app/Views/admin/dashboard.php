@@ -25,10 +25,10 @@
 
         <!-- Header Actions (Live Stream Toggle & Web Link) -->
         <div class="flex flex-wrap items-center gap-3 shrink-0">
-            <!-- Pastor Guide Book Button -->
+            <!-- Website Guide Book Button -->
             <a href="/admin/guide" class="px-4 py-2.5 bg-amber-400/30 hover:bg-amber-400/50 text-white border border-amber-300/50 rounded-2xl text-xs font-bold shadow-sm transition-all flex items-center gap-2">
                 <i class="fas fa-book-open text-amber-300"></i>
-                <span>📖 목회자 사용 설명서</span>
+                <span>📖 홈페이지 사용 설명서</span>
             </a>
 
             <?php if ($isSuperAdmin): ?>
@@ -58,8 +58,8 @@
                 <i class="fas fa-lightbulb"></i>
             </div>
             <div>
-                <h3 class="font-bold text-sm text-gray-900">목회자 & 사역자 웹사이트 사용 설명서</h3>
-                <p class="text-xs text-gray-600 mt-0.5">주간 사역 루틴, 실시간 중계 띠배너, 스마트 주보, 유튜브 1초 동기화 방법을 언제든 확인하실 수 있습니다.</p>
+                <h3 class="font-bold text-sm text-gray-900">홈페이지 사용 설명서 (가이드북)</h3>
+                <p class="text-xs text-gray-600 mt-0.5">주간 사역 루틴, 스마트 주보, 4주 섬김이, 카톡 알림 및 환영 메시지, 유튜브 1초 동기화 방법을 확인하세요.</p>
             </div>
         </div>
         <a href="/admin/guide" class="px-4 py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-1.5 shrink-0">
