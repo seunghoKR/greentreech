@@ -34,11 +34,11 @@ class Member
         $existing = self::findByKakaoId($kakaoId);
         $isSuperAdmin = ($email === 'leeshkr@kakao.com' || str_contains((string)$email, 'leeshkr'));
         $role = $isSuperAdmin ? '사이트 개발자 (최고관리자)' : '등록성도';
-        $defaultName = $name ?: ($isSuperAdmin ? '이승호 개발자' : null);
+        $defaultName = !empty($name) ? $name : ($isSuperAdmin ? '이승호 개발자' : $nickname);
 
         if ($existing) {
             // 사용자가 마이페이지에서 수정한 실명, 닉네임, 연락처는 카카오 재로그인 시에도 절대 덮어씌워지지 않고 영구 보존
-            $finalName = !empty($existing['name']) ? $existing['name'] : ($name ?: ($isSuperAdmin ? '이승호 개발자' : null));
+            $finalName = !empty($existing['name']) ? $existing['name'] : (!empty($name) ? $name : ($isSuperAdmin ? '이승호 개발자' : $nickname));
             $finalNickname = !empty($existing['nickname']) ? $existing['nickname'] : $nickname;
             $finalPhone = !empty($existing['phone']) ? $existing['phone'] : $phone;
             $finalProfileImage = $profileImage ?: ($existing['profile_image'] ?? null);
@@ -54,7 +54,7 @@ class Member
                     `profile_image` = :profile_image, 
                     `email` = :email, 
                     `phone` = :phone,
-                    `role` = :role,
+                    `role` = :role, 
                     `last_login` = CURRENT_TIMESTAMP 
                     WHERE `id` = :id";
             Database::execute($sql, [
@@ -85,14 +85,14 @@ class Member
         return self::find($newId);
     }
 
-    public static function updateProfile(int $id, ?string $name, string $nickname, ?string $phone, int $notifyKakao): bool
+    public static function updateProfile(int $id, string $name, string $nickname, ?string $phone, int $notifyKakao): bool
     {
         $sql = "UPDATE `members` SET `name` = :name, `nickname` = :nickname, `phone` = :phone, `notify_kakao` = :notify WHERE `id` = :id";
         return Database::execute($sql, [
             'id' => $id,
             'name' => $name,
             'nickname' => $nickname,
-            'phone' => $phone,
+            'phone' => !empty($phone) ? $phone : null,
             'notify' => $notifyKakao,
         ]) >= 0;
     }

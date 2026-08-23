@@ -149,13 +149,19 @@ class AuthController
         $notifyKakao = isset($_POST['notify_kakao']) ? 1 : 0;
         $memberId = (int)Auth::memberId();
 
-        if (empty($nickname)) {
-            Session::setFlash('error', '닉네임을 입력해 주세요.');
+        if (empty($name)) {
+            Session::setFlash('error', '성함(실명)을 입력해 주세요.');
             header('Location: /auth/profile');
             exit;
         }
 
-        Member::updateProfile($memberId, $name, $nickname, $phone, $notifyKakao);
+        if (empty($nickname)) {
+            Session::setFlash('error', '활동 닉네임을 입력해 주세요.');
+            header('Location: /auth/profile');
+            exit;
+        }
+
+        Member::updateProfile($memberId, $name, $nickname, $phone ?: null, $notifyKakao);
         $updated = Member::find($memberId);
         Auth::loginMember($updated);
 

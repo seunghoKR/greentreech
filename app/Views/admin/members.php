@@ -61,7 +61,7 @@
                             </td>
                             <td class="py-3.5 px-4">
                                 <div class="font-bold text-gray-900 text-sm flex items-center gap-1.5">
-                                    <span><?= e($m['name'] ?: '미입력') ?></span>
+                                    <span><?= e(!empty($m['name']) ? $m['name'] : $m['nickname']) ?></span>
                                     <?php if ($m['role'] === '사이트 개발자 (최고관리자)'): ?>
                                         <span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-purple-600 text-white">개발자</span>
                                     <?php elseif ($m['role'] === '담임목사 (최고관리자)'): ?>
@@ -158,8 +158,8 @@
 
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1">성함 (실명)</label>
-                    <input type="text" name="name" id="modalMemberName" placeholder="예: 홍길동" class="w-full px-3.5 py-2.5 rounded-2xl border border-gray-200 text-xs focus:ring-2 focus:ring-primary">
+                    <label class="block text-xs font-bold text-gray-700 mb-1">성함 (실명) <span class="text-red-500">*</span></label>
+                    <input type="text" name="name" id="modalMemberName" required placeholder="예: 홍길동" class="w-full px-3.5 py-2.5 rounded-2xl border border-gray-200 text-xs focus:ring-2 focus:ring-primary">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-700 mb-1">활동 닉네임 <span class="text-red-500">*</span></label>
@@ -169,7 +169,7 @@
 
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1">연락처 (휴대폰)</label>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">연락처 (휴대폰) <span class="text-gray-400 font-normal text-[11px]">(선택)</span></label>
                     <input type="tel" name="phone" id="modalMemberPhone" placeholder="010-1234-5678" class="w-full px-3.5 py-2.5 rounded-2xl border border-gray-200 text-xs focus:ring-2 focus:ring-primary">
                 </div>
                 <div>
@@ -217,7 +217,7 @@
 <script>
     function openEditModal(member) {
         document.getElementById('modalMemberId').value = member.id || '';
-        document.getElementById('modalMemberName').value = member.name || '';
+        document.getElementById('modalMemberName').value = member.name || member.nickname || '';
         document.getElementById('modalMemberNickname').value = member.nickname || '';
         document.getElementById('modalMemberPhone').value = member.phone || '';
         document.getElementById('modalMemberEmail').value = member.email || '';

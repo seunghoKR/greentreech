@@ -387,14 +387,14 @@ class AdminController
         $role = trim((string)($_POST['role'] ?? '등록성도'));
         $notifyKakao = isset($_POST['notify_kakao']) ? 1 : 0;
 
-        if ($id <= 0 || empty($nickname)) {
-            Session::setFlash('error', '필수 회원 정보(닉네임)가 누락되었습니다.');
+        if ($id <= 0 || empty($name) || empty($nickname)) {
+            Session::setFlash('error', '필수 회원 정보(성함 및 닉네임)가 누락되었습니다.');
             header('Location: /admin/members');
             exit;
         }
 
-        Member::adminUpdateMember($id, $name, $nickname, $phone, $email, $role, $notifyKakao);
-        Session::setFlash('success', "성도 [{$nickname}] 님의 정보가 성공적으로 수정되었습니다.");
+        Member::adminUpdateMember($id, $name, $nickname, $phone ?: null, $email ?: null, $role, $notifyKakao);
+        Session::setFlash('success', "성도 [{$name} / {$nickname}] 님의 정보가 성공적으로 수정되었습니다.");
         header('Location: /admin/members');
         exit;
     }
