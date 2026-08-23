@@ -13,7 +13,7 @@
                 <span class="w-2 h-2 rounded-full bg-green-400 animate-ping"></span>
                 <span><?= e($adminRoleName) ?> 모드</span>
                 <span class="text-white/40">·</span>
-                <span class="text-emerald-200">버전 v2.4.0 (최종 업데이트: 2026.08.22)</span>
+                <span class="text-emerald-200">버전 v2.5.0 (최종 업데이트: 2026.08.23)</span>
             </div>
             <h1 class="font-serif-kr text-2xl sm:text-3xl font-bold leading-snug">
                 <?= e($adminDisplayName) ?>님, 평안한 하루 되세요! 🌿

@@ -40,9 +40,9 @@
                     <span>푸른나무교회 관리자</span>
                 </a>
                 <div class="hidden sm:flex items-center gap-1.5 bg-white/15 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm">
-                    <span class="text-white">v2.4.0</span>
+                    <span class="text-white">v2.5.0</span>
                     <span class="text-white/40">|</span>
-                    <span class="text-emerald-200">최종 업데이트: 2026.08.22</span>
+                    <span class="text-emerald-200">최종 업데이트: 2026.08.23</span>
                 </div>
             </div>
 
