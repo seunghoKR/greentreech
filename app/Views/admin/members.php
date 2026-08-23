@@ -104,6 +104,10 @@
                             </td>
                             <td class="py-3.5 px-4 text-center">
                                 <div class="flex items-center justify-center gap-1.5">
+                                    <a href="/admin/members/send-welcome/<?= e($m['id']) ?>" onclick="return confirm('🌿 [<?= e($m['name'] ?: $m['nickname']) ?>] 성도님에게 환영 메시지를 발송하시겠습니까?\n(직분 변경 없이 환영 메시지만 안전하게 발송됩니다)');" class="px-2.5 py-1.5 bg-yellow-50 hover:bg-yellow-100 text-yellow-900 border border-yellow-300 rounded-xl font-bold transition-all flex items-center gap-1" title="환영 메시지 발송">
+                                        <i class="fas fa-paper-plane text-amber-700 text-xs"></i>
+                                        <span>환영톡</span>
+                                    </a>
                                     <button type="button" onclick='openEditModal(<?= json_encode($m, JSON_UNESCAPED_UNICODE) ?>)' class="px-2.5 py-1.5 bg-gray-100 hover:bg-primary hover:text-white text-gray-700 rounded-xl font-bold transition-all flex items-center gap-1" title="회원 정보 수정">
                                         <i class="fas fa-user-pen"></i>
                                         <span>수정</span>
@@ -199,13 +203,19 @@
                 </label>
             </div>
 
-            <div class="pt-4 border-t border-gray-100 flex items-center justify-end gap-2">
-                <button type="button" onclick="closeEditModal()" class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-2xl text-xs font-bold transition-all">
-                    취소
-                </button>
-                <button type="submit" class="px-5 py-2.5 bg-[#154212] hover:bg-[#0d2b0b] text-white rounded-2xl text-xs font-bold shadow-md transition-all">
-                    💾 변경 정보 저장하기
-                </button>
+            <div class="pt-4 border-t border-gray-100 flex items-center justify-between gap-2">
+                <a href="#" id="modalSendWelcomeBtn" onclick="return confirm('🌿 이 성도님에게 환영 메시지를 발송하시겠습니까?\n(직분 변경 없이 환영 메시지만 안전하게 발송됩니다)');" class="px-3.5 py-2.5 bg-yellow-50 hover:bg-yellow-100 text-yellow-900 border border-yellow-300 rounded-2xl text-xs font-bold transition-all flex items-center gap-1.5" title="환영 메시지 발송">
+                    <i class="fas fa-paper-plane text-amber-700"></i>
+                    <span>💌 환영 메시지 발송</span>
+                </a>
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="closeEditModal()" class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-2xl text-xs font-bold transition-all">
+                        취소
+                    </button>
+                    <button type="submit" class="px-5 py-2.5 bg-[#154212] hover:bg-[#0d2b0b] text-white rounded-2xl text-xs font-bold shadow-md transition-all">
+                        💾 변경 정보 저장하기
+                    </button>
+                </div>
             </div>
         </form>
     </div>
@@ -225,6 +235,8 @@
         if (roleVal === '장로') roleVal = '안수집사';
         document.getElementById('modalMemberRole').value = roleVal;
         document.getElementById('modalMemberNotify').checked = (parseInt(member.notify_kakao, 10) === 1);
+
+        document.getElementById('modalSendWelcomeBtn').href = '/admin/members/send-welcome/' + member.id;
 
         document.getElementById('memberEditModal').classList.remove('hidden');
     }

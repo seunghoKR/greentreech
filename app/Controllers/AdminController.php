@@ -399,6 +399,33 @@ class AdminController
         exit;
     }
 
+    public function memberSendWelcome(string $id): void
+    {
+        Auth::requireAuth();
+        $this->requirePermission('members');
+
+        $memberId = (int)$id;
+        $member = Member::find($memberId);
+        if (!$member) {
+            Session::setFlash('error', '존재하지 않는 성도 회원입니다.');
+            header('Location: /admin/members');
+            exit;
+        }
+
+        // 직분은 수정하지 않고 그대로 유지하면서 환영 메시지만 발송
+        $result = \App\Services\KakaoNotificationService::sendWelcomeMessage($member);
+        $displayName = !empty($member['name']) ? $member['name'] : ($member['nickname'] ?? '성도');
+
+        if (!empty($result['success'])) {
+            Session::setFlash('success', "🌿 [{$displayName}] 님에게 환영 메시지를 성공적으로 발송/기록했습니다! (카카오 알림 센터에서 확인 가능)");
+        } else {
+            Session::setFlash('error', "환영 메시지 발송 중 오류가 발생했습니다.");
+        }
+
+        header('Location: /admin/members');
+        exit;
+    }
+
     public function memberDelete(string $id): void
     {
         Auth::requireAuth();

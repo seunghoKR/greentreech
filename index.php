@@ -164,6 +164,8 @@ $router->post('/admin/settings', [AdminController::class, 'saveSettings']);
 $router->get('/admin/members', [AdminController::class, 'members']);
 $router->post('/admin/members/save', [AdminController::class, 'memberSave']);
 $router->post('/admin/members/{id}/role', [AdminController::class, 'updateMemberRole']);
+$router->get('/admin/members/send-welcome/{id}', [AdminController::class, 'memberSendWelcome']);
+$router->post('/admin/members/send-welcome/{id}', [AdminController::class, 'memberSendWelcome']);
 $router->get('/admin/members/delete/{id}', [AdminController::class, 'memberDelete']);
 
 // Admin - Community
