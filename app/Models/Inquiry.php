@@ -9,7 +9,7 @@ class Inquiry
 {
     public static function getTypes(): array
     {
-        return ['새가족등록', '기도요청', '상담문의'];
+        return ['첫방문 안내', '마음 나눔 / 질문', '기도 부탁'];
     }
 
     public static function getStatuses(): array

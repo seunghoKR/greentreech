@@ -196,13 +196,13 @@
                     </div>
                 </div>
 
-                <!-- 3. 오시는 길 3대 내비 & 새가족 등록 -->
+                <!-- 3. 오시는 길 3대 내비 & 첫 방문 초대 -->
                 <div class="bg-white p-6 rounded-2xl border border-outline-variant/30 shadow-soft hover:shadow-card transition-all flex flex-col justify-between">
                     <div>
                         <div class="w-11 h-11 rounded-xl bg-surface-container flex items-center justify-center text-primary mb-3.5 text-xl">
                             <i class="fas fa-location-dot"></i>
                         </div>
-                        <h4 class="font-bold text-sm sm:text-base text-gray-900 mb-1.5">오시는 길 & 새가족 등록</h4>
+                        <h4 class="font-bold text-sm sm:text-base text-gray-900 mb-1.5">오시는 길 & 첫 방문 환영</h4>
                         <p class="text-xs sm:text-sm text-gray-600 mb-4"><?= e($address ?? '전북 익산시 선화로73길 25 (3층)') ?></p>
                     </div>
 
@@ -211,7 +211,7 @@
                             <i class="fas fa-map-location-dot text-primary"></i> 3대 내비게이션 길안내
                         </a>
                         <a href="/inquiry" class="w-full py-2.5 px-3 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 shadow-sm transition-colors">
-                            <i class="fas fa-heart text-amber-300"></i> 1초 새가족 · 기도 신청
+                            <i class="fas fa-door-open text-emerald-300"></i> 첫 방문 안내 & 마음 나누기
                         </a>
                     </div>
                 </div>

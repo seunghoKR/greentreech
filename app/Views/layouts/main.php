@@ -354,10 +354,10 @@
                 </button>
                 <?php endif; ?>
 
-                <!-- Desktop Only: Prayer / New Family -->
+                <!-- Desktop Only: Invitation / First Visit / Free Message -->
                 <a href="/inquiry" class="hidden md:inline-flex items-center gap-1.5 bg-primary hover:bg-primary-container text-white px-3.5 py-2 rounded-full text-xs font-bold shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]">
-                    <i class="fas fa-heart text-secondary-container text-xs"></i>
-                    <span>새가족 · 기도</span>
+                    <i class="fas fa-door-open text-emerald-300 text-xs"></i>
+                    <span>초대 & 첫걸음</span>
                 </a>
 
                 <!-- Desktop Only: Kakao Member Login / Profile Button -->
@@ -605,8 +605,8 @@
             <span class="text-xs font-semibold">나눔터</span>
         </a>
         <a href="/inquiry" class="flex flex-col items-center gap-1 <?= ($currentNav ?? '') === 'inquiry' ? 'text-primary font-bold' : 'text-gray-500' ?>">
-            <i class="fas fa-heart text-xl text-primary"></i>
-            <span class="text-xs font-semibold">새가족/기도</span>
+            <i class="fas fa-door-open text-xl text-primary"></i>
+            <span class="text-xs font-semibold">초대&첫걸음</span>
         </a>
     </nav>
 

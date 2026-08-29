@@ -1,25 +1,30 @@
 <div class="py-12 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
     
     <!-- Page Header -->
-    <div class="text-center mb-10">
-        <span class="text-xs font-bold text-secondary uppercase tracking-wider">Welcome & Prayer Request</span>
-        <h1 class="font-serif-kr text-3xl font-bold text-gray-950 mt-1">새가족 등록 및 기도/상담 요청</h1>
-        <p class="text-sm text-gray-600 mt-2">마음속 고민과 기도의 제목을 남겨주시면 담임목사님께서 함께 기도하고 섬기겠습니다</p>
+    <div class="text-center mb-10 space-y-2">
+        <div class="inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>Welcome to Green Tree Church</span>
+        </div>
+        <h1 class="font-serif-kr text-2xl sm:text-3xl font-bold text-gray-950">푸른나무교회로 초대합니다 🌿</h1>
+        <p class="text-xs sm:text-sm text-gray-600 max-w-xl mx-auto leading-relaxed">
+            처음 방문을 계획 중이시거나 궁금한 점, 나누고 싶은 마음의 이야기가 있으시다면 편안하게 남겨주세요. 언제나 따뜻하고 반갑게 맞이하겠습니다.
+        </p>
     </div>
 
     <!-- Form Container Card -->
-    <div class="bg-white rounded-3xl border border-outline-variant/40 shadow-card p-6 sm:p-10">
+    <div class="bg-white rounded-3xl border border-outline-variant/40 shadow-card p-6 sm:p-10 space-y-6">
         
         <form action="/inquiry" method="POST" class="space-y-6">
             <input type="hidden" name="csrf_token" value="<?= e($csrfToken) ?>">
 
             <!-- 1. Inquiry Type Selection (Radio / Segment) -->
             <div>
-                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">신청 구분</label>
+                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">어떤 이야기인가요?</label>
                 <div class="grid grid-cols-3 gap-2 sm:gap-3">
                     <?php foreach ($types as $type): ?>
                     <label class="cursor-pointer">
-                        <input type="radio" name="type" value="<?= e($type) ?>" <?= ($selectedType ?? '새가족등록') === $type ? 'checked' : '' ?> class="peer sr-only">
+                        <input type="radio" name="type" value="<?= e($type) ?>" <?= ($selectedType ?? '첫방문 안내') === $type ? 'checked' : '' ?> class="peer sr-only">
                         <div class="p-3 text-center rounded-2xl border border-outline-variant/50 text-xs font-bold text-gray-700 peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary peer-checked:shadow-sm transition-all">
                             <?= e($type) ?>
                         </div>
@@ -28,86 +33,84 @@
                 </div>
             </div>
 
-            <!-- 2. Name -->
-            <div>
-                <label for="name" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                    성함 <span class="text-red-500">*</span>
-                </label>
-                <input 
-                    type="text" 
-                    id="name" 
-                    name="name" 
-                    required 
-                    placeholder="성함을 입력해 주세요" 
-                    class="w-full px-4 py-3 rounded-2xl border border-outline-variant/50 bg-gray-50/50 text-xs sm:text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all">
-            </div>
-
-            <!-- 3. Phone Number -->
-            <div>
-                <label for="phone" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                    연락처 (휴대전화) <span class="text-red-500">*</span>
-                </label>
-                <input 
-                    type="tel" 
-                    id="phone" 
-                    name="phone" 
-                    required 
-                    placeholder="예: 010-1234-5678" 
-                    class="w-full px-4 py-3 rounded-2xl border border-outline-variant/50 bg-gray-50/50 text-xs sm:text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all">
-            </div>
-
-            <!-- 4. Content / Prayer Request -->
+            <!-- 2. Content / Message (Required, Main Focus) -->
             <div>
                 <label for="content" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                    남기실 말씀 / 기도 제목 <span class="text-red-500">*</span>
+                    남기실 말씀 / 궁금한 점 <span class="text-emerald-600 font-normal text-[11px]">(필수)</span>
                 </label>
                 <textarea 
                     id="content" 
                     name="content" 
-                    rows="5" 
+                    rows="6" 
                     required 
-                    placeholder="나누고 싶으신 이야기나 기도가 필요한 부분을 편안하게 적어주세요. (비공개로 안전하게 보호됩니다)" 
-                    class="w-full px-4 py-3 rounded-2xl border border-outline-variant/50 bg-gray-50/50 text-xs sm:text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all resize-none"></textarea>
+                    placeholder="예배 시간, 주차, 처음 방문 관련 질문이나 나누고 싶은 기도 제목, 사연을 자유롭게 남겨주세요. (목회자에게만 비공개로 전달됩니다)" 
+                    class="w-full px-4 py-3.5 rounded-2xl border border-outline-variant/50 bg-gray-50/40 text-xs sm:text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all resize-none leading-relaxed"></textarea>
             </div>
 
-            <!-- 5. Captcha Verification (Spam Protection) -->
-            <div class="bg-surface-container-low p-5 rounded-2xl border border-outline-variant/40 space-y-3">
-                <label class="block text-xs font-bold text-primary uppercase tracking-wider">
-                    <i class="fas fa-shield-alt mr-1"></i> 자동 등록 방지 (스팸방지 계산) <span class="text-red-500">*</span>
+            <!-- 3. Optional Contact Info (Optional Box) -->
+            <div class="bg-surface-container-low/60 p-5 rounded-2xl border border-outline-variant/30 space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-gray-800 flex items-center gap-1.5">
+                        <i class="fas fa-user-pen text-primary"></i> 작성자 정보 (선택 사항)
+                    </span>
+                    <span class="text-[11px] text-emerald-700 font-semibold bg-emerald-50 px-2.5 py-0.5 rounded-full">
+                        익명 전송 가능
+                    </span>
+                </div>
+                <p class="text-[11px] text-gray-500 leading-relaxed">
+                    목회자의 따뜻한 답변이나 안내 연락을 원하시는 경우에만 성함과 연락처를 남겨주세요. 비워두셔도 글이 정상 전송됩니다.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label for="name" class="block text-[11px] font-bold text-gray-600 mb-1">성함 (또는 닉네임)</label>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            name="name" 
+                            placeholder="예: 익명, 김은혜 (선택)" 
+                            class="w-full px-3.5 py-2.5 rounded-xl border border-outline-variant/50 bg-white text-xs focus:ring-2 focus:ring-primary transition-all">
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-[11px] font-bold text-gray-600 mb-1">연락처</label>
+                        <input 
+                            type="tel" 
+                            id="phone" 
+                            name="phone" 
+                            placeholder="예: 010-0000-0000 (선택)" 
+                            class="w-full px-3.5 py-2.5 rounded-xl border border-outline-variant/50 bg-white text-xs focus:ring-2 focus:ring-primary transition-all">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Captcha Verification (Spam Protection) -->
+            <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200 space-y-2">
+                <label class="block text-[11px] font-bold text-gray-700 uppercase tracking-wider">
+                    <i class="fas fa-shield-alt text-primary mr-1"></i> 스팸 방지 연산 확인 <span class="text-red-500">*</span>
                 </label>
                 <div class="flex flex-wrap items-center gap-3">
                     <div id="captchaContainer" class="flex-shrink-0">
                         <?= $captchaSvg ?>
                     </div>
-                    <button type="button" onclick="refreshCaptcha()" class="p-2.5 rounded-xl border border-outline-variant/50 bg-white hover:bg-gray-50 text-gray-600 text-xs font-semibold flex items-center gap-1 transition-colors" title="새 문제 받기">
-                        <i class="fas fa-sync-alt" id="refreshIcon"></i> 새로고침
+                    <button type="button" onclick="refreshCaptcha()" class="p-2 rounded-xl border border-gray-300 bg-white hover:bg-gray-50 text-gray-600 text-xs font-semibold flex items-center gap-1 transition-colors" title="새 문제 받기">
+                        <i class="fas fa-sync-alt" id="refreshIcon"></i>
                     </button>
-                    <div class="flex-grow min-w-[140px]">
+                    <div class="flex-grow min-w-[120px]">
                         <input 
                             type="number" 
                             name="captcha" 
                             required 
-                            placeholder="계산 결과 숫자 입력" 
-                            class="w-full px-4 py-2.5 rounded-xl border border-outline-variant/50 bg-white text-xs sm:text-sm focus:ring-2 focus:ring-primary">
+                            placeholder="정답 숫자 입력" 
+                            class="w-full px-3.5 py-2 rounded-xl border border-gray-300 bg-white text-xs focus:ring-2 focus:ring-primary">
                     </div>
                 </div>
-                <p class="text-[11px] text-gray-500">위 이미지의 간단한 연산 결과를 숫자로 입력해 주세요.</p>
-            </div>
-
-            <!-- 6. Privacy & Options -->
-            <div class="flex items-center justify-between text-xs text-gray-600 pt-2">
-                <label class="flex items-center gap-2 cursor-pointer select-none">
-                    <input type="checkbox" name="is_private" value="1" checked class="rounded text-primary focus:ring-primary">
-                    <span>목회자에게만 비공개로 전달</span>
-                </label>
-                <span class="text-[11px] text-gray-400">개인정보는 상담 목적으로만 활용됩니다</span>
             </div>
 
             <!-- Submit Button -->
-            <div class="pt-4">
-                <button type="submit" class="w-full py-4 bg-primary hover:bg-primary-container text-white rounded-full font-bold text-sm shadow-md hover:shadow-lg transition-all hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2">
+            <div class="pt-2">
+                <button type="submit" class="w-full py-4 bg-primary hover:bg-primary-container text-white rounded-2xl font-bold text-sm shadow-md hover:shadow-lg transition-all hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2">
                     <i class="fas fa-paper-plane text-secondary-container"></i>
-                    <span>소중한 마음 전송하기</span>
+                    <span>소중한 마음 보내기</span>
                 </button>
             </div>
 

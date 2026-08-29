@@ -47,14 +47,19 @@ class InquiryController
 
         $name = trim((string)($_POST['name'] ?? ''));
         $phone = trim((string)($_POST['phone'] ?? ''));
-        $type = trim((string)($_POST['type'] ?? '새가족등록'));
+        $type = trim((string)($_POST['type'] ?? '첫방문 안내'));
         $content = trim((string)($_POST['content'] ?? ''));
         $isPrivate = isset($_POST['is_private']) ? 1 : 0;
 
-        if (empty($name) || empty($phone) || empty($content)) {
-            Session::setFlash('error', '이름, 연락처, 내용을 모두 입력해 주세요.');
+        if (empty($content)) {
+            Session::setFlash('error', '남기실 글 내용을 입력해 주세요.');
             header('Location: /inquiry');
             exit;
+        }
+
+        // 이름이 비어있으면 '익명의 방문자'로 설정
+        if (empty($name)) {
+            $name = '익명의 방문자';
         }
 
         try {
