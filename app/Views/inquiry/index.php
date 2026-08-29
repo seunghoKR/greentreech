@@ -115,6 +115,35 @@
 
     </div>
 
+    <!-- Inquiry Success Blessing Modal -->
+    <?php if (!empty($flashSuccess)): ?>
+    <div id="inquirySuccessModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl border border-gray-100 text-center space-y-5 animate-scaleUp">
+            <div class="w-16 h-16 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto text-2xl shadow-inner ring-4 ring-emerald-100">
+                <i class="fas fa-heart"></i>
+            </div>
+            <div class="space-y-2">
+                <span class="text-xs font-bold text-primary uppercase tracking-wider">Prayer & Welcome</span>
+                <h3 class="font-serif-kr text-2xl font-bold text-gray-900">소중한 마음이 잘 접수되었습니다</h3>
+                <p class="text-xs sm:text-sm text-gray-600 leading-relaxed pt-1">
+                    <?= e($flashSuccess) ?><br>
+                    담임목사님께서 성도님의 기도제목을 품고 함께 간절히 기도하겠습니다. 🌿
+                </p>
+            </div>
+
+            <div class="bg-green-50/70 p-4 rounded-2xl border border-green-100 text-xs text-green-800 font-serif-kr italic">
+                "아무 것도 염려하지 말고 다만 모든 일에 기도와 간구로, 너희 구할 것을 감사함으로 하나님께 아뢰라" (빌립보서 4:6)
+            </div>
+
+            <div class="pt-2">
+                <button type="button" onclick="document.getElementById('inquirySuccessModal').remove()" class="w-full py-3.5 bg-primary hover:bg-primary-dark text-white rounded-2xl text-xs sm:text-sm font-bold shadow-md transition-all">
+                    확인 (홈으로 이동)
+                </button>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+
 </div>
 
 <script>

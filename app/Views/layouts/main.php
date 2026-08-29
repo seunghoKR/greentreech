@@ -23,6 +23,43 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/public/assets/images/logo.png">
+
+    <!-- JSON-LD Structured Data for Search Engines (Google, Naver) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Church",
+      "name": "푸른나무교회",
+      "alternateName": "익산 푸른나무교회",
+      "description": "지친 일상 속, 작은 휴식과 진정한 사랑이 있는 믿음의 공동체",
+      "url": "https://greentreech.iwinv.net",
+      "logo": "https://greentreech.iwinv.net/public/assets/images/logo.png",
+      "image": "https://greentreech.iwinv.net/public/assets/images/logo.png",
+      "telephone": "010-9559-8623",
+      "email": "leeshkr@kakao.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "선화로73길 25 (3층)",
+        "addressLocality": "익산시",
+        "addressRegion": "전북특별자치도",
+        "addressCountry": "KR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "35.9575",
+        "longitude": "126.9858"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Sunday"],
+          "opens": "11:00",
+          "closes": "12:30",
+          "description": "주일 낮 예배"
+        }
+      ]
+    }
+    </script>
     
     <!-- Google Fonts & Pretendard -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -309,6 +346,12 @@
             <!-- Right Action: Desktop Prayer / Member Login & Mobile Hamburger Button -->
             <div class="flex items-center gap-2 sm:gap-3 shrink-0">
                 
+                <!-- Desktop Only: Giving Modal Trigger -->
+                <button type="button" onclick="openGivingModal()" class="hidden md:inline-flex items-center gap-1.5 bg-surface-container hover:bg-surface-container-high text-gray-700 px-3.5 py-2 rounded-full text-xs font-bold transition-all border border-outline-variant/40 hover:scale-[1.02] active:scale-[0.98]">
+                    <i class="fas fa-hand-holding-heart text-emerald-600 text-xs"></i>
+                    <span>온라인 헌금</span>
+                </button>
+
                 <!-- Desktop Only: Prayer / New Family -->
                 <a href="/inquiry" class="hidden md:inline-flex items-center gap-1.5 bg-primary hover:bg-primary-container text-white px-3.5 py-2 rounded-full text-xs font-bold shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]">
                     <i class="fas fa-heart text-secondary-container text-xs"></i>
@@ -565,6 +608,61 @@
         </a>
     </nav>
 
+    <!-- Giving / Account Quick Modal -->
+    <div id="givingModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-gray-100 text-center space-y-4 animate-scaleUp">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center mx-auto text-xl">
+                <i class="fas fa-hand-holding-heart"></i>
+            </div>
+            <div>
+                <h3 class="font-serif-kr text-lg font-bold text-gray-900">온라인 헌금 / 계좌 안내</h3>
+                <p class="text-xs text-gray-500 mt-1">정성스러운 마음과 기도로 함께 동역해 주셔서 감사합니다.</p>
+            </div>
+            
+            <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200 text-left space-y-2">
+                <div class="flex items-center justify-between text-xs text-gray-500 font-medium">
+                    <span>농협은행</span>
+                    <span>예금주: 푸른나무교회</span>
+                </div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="font-mono font-bold text-sm sm:text-base text-gray-900 select-all">351-9559-8623-03</span>
+                    <button type="button" onclick="copyToClipboard('351-9559-8623-03', '계좌번호가 복사되었습니다!')" class="px-2.5 py-1 bg-primary text-white rounded-lg text-xs font-bold shrink-0 hover:bg-primary-dark transition-colors">
+                        복사
+                    </button>
+                </div>
+            </div>
+
+            <button type="button" onclick="closeGivingModal()" class="w-full py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-bold transition-colors">
+                닫기
+            </button>
+        </div>
+    </div>
+
+    <!-- PWA Smart App Install Banner (Mobile) -->
+    <div id="pwaInstallBanner" class="fixed bottom-20 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 sm:w-96 z-40 bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-primary/20 hidden items-center justify-between gap-3 animate-fadeIn">
+        <div class="flex items-center gap-3 min-w-0">
+            <img src="/public/assets/images/logo.png" alt="Logo" class="w-10 h-10 rounded-xl p-1 bg-green-50 border border-green-100 shrink-0">
+            <div class="min-w-0 text-left">
+                <h4 class="font-bold text-xs text-gray-900 truncate">푸른나무교회 홈화면 앱</h4>
+                <p class="text-[11px] text-gray-500 truncate">홈 화면에 추가하고 편하게 예배드리세요</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-1.5 shrink-0">
+            <button id="pwaInstallBtn" class="px-3 py-1.5 bg-primary text-white rounded-xl text-xs font-bold shadow-xs hover:bg-primary-dark transition-colors">
+                설치
+            </button>
+            <button onclick="dismissPwaBanner()" class="text-gray-400 hover:text-gray-600 p-1 text-sm">
+                &times;
+            </button>
+        </div>
+    </div>
+
+    <!-- Global Toast Container -->
+    <div id="globalToast" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 max-w-sm bg-gray-900/90 text-white px-5 py-3 rounded-full text-xs font-bold backdrop-blur-md shadow-2xl hidden items-center gap-2 transition-all">
+        <i class="fas fa-check-circle text-emerald-400"></i>
+        <span id="globalToastMsg">복사되었습니다!</span>
+    </div>
+
     <script>
         function toggleMobileDrawer() {
             const drawer = document.getElementById('mobileDrawer');
@@ -572,6 +670,88 @@
                 drawer.classList.remove('hidden');
             } else {
                 drawer.classList.add('hidden');
+            }
+        }
+
+        // Giving Modal Helpers
+        function openGivingModal() {
+            const modal = document.getElementById('givingModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+        function closeGivingModal() {
+            const modal = document.getElementById('givingModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        // Global Copy Helper with Toast
+        function copyToClipboard(text, msg = '복사되었습니다!') {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => showToast(msg));
+            } else {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast(msg);
+                } catch (err) {
+                    alert('복사에 실패했습니다.');
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('globalToast');
+            const toastMsg = document.getElementById('globalToastMsg');
+            if (toast && toastMsg) {
+                toastMsg.innerText = msg;
+                toast.classList.remove('hidden');
+                toast.classList.add('flex');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                    toast.classList.remove('flex');
+                }, 2500);
+            }
+        }
+
+        // PWA Install Prompt Handler
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const banner = document.getElementById('pwaInstallBanner');
+            if (banner && !sessionStorage.getItem('pwa_dismissed')) {
+                banner.classList.remove('hidden');
+                banner.classList.add('flex');
+            }
+        });
+
+        document.getElementById('pwaInstallBtn')?.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                deferredPrompt = null;
+                dismissPwaBanner();
+            }
+        });
+
+        function dismissPwaBanner() {
+            const banner = document.getElementById('pwaInstallBanner');
+            if (banner) {
+                banner.classList.add('hidden');
+                banner.classList.remove('flex');
+                sessionStorage.setItem('pwa_dismissed', '1');
             }
         }
 

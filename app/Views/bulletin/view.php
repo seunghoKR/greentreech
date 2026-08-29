@@ -23,8 +23,9 @@
                     <i class="fas fa-print"></i>
                     <span>인쇄 및 PDF 저장</span>
                 </a>
-                <button onclick="navigator.share ? navigator.share({title: '푸른나무교회 주보', url: window.location.href}) : alert('주보 링크가 복사되었습니다!');" class="p-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-bold transition-all" title="주보 공유하기">
-                    <i class="fas fa-share-nodes"></i>
+                <button type="button" onclick="copyToClipboard(window.location.href, '온라인 주보 링크가 복사되었습니다! 💌')" class="inline-flex items-center gap-1.5 px-3.5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-bold transition-all shadow-2xs" title="주보 링크 복사 및 공유">
+                    <i class="fas fa-share-nodes text-primary"></i>
+                    <span class="hidden sm:inline">주보 공유</span>
                 </button>
             </div>
         </div>

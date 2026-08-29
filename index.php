@@ -99,6 +99,8 @@ $router->get('/pastor', [AboutController::class, 'pastor']);
 $router->get('/schedule', [AboutController::class, 'schedule']);
 $router->get('/location', [AboutController::class, 'location']);
 $router->get('/privacy', [HomeController::class, 'privacy']);
+$router->get('/sitemap.xml', [HomeController::class, 'sitemap']);
+$router->get('/robots.txt', [HomeController::class, 'robots']);
 
 // Sermons
 $router->get('/sermons', [SermonController::class, 'index']);
@@ -159,6 +161,7 @@ $router->get('/admin/hero', [AdminController::class, 'hero']);
 $router->post('/admin/hero', [AdminController::class, 'saveHero']);
 $router->get('/admin/settings', [AdminController::class, 'settings']);
 $router->post('/admin/settings', [AdminController::class, 'saveSettings']);
+$router->get('/admin/backup-db', [AdminController::class, 'backupDatabase']);
 
 // Admin - Members
 $router->get('/admin/members', [AdminController::class, 'members']);

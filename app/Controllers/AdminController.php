@@ -142,6 +142,64 @@ class AdminController
         ], 'layouts/admin');
     }
 
+    /**
+     * 데이터베이스 원클릭 SQL 백업 다운로드
+     */
+    public function backupDatabase(): void
+    {
+        Auth::requireAuth();
+        $this->requirePastor();
+
+        $pdo = Database::getInstance();
+        $tables = [];
+        
+        // Check driver
+        $driver = $pdo->getAttribute(\PDO::ATTR_DRIVER_NAME);
+        if ($driver === 'sqlite') {
+            $stmt = $pdo->query("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'");
+            while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+                $tables[] = $row['name'];
+            }
+        } else {
+            $stmt = $pdo->query("SHOW TABLES");
+            while ($row = $stmt->fetch(\PDO::FETCH_NUM)) {
+                $tables[] = $row[0];
+            }
+        }
+
+        $dump = "-- ========================================================\n";
+        $dump .= "-- 푸른나무교회 데이터베이스 전체 백업\n";
+        $dump .= "-- 일시: " . date('Y-m-d H:i:s') . "\n";
+        $dump .= "-- 드라이버: " . $driver . "\n";
+        $dump .= "-- ========================================================\n\n";
+
+        foreach ($tables as $table) {
+            $dump .= "-- Table: {$table}\n";
+            
+            // Table data
+            $rows = $pdo->query("SELECT * FROM `{$table}`")->fetchAll(\PDO::FETCH_ASSOC);
+            if (!empty($rows)) {
+                foreach ($rows as $row) {
+                    $keys = array_map(fn($k) => "`{$k}`", array_keys($row));
+                    $vals = array_map(function($v) use ($pdo) {
+                        if ($v === null) return 'NULL';
+                        return $pdo->quote((string)$v);
+                    }, array_values($row));
+
+                    $dump .= "INSERT INTO `{$table}` (" . implode(', ', $keys) . ") VALUES (" . implode(', ', $vals) . ");\n";
+                }
+            }
+            $dump .= "\n";
+        }
+
+        $filename = 'greentreech_backup_' . date('Ymd_His') . '.sql';
+        header('Content-Type: application/sql; charset=utf-8');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Content-Length: ' . strlen($dump));
+        echo $dump;
+        exit;
+    }
+
     // ==========================================
     // 3. Site Settings
     // ==========================================

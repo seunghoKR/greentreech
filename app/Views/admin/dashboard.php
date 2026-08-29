@@ -13,7 +13,7 @@
                 <span class="w-2 h-2 rounded-full bg-green-400 animate-ping"></span>
                 <span><?= e($adminRoleName) ?> 모드</span>
                 <span class="text-white/40">·</span>
-                <span class="text-emerald-200">버전 v2.5.0 (최종 업데이트: 2026.08.23)</span>
+                <span class="text-emerald-200">버전 v2.6.0 (최종 업데이트: 2026.08.29)</span>
             </div>
             <h1 class="font-serif-kr text-2xl sm:text-3xl font-bold leading-snug">
                 <?= e($adminDisplayName) ?>님, 평안한 하루 되세요! 🌿
@@ -28,10 +28,16 @@
             <!-- Website Guide Book Button -->
             <a href="/admin/guide" class="px-4 py-2.5 bg-amber-400/30 hover:bg-amber-400/50 text-white border border-amber-300/50 rounded-2xl text-xs font-bold shadow-sm transition-all flex items-center gap-2">
                 <i class="fas fa-book-open text-amber-300"></i>
-                <span>📖 홈페이지 사용 설명서</span>
+                <span>📖 사용 설명서</span>
             </a>
 
             <?php if ($isSuperAdmin): ?>
+            <!-- One-Click DB Backup Download Button -->
+            <a href="/admin/backup-db" class="px-4 py-2.5 bg-blue-500/30 hover:bg-blue-500/50 text-white border border-blue-400/40 rounded-2xl text-xs font-bold shadow-sm transition-all flex items-center gap-2" title="데이터베이스 전체 SQL 백업 다운로드">
+                <i class="fas fa-database text-blue-300"></i>
+                <span>💾 DB 백업</span>
+            </a>
+
             <!-- Bulletin Planning Quick Button (담임목사 전용) -->
             <a href="/admin/bulletin-settings" class="px-4 py-2.5 bg-green-500/30 hover:bg-green-500/50 text-white border border-green-400/40 rounded-2xl text-xs font-bold shadow-sm transition-all flex items-center gap-2">
                 <i class="fas fa-clipboard-list text-green-300"></i>

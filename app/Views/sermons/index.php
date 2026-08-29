@@ -19,13 +19,41 @@
         </a>
     </div>
 
+    <!-- Topic / Scripture Tag Filter Bar -->
+    <?php
+        $topics = [
+            '' => '전체 말씀',
+            '믿음' => '🌿 믿음과 순종',
+            '사랑' => '💖 사랑과 섬김',
+            '회복' => '🕊️ 위로와 회복',
+            '기도' => '🙏 기도와 영성',
+            '감사' => '✨ 감사와 축복',
+            '복음' => '📖 십자가 복음',
+        ];
+        $currentKeyword = $keyword ?? '';
+    ?>
+    <div class="flex items-center gap-2 overflow-x-auto pb-3 mb-6 scrollbar-none">
+        <?php foreach ($topics as $key => $label): ?>
+        <?php $isActive = ($currentKeyword === $key) || ($key === '' && empty($currentKeyword)); ?>
+        <a href="/sermons<?= $key ? '?keyword=' . urlencode($key) : '' ?>" class="px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all <?= $isActive ? 'bg-primary text-white shadow-xs' : 'bg-white text-gray-600 hover:bg-surface-container hover:text-primary border border-outline-variant/40' ?>">
+            <?= $label ?>
+        </a>
+        <?php endforeach; ?>
+    </div>
+
     <!-- Search Bar & Count Header -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div class="flex items-center gap-2">
-            <span class="font-bold text-sm text-gray-900">등록된 주일 설교</span>
-            <span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-black">
+            <span class="font-bold text-sm text-gray-900">주일 설교 목록</span>
+            <span class="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-black">
                 <?= e($pagination['total']) ?>편
             </span>
+            <?php if (!empty($keyword)): ?>
+            <span class="text-xs text-gray-500 font-medium">
+                ('<strong><?= e($keyword) ?></strong>' 검색 결과)
+                <a href="/sermons" class="text-red-500 hover:underline ml-1 font-bold"><i class="fas fa-times-circle"></i> 초기화</a>
+            </span>
+            <?php endif; ?>
         </div>
 
         <form action="/sermons" method="GET" class="relative flex items-center min-w-[240px]">

@@ -53,25 +53,63 @@
         </div>
         <?php endif; ?>
 
-        <!-- Content Body -->
-        <div class="p-6 sm:p-10 prose max-w-none text-gray-800 text-sm sm:text-base leading-relaxed whitespace-pre-line font-serif-kr">
+        <!-- Content Body with Font Size Control Bar -->
+        <div class="px-6 sm:px-10 pt-6 pb-2 border-b border-gray-100 flex items-center justify-between bg-surface-container-lowest">
+            <span class="text-xs text-gray-500 font-bold flex items-center gap-1.5">
+                <i class="fas fa-align-left text-primary"></i>
+                <span>설교 요약 및 본문 말씀</span>
+            </span>
+            <!-- Font Size Controller -->
+            <div class="flex items-center gap-1 bg-surface-container p-1 rounded-xl text-xs font-bold text-gray-600">
+                <span class="text-[10px] text-gray-400 px-1">글자 크기:</span>
+                <button type="button" onclick="changeFontSize('sm')" id="fontBtnSm" class="px-2 py-0.5 rounded-lg hover:bg-white transition-all text-xs">작게</button>
+                <button type="button" onclick="changeFontSize('base')" id="fontBtnBase" class="px-2 py-0.5 rounded-lg bg-white shadow-2xs text-primary transition-all text-xs font-black">보통</button>
+                <button type="button" onclick="changeFontSize('lg')" id="fontBtnLg" class="px-2 py-0.5 rounded-lg hover:bg-white transition-all text-xs">크게</button>
+            </div>
+        </div>
+
+        <div id="sermonContentBody" class="p-6 sm:p-10 prose max-w-none text-gray-800 text-base leading-relaxed whitespace-pre-line font-serif-kr transition-all duration-200">
             <?= nl2br(e($sermon['content'] ?? '')) ?>
         </div>
 
         <!-- Share / Action Bar -->
         <div class="p-6 bg-surface-container-low/50 border-t border-gray-100 flex flex-wrap items-center justify-between gap-4">
             <div class="text-xs text-gray-500">
-                푸른나무교회 주일 설교와 함께 은혜로운 한 주 되시길 기도합니다.
+                푸른나무교회 주일 설교와 함께 은혜로운 한 주 되시길 기도합니다. 🌿
             </div>
             <div class="flex items-center gap-2">
-                <button onclick="navigator.clipboard.writeText(window.location.href); alert('설교 링크가 복사되었습니다.');" class="px-4 py-2 bg-white border border-gray-300 hover:bg-gray-50 rounded-full text-xs font-semibold text-gray-700 transition-all">
-                    <i class="fas fa-share-alt mr-1 text-primary"></i> 링크 공유
+                <button onclick="copyToClipboard(window.location.href, '설교 링크가 복사되었습니다! 💌')" class="px-4 py-2 bg-white border border-gray-300 hover:bg-gray-50 rounded-full text-xs font-semibold text-gray-700 transition-all flex items-center gap-1.5 shadow-2xs">
+                    <i class="fas fa-link text-primary"></i> 링크 복사
                 </button>
                 <a href="/sermons" class="px-4 py-2 bg-primary hover:bg-primary-container text-white rounded-full text-xs font-bold transition-all shadow-sm">
                     목록으로
                 </a>
             </div>
         </div>
+
+        <script>
+            function changeFontSize(size) {
+                const body = document.getElementById('sermonContentBody');
+                const btnSm = document.getElementById('fontBtnSm');
+                const btnBase = document.getElementById('fontBtnBase');
+                const btnLg = document.getElementById('fontBtnLg');
+                
+                [btnSm, btnBase, btnLg].forEach(b => {
+                    b.className = 'px-2 py-0.5 rounded-lg hover:bg-white transition-all text-xs';
+                });
+
+                if (size === 'sm') {
+                    body.className = 'p-6 sm:p-10 prose max-w-none text-gray-800 text-sm leading-relaxed whitespace-pre-line font-serif-kr transition-all duration-200';
+                    btnSm.className = 'px-2 py-0.5 rounded-lg bg-white shadow-2xs text-primary transition-all text-xs font-black';
+                } else if (size === 'lg') {
+                    body.className = 'p-6 sm:p-10 prose max-w-none text-gray-900 text-lg sm:text-xl leading-loose whitespace-pre-line font-serif-kr transition-all duration-200 font-medium';
+                    btnLg.className = 'px-2 py-0.5 rounded-lg bg-white shadow-2xs text-primary transition-all text-xs font-black';
+                } else {
+                    body.className = 'p-6 sm:p-10 prose max-w-none text-gray-800 text-base leading-relaxed whitespace-pre-line font-serif-kr transition-all duration-200';
+                    btnBase.className = 'px-2 py-0.5 rounded-lg bg-white shadow-2xs text-primary transition-all text-xs font-black';
+                }
+            }
+        </script>
 
     </article>
 
