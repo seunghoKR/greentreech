@@ -346,11 +346,13 @@
             <!-- Right Action: Desktop Prayer / Member Login & Mobile Hamburger Button -->
             <div class="flex items-center gap-2 sm:gap-3 shrink-0">
                 
-                <!-- Desktop Only: Giving Modal Trigger -->
+                <!-- Desktop Only: Giving Modal Trigger (Logged-in Members Only) -->
+                <?php if (\App\Core\Auth::isMember() || \App\Core\Auth::check()): ?>
                 <button type="button" onclick="openGivingModal()" class="hidden md:inline-flex items-center gap-1.5 bg-surface-container hover:bg-surface-container-high text-gray-700 px-3.5 py-2 rounded-full text-xs font-bold transition-all border border-outline-variant/40 hover:scale-[1.02] active:scale-[0.98]">
                     <i class="fas fa-hand-holding-heart text-emerald-600 text-xs"></i>
                     <span>온라인 헌금</span>
                 </button>
+                <?php endif; ?>
 
                 <!-- Desktop Only: Prayer / New Family -->
                 <a href="/inquiry" class="hidden md:inline-flex items-center gap-1.5 bg-primary hover:bg-primary-container text-white px-3.5 py-2 rounded-full text-xs font-bold shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]">
@@ -638,8 +640,8 @@
         </div>
     </div>
 
-    <!-- PWA Smart App Install Banner (Mobile) -->
-    <div id="pwaInstallBanner" class="fixed bottom-20 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 sm:w-96 z-40 bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-primary/20 hidden items-center justify-between gap-3 animate-fadeIn">
+    <!-- PWA Smart App Install Banner (Mobile Only) -->
+    <div id="pwaInstallBanner" class="md:hidden fixed bottom-20 left-4 right-4 z-40 bg-white/95 backdrop-blur-md rounded-2xl p-3.5 shadow-xl border border-primary/20 hidden items-center justify-between gap-3 animate-fadeIn">
         <div class="flex items-center gap-3 min-w-0">
             <img src="/public/assets/images/logo.png" alt="Logo" class="w-10 h-10 rounded-xl p-1 bg-green-50 border border-green-100 shrink-0">
             <div class="min-w-0 text-left">

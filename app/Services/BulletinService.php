@@ -39,35 +39,63 @@ class BulletinService
             'content' => '수고하고 무거운 짐 진 자들아 다 내게로 오라 내가 너희를 쉬게 하리라.',
         ]);
 
-        // 3. 최신 공지사항 / 소식 가져오기
-        $notices = Notice::getLatest(6);
+        // 3. 최신 공지사항 1건의 내용 가져오기 (가장 최근 게시물 기준)
+        $latestNotices = Notice::getLatest(1);
+        $latestNotice = !empty($latestNotices) ? $latestNotices[0] : null;
         $churchNews = [];
-        foreach ($notices as $n) {
-            $refinedContent = AITextService::refineToPastoralTone($n['content']);
-            $churchNews[] = [
-                'id' => $n['id'],
-                'category' => $n['category'] ?? '교회소식',
-                'title' => $n['title'],
-                'content' => $refinedContent,
-            ];
+
+        if ($latestNotice) {
+            $rawContent = trim((string)$latestNotice['content']);
+            // 줄바꿈 또는 번호(1., 2., [1], ① 등) 패턴으로 소식 세부 단락 파싱
+            $lines = preg_split('/\r\n|\r|\n/', $rawContent);
+            $currentSectionTitle = $latestNotice['title'];
+            $currentSectionBody = [];
+
+            foreach ($lines as $line) {
+                $trimmed = trim($line);
+                if (empty($trimmed)) continue;
+
+                // 번호나 특수기호로 시작하는 헤더 감지 (예: 1. 예배 안내, [모임], ① 새가족 등)
+                if (preg_match('/^(?:[0-9]+[\.\)]|\[.+\]|[①-⑩]|▪|•|\*)\s*(.+)/u', $trimmed, $matches)) {
+                    if (!empty($currentSectionBody)) {
+                        $churchNews[] = [
+                            'category' => '알리는소식',
+                            'title' => $currentSectionTitle,
+                            'content' => implode("\n", $currentSectionBody),
+                        ];
+                        $currentSectionBody = [];
+                    }
+                    $currentSectionTitle = $trimmed;
+                } else {
+                    $currentSectionBody[] = $trimmed;
+                }
+            }
+
+            if (!empty($currentSectionTitle) || !empty($currentSectionBody)) {
+                $churchNews[] = [
+                    'category' => '알리는소식',
+                    'title' => $currentSectionTitle,
+                    'content' => implode("\n", $currentSectionBody),
+                ];
+            }
         }
 
         if (empty($churchNews)) {
             $churchNews = [
                 [
-                    'category' => '예배안내',
-                    'title' => '주일 예배 및 온라인 실시간 중계',
-                    'content' => '매주 주일 오전 11시에 본당 및 공식 유튜브 채널에서 은혜로운 예배가 드려집니다.',
+                    'category' => '알리는소식',
+                    'title' => '1. 주일 예배 및 모임 안내',
+                    'content' => "매주 주일 오전 11시에 본당에서 은혜로운 예배가 드려집니다.\n예배 후 따뜻한 애찬 교제가 준비되어 있습니다.",
                 ],
                 [
-                    'category' => '모임소식',
-                    'title' => '청년 BIBLE TIME / 제자훈련',
-                    'content' => '매주 토요일 오후 2시, 청년 성경 연구 및 깊이 있는 교제 모임에 청년 여러분을 축복하며 초대합니다.',
+                    'category' => '알리는소식',
+                    'title' => '2. 푸른나무교회 새가족 환영',
+                    'content' => "오늘 처음 교회를 방문해 주신 성도님들을 주님의 이름으로 진심으로 환영하고 축복합니다.",
                 ],
                 [
-                    'category' => '새가족',
-                    'title' => '푸른나무교회에 오신 새가족 환영',
-                    'content' => '오늘 처음 저희 교회를 방문해 주신 성도님들을 주님의 사랑으로 진심으로 환영합니다.',
+                    'category' => '알리는소식',
+                    'title' => '3. 교우 동정과 중보기도',
+                    'content' => "환우 성도님들의 빠른 회복과 가정의 평안을 위해 함께 마음 모아 기도해 주시기 바랍니다.",
                 ]
             ];
         }
