@@ -98,12 +98,12 @@
         <div class="max-w-4xl mx-auto mb-12">
             
             <!-- Tab Switcher Header -->
-            <div class="flex items-center justify-center gap-2 p-1.5 bg-surface-container rounded-full max-w-md mx-auto mb-8 shadow-inner">
-                <button type="button" onclick="switchTrack('members')" id="tabBtnMembers" class="flex-1 py-2.5 px-5 rounded-full text-sm font-bold transition-all shadow-sm bg-[#154212] text-white flex items-center justify-center gap-1.5">
+            <div class="flex items-center justify-center gap-2 p-1.5 bg-surface-container rounded-full max-w-xl mx-auto mb-8 shadow-inner">
+                <button type="button" onclick="switchTrack('members')" id="tabBtnMembers" class="flex-1 py-2.5 px-4 sm:px-5 rounded-full text-xs sm:text-sm font-bold transition-all shadow-sm bg-[#154212] text-white flex items-center justify-center gap-1.5">
                     <span>🌿 기존 성도 공간</span>
                 </button>
-                <button type="button" onclick="switchTrack('newcomers')" id="tabBtnNewcomers" class="flex-1 py-2.5 px-5 rounded-full text-sm font-bold transition-all text-gray-600 hover:text-primary flex items-center justify-center gap-1.5">
-                    <span>✨ 처음 오신 분 (새가족)</span>
+                <button type="button" onclick="switchTrack('newcomers')" id="tabBtnNewcomers" class="flex-1 py-2.5 px-4 sm:px-5 rounded-full text-xs sm:text-sm font-bold transition-all text-gray-600 hover:text-primary flex items-center justify-center gap-1.5">
+                    <span>✨ 처음 오셔서 교회가 궁금하신 분 ^^</span>
                 </button>
             </div>
 
