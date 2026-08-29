@@ -31,12 +31,13 @@ if ($isLoggedInAdmin) {
         $currentRoleBadgeClass = 'bg-blue-600 text-white font-bold';
     }
 } elseif ($isLoggedInMember) {
-    $mRole = $curMember['role'] ?? '일반교우';
-    if ($mRole === '일반교우') {
-        $currentRoleLabel = '⏳ 2. 인증전로그인 (일반교우)';
+    $mRole = $curMember['role'] ?? '인증전로그인';
+    $mDuty = $curMember['duty'] ?? '성도';
+    if ($mRole === '인증전로그인' || $mRole === '일반교우' || $mRole === '준회원') {
+        $currentRoleLabel = '⏳ 2. 인증전로그인 (귀한 손님)';
         $currentRoleBadgeClass = 'bg-amber-500 text-white font-bold';
     } else {
-        $currentRoleLabel = '🌿 3. 푸른나무가족 (' . $mRole . ')';
+        $currentRoleLabel = '🌿 3. 푸른나무가족 (' . $mDuty . ')';
         $currentRoleBadgeClass = 'bg-green-600 text-white font-bold';
     }
 }
@@ -97,12 +98,12 @@ $currentUri = $_SERVER['REQUEST_URI'] ?? '/';
                 <span class="text-[10px] text-gray-500">일반 방문자</span>
             </a>
 
-            <!-- 2. 인증전로그인 (일반교우) -->
+            <!-- 2. 인증전로그인 (귀한 손님) -->
             <a href="/dev/switch-role?role=unverified&redirect=<?= urlencode($currentUri) ?>" 
                class="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-gray-900 hover:bg-amber-950/40 border border-gray-800 hover:border-amber-700/50 transition-all group">
                 <div class="flex items-center gap-2">
                     <span class="text-amber-400">⏳</span>
-                    <span class="font-bold text-amber-200">2. 인증전로그인 (일반교우)</span>
+                    <span class="font-bold text-amber-200">2. 인증전로그인 (귀한 손님)</span>
                 </div>
                 <span class="text-[10px] text-amber-400/80">승인 대기</span>
             </a>

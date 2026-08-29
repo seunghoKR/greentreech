@@ -85,6 +85,28 @@ class Member
         return self::find($newId);
     }
 
+    public static function getRoles(): array
+    {
+        return ['인증전로그인', '푸른나무가족', '부관리자', '담임목사 (최고관리자)', '사이트 개발자 (최고관리자)'];
+    }
+
+    public static function getDuties(): array
+    {
+        return ['성도', '집사', '권사', '안수집사', '장로', '전도사', '부목사', '담임목사'];
+    }
+
+    public static function getPermissionsMap(): array
+    {
+        return [
+            'worship' => '찬양 (찬양팀/반주/음향)',
+            'media' => '미디어 (설교/쇼츠 영상)',
+            'gallery' => '갤러리 (사진첩/캘리)',
+            'notice' => '소식 (공지/주보)',
+            'community' => '나눔 (성도나눔터)',
+            'inquiry' => '새가족 (초대/첫걸음)',
+        ];
+    }
+
     public static function updateProfile(int $id, string $name, string $nickname, ?string $phone, int $notifyKakao): bool
     {
         $sql = "UPDATE `members` SET `name` = :name, `nickname` = :nickname, `phone` = :phone, `notify_kakao` = :notify WHERE `id` = :id";
@@ -97,14 +119,25 @@ class Member
         ]) >= 0;
     }
 
-    public static function adminUpdateMember(int $id, ?string $name, string $nickname, ?string $phone, ?string $email, string $role, int $notifyKakao): bool
-    {
+    public static function adminUpdateMember(
+        int $id, 
+        ?string $name, 
+        string $nickname, 
+        ?string $phone, 
+        ?string $email, 
+        string $role, 
+        string $duty = '성도', 
+        ?string $permissions = null, 
+        int $notifyKakao = 1
+    ): bool {
         $sql = "UPDATE `members` SET 
                 `name` = :name, 
                 `nickname` = :nickname, 
                 `phone` = :phone, 
                 `email` = :email, 
                 `role` = :role, 
+                `duty` = :duty,
+                `permissions` = :permissions,
                 `notify_kakao` = :notify 
                 WHERE `id` = :id";
         return Database::execute($sql, [
@@ -114,6 +147,8 @@ class Member
             'phone' => $phone,
             'email' => $email,
             'role' => $role,
+            'duty' => $duty,
+            'permissions' => $permissions,
             'notify' => $notifyKakao,
         ]) >= 0;
     }
@@ -123,10 +158,22 @@ class Member
         return Database::execute("DELETE FROM `members` WHERE `id` = :id", ['id' => $id]) > 0;
     }
 
-    public static function updateRole(int $id, string $role): bool
+    public static function updateRole(int $id, string $role, ?string $duty = null, ?string $permissions = null): bool
     {
-        $sql = "UPDATE `members` SET `role` = :role WHERE `id` = :id";
-        return Database::execute($sql, ['id' => $id, 'role' => $role]) >= 0;
+        $sql = "UPDATE `members` SET `role` = :role";
+        $params = ['id' => $id, 'role' => $role];
+
+        if ($duty !== null) {
+            $sql .= ", `duty` = :duty";
+            $params['duty'] = $duty;
+        }
+        if ($permissions !== null) {
+            $sql .= ", `permissions` = :permissions";
+            $params['permissions'] = $permissions;
+        }
+
+        $sql .= " WHERE `id` = :id";
+        return Database::execute($sql, $params) >= 0;
     }
 
     public static function getTotalMemberCount(): int
