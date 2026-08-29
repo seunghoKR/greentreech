@@ -402,7 +402,6 @@ class AdminController
             'adminNav' => 'members',
             'pagination' => $pagination,
             'keyword' => $keyword,
-            'roles' => Member::getRoles(),
             'duties' => Member::getDuties(),
             'permissionsMap' => Member::getPermissionsMap(),
         ], 'layouts/admin');
@@ -420,14 +419,13 @@ class AdminController
             exit;
         }
 
-        $role = trim((string)($_POST['role'] ?? '푸른나무가족'));
         $duty = trim((string)($_POST['duty'] ?? '성도'));
         $perms = $_POST['permissions'] ?? [];
         $permsJson = !empty($perms) ? json_encode(array_values((array)$perms), JSON_UNESCAPED_UNICODE) : null;
 
-        Member::updateRole((int)$id, $role, $duty, $permsJson);
+        Member::updateRole((int)$id, $duty, $duty, $permsJson);
 
-        Session::setFlash('success', '회원 등급 및 직분이 성공적으로 변경되었습니다.');
+        Session::setFlash('success', '회원 직분이 성공적으로 변경되었습니다.');
         header('Location: /admin/members');
         exit;
     }
@@ -449,7 +447,6 @@ class AdminController
         $nickname = trim((string)($_POST['nickname'] ?? ''));
         $phone = trim((string)($_POST['phone'] ?? ''));
         $email = trim((string)($_POST['email'] ?? ''));
-        $role = trim((string)($_POST['role'] ?? '푸른나무가족'));
         $duty = trim((string)($_POST['duty'] ?? '성도'));
         $perms = $_POST['permissions'] ?? [];
         $permsJson = !empty($perms) ? json_encode(array_values((array)$perms), JSON_UNESCAPED_UNICODE) : null;
@@ -461,8 +458,8 @@ class AdminController
             exit;
         }
 
-        Member::adminUpdateMember($id, $name, $nickname, $phone ?: null, $email ?: null, $role, $duty, $permsJson, $notifyKakao);
-        Session::setFlash('success', "성도 [{$name} / {$nickname}] 님의 정보(등급: {$role}, 직분: {$duty})가 성공적으로 수정되었습니다.");
+        Member::adminUpdateMember($id, $name, $nickname, $phone ?: null, $email ?: null, $duty, $permsJson, $notifyKakao);
+        Session::setFlash('success', "성도 [{$name} / {$nickname}] 님의 정보(직분: {$duty})가 성공적으로 수정되었습니다.");
         header('Location: /admin/members');
         exit;
     }

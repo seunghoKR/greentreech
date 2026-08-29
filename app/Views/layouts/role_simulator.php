@@ -98,24 +98,24 @@ $currentUri = $_SERVER['REQUEST_URI'] ?? '/';
                 <span class="text-[10px] text-gray-500">일반 방문자</span>
             </a>
 
-            <!-- 2. 인증전로그인 (귀한 손님) -->
+            <!-- 2. 귀한 손님 -->
             <a href="/dev/switch-role?role=unverified&redirect=<?= urlencode($currentUri) ?>" 
                class="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-gray-900 hover:bg-amber-950/40 border border-gray-800 hover:border-amber-700/50 transition-all group">
                 <div class="flex items-center gap-2">
                     <span class="text-amber-400">⏳</span>
-                    <span class="font-bold text-amber-200">2. 인증전로그인 (귀한 손님)</span>
+                    <span class="font-bold text-amber-200">2. 귀한 손님</span>
                 </div>
-                <span class="text-[10px] text-amber-400/80">승인 대기</span>
+                <span class="text-[10px] text-amber-400/80">인증 대기</span>
             </a>
 
-            <!-- 3. 푸른나무가족 (등록성도) -->
+            <!-- 3. 성도 / 교우 -->
             <a href="/dev/switch-role?role=member&redirect=<?= urlencode($currentUri) ?>" 
                class="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-gray-900 hover:bg-green-950/40 border border-gray-800 hover:border-green-700/50 transition-all group">
                 <div class="flex items-center gap-2">
                     <span class="text-green-400">🌿</span>
-                    <span class="font-bold text-green-200">3. 푸른나무가족 (등록성도)</span>
+                    <span class="font-bold text-green-200">3. 푸른나무 성도 (정회원)</span>
                 </div>
-                <span class="text-[10px] text-green-400/80">나눔터 정회원</span>
+                <span class="text-[10px] text-green-400/80">나눔터/헌금 가능</span>
             </a>
 
             <!-- 4. 관리자 (Sub-Admin Granular Presets) -->

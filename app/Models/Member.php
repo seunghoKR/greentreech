@@ -85,14 +85,9 @@ class Member
         return self::find($newId);
     }
 
-    public static function getRoles(): array
-    {
-        return ['인증전로그인', '푸른나무가족', '부관리자', '담임목사 (최고관리자)', '사이트 개발자 (최고관리자)'];
-    }
-
     public static function getDuties(): array
     {
-        return ['성도', '집사', '권사', '안수집사', '장로', '전도사', '부목사', '담임목사'];
+        return ['귀한 손님', '성도', '집사', '권사', '안수집사', '사모', '부교역자', '담임목사'];
     }
 
     public static function getPermissionsMap(): array
@@ -101,9 +96,9 @@ class Member
             'worship' => '찬양 (찬양팀/반주/음향)',
             'media' => '미디어 (설교/쇼츠 영상)',
             'gallery' => '갤러리 (사진첩/캘리)',
-            'notice' => '소식 (공지/주보)',
-            'community' => '나눔 (성도나눔터)',
-            'inquiry' => '새가족 (초대/첫걸음)',
+            'notice' => '소식/주보 (공지/주보)',
+            'community' => '나눔/성도 (성도나눔터)',
+            'inquiry' => '새가족/초대 (초대/첫걸음)',
         ];
     }
 
@@ -125,11 +120,16 @@ class Member
         string $nickname, 
         ?string $phone, 
         ?string $email, 
-        string $role, 
         string $duty = '성도', 
         ?string $permissions = null, 
         int $notifyKakao = 1
     ): bool {
+        // 직분(duty)을 role 컬럼에도 동기화하여 완벽한 호환성 유지
+        $role = $duty;
+        if ($duty === '담임목사') {
+            $role = '담임목사 (최고관리자)';
+        }
+
         $sql = "UPDATE `members` SET 
                 `name` = :name, 
                 `nickname` = :nickname, 

@@ -7,8 +7,8 @@
                 <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#154212] text-white">교우 명부</span>
                 <span class="text-xs text-gray-500 font-semibold">총 등록 회원 <?= number_format($pagination['total'] ?? 0) ?>명</span>
             </div>
-            <h1 class="text-xl font-bold text-gray-900 mt-1">성도 회원 & 직분/역할 권한 관리</h1>
-            <p class="text-xs text-gray-500 mt-0.5">회원 등급(귀한 손님/푸른나무가족)과 교회 직분, 콘텐츠별 담당 사역 권한(찬양/미디어/갤러리 등)을 체계적으로 관리합니다.</p>
+            <h1 class="text-xl font-bold text-gray-900 mt-1">성도 회원 관리 (직분 & 역할)</h1>
+            <p class="text-xs text-gray-500 mt-0.5">성도님의 직분(귀한 손님~담임목사)과 담당 사역 역할(찬양/미디어/갤러리/소식/나눔/새가족)을 관리합니다.</p>
         </div>
 
         <!-- Search Form -->
@@ -43,9 +43,8 @@
                         <th class="py-3.5 px-3">프로필</th>
                         <th class="py-3.5 px-4">성함 (실명) / 닉네임</th>
                         <th class="py-3.5 px-4">연락처</th>
-                        <th class="py-3.5 px-3 text-center">회원 등급</th>
-                        <th class="py-3.5 px-3 text-center">직분</th>
-                        <th class="py-3.5 px-4">담당 역할 / 사역 권한</th>
+                        <th class="py-3.5 px-4 text-center">직분</th>
+                        <th class="py-3.5 px-5">담당 역할 / 사역 권한</th>
                         <th class="py-3.5 px-2 text-center">알림</th>
                         <th class="py-3.5 px-3 text-center">최근로그인</th>
                         <th class="py-3.5 px-4 text-center">관리</th>
@@ -54,6 +53,12 @@
                 <tbody class="divide-y divide-gray-100 text-gray-700">
                     <?php if (!empty($pagination['items'])): ?>
                         <?php foreach ($pagination['items'] as $idx => $m): ?>
+                        <?php 
+                            $dutyVal = $m['duty'] ?: ($m['role'] ?? '성도');
+                            if ($dutyVal === '인증전로그인' || $dutyVal === '일반교우' || $dutyVal === '준회원') $dutyVal = '귀한 손님';
+                            if ($dutyVal === '등록성도' || $dutyVal === '푸른나무가족') $dutyVal = '성도';
+                            if (str_contains($dutyVal, '최고관리자')) $dutyVal = '담임목사';
+                        ?>
                         <tr class="hover:bg-gray-50/80 transition-colors">
                             <td class="py-3.5 px-3 text-center text-gray-400 font-semibold">
                                 <?= e($m['id']) ?>
@@ -66,8 +71,6 @@
                                     <span><?= e(!empty($m['name']) ? $m['name'] : $m['nickname']) ?></span>
                                     <?php if ($m['role'] === '사이트 개발자 (최고관리자)'): ?>
                                         <span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-purple-600 text-white">개발자</span>
-                                    <?php elseif ($m['role'] === '담임목사' || $m['role'] === '담임목사 (최고관리자)'): ?>
-                                        <span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-green-700 text-white">담임목사</span>
                                     <?php endif; ?>
                                 </div>
                                 <div class="text-[11px] text-gray-500 font-semibold mt-0.5">
@@ -83,37 +86,23 @@
                                     <?= e($m['email'] ?: '카카오 간편연동') ?>
                                 </div>
                             </td>
-                            <td class="py-3.5 px-3 text-center">
+                            <td class="py-3.5 px-4 text-center">
                                 <?php 
-                                    $isPreAuth = ($m['role'] === '인증전로그인' || $m['role'] === '일반교우' || $m['role'] === '준회원');
-                                    $isFamily = ($m['role'] === '푸른나무가족' || $m['role'] === '등록성도');
-                                    $isSubAdmin = ($m['role'] === '부관리자');
-                                    $isMaster = str_contains($m['role'] ?? '', '최고관리자') || ($m['role'] ?? '') === '담임목사';
+                                    $dutyBadge = 'bg-green-50 text-green-800 border-green-200';
+                                    if ($dutyVal === '귀한 손님') $dutyBadge = 'bg-amber-50 text-amber-800 border-amber-200';
+                                    elseif ($dutyVal === '성도') $dutyBadge = 'bg-emerald-50 text-emerald-800 border-emerald-200';
+                                    elseif ($dutyVal === '집사') $dutyBadge = 'bg-blue-50 text-blue-800 border-blue-200';
+                                    elseif ($dutyVal === '권사') $dutyBadge = 'bg-teal-50 text-teal-800 border-teal-200';
+                                    elseif ($dutyVal === '안수집사') $dutyBadge = 'bg-indigo-50 text-indigo-800 border-indigo-200';
+                                    elseif ($dutyVal === '사모') $dutyBadge = 'bg-pink-50 text-pink-800 border-pink-200 font-bold';
+                                    elseif ($dutyVal === '부교역자') $dutyBadge = 'bg-purple-50 text-purple-800 border-purple-200 font-bold';
+                                    elseif ($dutyVal === '담임목사') $dutyBadge = 'bg-primary text-white border-primary font-black';
                                 ?>
-                                <?php if ($isPreAuth): ?>
-                                    <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
-                                        귀한 손님
-                                    </span>
-                                <?php elseif ($isFamily): ?>
-                                    <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-50 text-green-800 border border-green-200">
-                                        푸른나무가족
-                                    </span>
-                                <?php elseif ($isSubAdmin): ?>
-                                    <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-blue-50 text-blue-800 border border-blue-200">
-                                        부관리자
-                                    </span>
-                                <?php else: ?>
-                                    <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-purple-50 text-purple-800 border border-purple-200">
-                                        <?= e($m['role']) ?>
-                                    </span>
-                                <?php endif; ?>
-                            </td>
-                            <td class="py-3.5 px-3 text-center">
-                                <span class="px-2 py-0.5 rounded-lg text-xs font-bold bg-gray-100 text-gray-800 border border-gray-200">
-                                    <?= e($m['duty'] ?: '성도') ?>
+                                <span class="px-2.5 py-1 rounded-full text-xs font-bold border <?= $dutyBadge ?>">
+                                    <?= e($dutyVal) ?>
                                 </span>
                             </td>
-                            <td class="py-3.5 px-4">
+                            <td class="py-3.5 px-5">
                                 <?php 
                                     $perms = !empty($m['permissions']) ? (is_array($m['permissions']) ? $m['permissions'] : json_decode($m['permissions'], true)) : [];
                                     $perms = is_array($perms) ? $perms : [];
@@ -127,9 +116,9 @@
                                                 if ($p === 'worship') { $badgeStyle = 'bg-purple-50 text-purple-700 border-purple-200'; $label = '찬양'; }
                                                 elseif ($p === 'media') { $badgeStyle = 'bg-red-50 text-red-700 border-red-200'; $label = '미디어'; }
                                                 elseif ($p === 'gallery') { $badgeStyle = 'bg-pink-50 text-pink-700 border-pink-200'; $label = '갤러리'; }
-                                                elseif ($p === 'notice') { $badgeStyle = 'bg-blue-50 text-blue-700 border-blue-200'; $label = '소식'; }
-                                                elseif ($p === 'community') { $badgeStyle = 'bg-emerald-50 text-emerald-700 border-emerald-200'; $label = '나눔'; }
-                                                elseif ($p === 'inquiry') { $badgeStyle = 'bg-amber-50 text-amber-700 border-amber-200'; $label = '새가족'; }
+                                                elseif ($p === 'notice') { $badgeStyle = 'bg-blue-50 text-blue-700 border-blue-200'; $label = '소식/주보'; }
+                                                elseif ($p === 'community') { $badgeStyle = 'bg-emerald-50 text-emerald-700 border-emerald-200'; $label = '나눔/성도'; }
+                                                elseif ($p === 'inquiry') { $badgeStyle = 'bg-amber-50 text-amber-700 border-amber-200'; $label = '새가족/초대'; }
                                             ?>
                                             <span class="px-1.5 py-0.5 rounded text-[10px] font-bold border <?= $badgeStyle ?>">
                                                 <?= e($label) ?>
@@ -165,7 +154,7 @@
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="10" class="p-12 text-center text-xs text-gray-400">
+                            <td colspan="9" class="p-12 text-center text-xs text-gray-400">
                                 <i class="fas fa-user-slash text-2xl mb-2 text-gray-300 block"></i>
                                 검색된 성도 회원이 없습니다.
                             </td>
@@ -218,53 +207,40 @@
                 </div>
             </div>
 
-            <!-- 2. Phone & Email -->
+            <!-- 2. Phone & Duty (직분 일원화) -->
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-xs font-bold text-gray-700 mb-1">연락처 (휴대폰) <span class="text-gray-400 font-normal text-[11px]">(선택)</span></label>
                     <input type="tel" name="phone" id="modalMemberPhone" placeholder="010-1234-5678" class="w-full px-3.5 py-2.5 rounded-2xl border border-gray-200 text-xs focus:ring-2 focus:ring-primary">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1">카카오 이메일</label>
-                    <input type="email" name="email" id="modalMemberEmail" class="w-full px-3.5 py-2.5 rounded-2xl border border-gray-200 text-xs focus:ring-2 focus:ring-primary">
-                </div>
-            </div>
-
-            <!-- 3. 회원 그룹 등급 & 직분 구분 (따로 분리) -->
-            <div class="grid grid-cols-2 gap-4 p-4 bg-gray-50/80 rounded-2xl border border-gray-200">
-                <div>
                     <label class="block text-xs font-bold text-gray-800 mb-1">
-                        <i class="fas fa-layer-group text-primary mr-1"></i> 회원 등급 구분
+                        <i class="fas fa-church text-primary mr-1"></i> 직분
                     </label>
-                    <select name="role" id="modalMemberRole" class="w-full px-3 py-2 rounded-xl border border-gray-300 text-xs focus:ring-2 focus:ring-primary font-bold bg-white">
-                        <option value="인증전로그인">인증전로그인 (귀한 손님)</option>
-                        <option value="푸른나무가족">푸른나무가족 (등록 성도)</option>
-                        <option value="부관리자">부관리자 (권한 분담)</option>
-                        <option value="담임목사 (최고관리자)">담임목사 (최고관리자)</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-800 mb-1">
-                        <i class="fas fa-church text-primary mr-1"></i> 직분 구분
-                    </label>
-                    <select name="duty" id="modalMemberDuty" class="w-full px-3 py-2 rounded-xl border border-gray-300 text-xs focus:ring-2 focus:ring-primary font-bold bg-white">
+                    <select name="duty" id="modalMemberDuty" class="w-full px-3.5 py-2.5 rounded-2xl border border-gray-300 text-xs focus:ring-2 focus:ring-primary font-bold bg-white">
+                        <option value="귀한 손님">귀한 손님</option>
                         <option value="성도">성도</option>
                         <option value="집사">집사</option>
                         <option value="권사">권사</option>
                         <option value="안수집사">안수집사</option>
-                        <option value="장로">장로</option>
-                        <option value="전도사">전도사</option>
-                        <option value="부목사">부목사</option>
+                        <option value="사모">사모</option>
+                        <option value="부교역자">부교역자</option>
                         <option value="담임목사">담임목사</option>
                     </select>
                 </div>
+            </div>
+
+            <!-- 3. Kakao Email -->
+            <div>
+                <label class="block text-xs font-bold text-gray-700 mb-1">카카오 이메일</label>
+                <input type="email" name="email" id="modalMemberEmail" class="w-full px-3.5 py-2.5 rounded-2xl border border-gray-200 text-xs focus:ring-2 focus:ring-primary">
             </div>
 
             <!-- 4. 담당 역할 / 사역 권한 지정 -->
             <div class="p-4 bg-surface-container-low rounded-2xl border border-outline-variant/40 space-y-2">
                 <div class="flex items-center justify-between">
                     <label class="block text-xs font-bold text-gray-800">
-                        <i class="fas fa-user-gear text-primary mr-1"></i> 담당 역할 / 콘텐츠 권한 분담
+                        <i class="fas fa-user-gear text-primary mr-1"></i> 담당 역할 / 권한 분담
                     </label>
                     <span class="text-[11px] text-gray-500">목회자/개발자가 지정</span>
                 </div>
@@ -332,12 +308,11 @@
         document.getElementById('modalMemberPhone').value = member.phone || '';
         document.getElementById('modalMemberEmail').value = member.email || '';
         
-        let roleVal = member.role || '푸른나무가족';
-        if (roleVal === '등록성도') roleVal = '푸른나무가족';
-        if (roleVal === '일반교우' || roleVal === '준회원') roleVal = '인증전로그인';
-        document.getElementById('modalMemberRole').value = roleVal;
-
-        let dutyVal = member.duty || '성도';
+        let dutyVal = member.duty || member.role || '성도';
+        if (dutyVal === '인증전로그인' || dutyVal === '일반교우' || dutyVal === '준회원') dutyVal = '귀한 손님';
+        if (dutyVal === '등록성도' || dutyVal === '푸른나무가족') dutyVal = '성도';
+        if (dutyVal === '담임목사 (최고관리자)' || dutyVal === '교역자' || dutyVal === '전도사') dutyVal = '담임목사';
+        if (dutyVal === '장로') dutyVal = '안수집사';
         document.getElementById('modalMemberDuty').value = dutyVal;
 
         // Reset and check permissions
