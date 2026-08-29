@@ -4,7 +4,7 @@
     <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary-fixed/20 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute top-1/3 right-0 w-80 h-80 bg-secondary-container/30 rounded-full blur-3xl pointer-events-none"></div>
 
-    <div class="max-w-5xl mx-auto text-center relative z-10">
+    <div class="max-w-7xl mx-auto text-center relative z-10">
         
         <?php 
             $heroMode = $settings['hero_mode'] ?? 'text';
@@ -30,8 +30,8 @@
         ?>
 
         <?php if ($heroMode === 'image' && !empty($heroImgDesktop)): ?>
-            <!-- 1. Graphic Image Banner Mode -->
-            <div class="mb-10 rounded-3xl overflow-hidden shadow-card border border-outline-variant/30 group">
+            <!-- 1. Graphic Image Banner Mode (Full Width to max-w-7xl Header Match) -->
+            <div class="mb-12 rounded-3xl sm:rounded-[32px] overflow-hidden shadow-card border border-outline-variant/30 group w-full">
                 <?php if (!empty($heroImgLink)): ?>
                 <a href="<?= e($heroImgLink) ?>" target="<?= e($heroImgTarget) ?>" class="block overflow-hidden">
                 <?php endif; ?>
