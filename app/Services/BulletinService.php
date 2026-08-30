@@ -243,8 +243,10 @@ class BulletinService
         ];
 
         // 9. 템플릿 테마 (classic / modern / simple_bw)
+        $templateTheme = Setting::get('bulletin_template_theme', 'classic');
+
         // 10. [1면 전용] 표지 이미지 및 표지 문구/스타일 설정
-        $coverImage = Setting::get('bulletin_cover_image', '/assets/images/sample2.jpg');
+        $coverImage = Setting::get('bulletin_cover_image', '/public/assets/images/sample2.jpg');
         $coverText = Setting::get('bulletin_cover_text', '지친 마음에 쉼과 회복을 주는 따뜻한 공동체');
         $coverSubtext = Setting::get('bulletin_cover_subtext', '주 예수의 은혜와 평강이 성도 여러분의 가정과 일터에 넘치기를 소망합니다.');
         $coverStyle = Setting::get('bulletin_cover_style', 'image_focus');

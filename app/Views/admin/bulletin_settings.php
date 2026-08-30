@@ -63,7 +63,7 @@
                     <div class="md:col-span-4 bg-gray-50 p-4 rounded-2xl border border-gray-200 text-center space-y-2.5">
                         <span class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block">현재 표지 이미지 미리보기</span>
                         <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-white border border-gray-200 shadow-inner flex items-center justify-center">
-                            <img id="coverPreviewImg" src="<?= e($bulletin['cover_image'] ?? '/assets/images/sample2.jpg') ?>" alt="표지 미리보기" class="w-full h-full object-cover">
+                            <img id="coverPreviewImg" src="<?= e($bulletin['cover_image'] ?? '/public/assets/images/sample2.jpg') ?>" alt="표지 미리보기" class="w-full h-full object-cover">
                         </div>
                         <p class="text-[10px] text-gray-400">권장 비율: 4:3 또는 16:9 (가로형)</p>
                     </div>
@@ -90,9 +90,9 @@
                                 type="text" 
                                 id="inputCoverImageUrl" 
                                 name="cover_image_url" 
-                                value="<?= e($bulletin['cover_image'] ?? '/assets/images/sample2.jpg') ?>" 
+                                value="<?= e($bulletin['cover_image'] ?? '/public/assets/images/sample2.jpg') ?>" 
                                 oninput="document.getElementById('coverPreviewImg').src = this.value"
-                                placeholder="/assets/images/sample2.jpg 또는 웹 URL" 
+                                placeholder="/public/assets/images/sample2.jpg 또는 웹 URL" 
                                 class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm font-mono focus:ring-2 focus:ring-primary">
                         </div>
 
@@ -102,16 +102,16 @@
                                 🎨 원클릭 추천 감성 이미지 프리셋
                             </label>
                             <div class="flex flex-wrap gap-2">
-                                <button type="button" onclick="selectCoverPreset('/assets/images/sample2.jpg')" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-xl text-xs font-semibold text-gray-700 flex items-center gap-1.5 transition-all">
+                                <button type="button" onclick="selectCoverPreset('/public/assets/images/sample2.jpg')" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-xl text-xs font-semibold text-gray-700 flex items-center gap-1.5 transition-all">
                                     <span>✝️ 은혜의 십자가/교회</span>
                                 </button>
-                                <button type="button" onclick="selectCoverPreset('/assets/images/logo-tree.png')" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-xl text-xs font-semibold text-gray-700 flex items-center gap-1.5 transition-all">
+                                <button type="button" onclick="selectCoverPreset('/public/assets/images/logo-tree.png')" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-xl text-xs font-semibold text-gray-700 flex items-center gap-1.5 transition-all">
                                     <span>🌿 푸른나무 심볼</span>
                                 </button>
-                                <button type="button" onclick="selectCoverPreset('/assets/images/sample1.jpg')" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-xl text-xs font-semibold text-gray-700 flex items-center gap-1.5 transition-all">
+                                <button type="button" onclick="selectCoverPreset('/public/assets/images/sample1.jpg')" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-xl text-xs font-semibold text-gray-700 flex items-center gap-1.5 transition-all">
                                     <span>📖 성경과 묵상</span>
                                 </button>
-                                <button type="button" onclick="selectCoverPreset('/assets/images/sample3.jpg')" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-xl text-xs font-semibold text-gray-700 flex items-center gap-1.5 transition-all">
+                                <button type="button" onclick="selectCoverPreset('/public/assets/images/sample3.jpg')" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-xl text-xs font-semibold text-gray-700 flex items-center gap-1.5 transition-all">
                                     <span>🌅 빛과 소망</span>
                                 </button>
                             </div>
