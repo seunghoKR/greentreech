@@ -12,21 +12,21 @@
         </div>
 
         <!-- Search Form -->
-        <form action="/admin/members" method="GET" class="flex items-center gap-2">
-            <div class="relative">
+        <form action="/admin/members" method="GET" class="flex items-center gap-2 w-full sm:w-auto">
+            <div class="relative flex-1 sm:flex-initial">
                 <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
                 <input 
                     type="text" 
                     name="keyword" 
                     value="<?= e($keyword ?? '') ?>" 
                     placeholder="성함, 닉네임, 연락처 검색" 
-                    class="pl-9 pr-4 py-2 rounded-2xl border border-gray-200 text-xs w-60 sm:w-72 focus:ring-2 focus:ring-primary bg-gray-50/50">
+                    class="pl-9 pr-4 py-2 rounded-2xl border border-gray-200 text-xs w-full sm:w-72 focus:ring-2 focus:ring-primary bg-gray-50/50">
             </div>
-            <button type="submit" class="px-4 py-2 bg-gray-800 hover:bg-gray-900 text-white rounded-2xl text-xs font-bold transition-all shadow-xs">
+            <button type="submit" class="px-4 py-2 bg-gray-800 hover:bg-gray-900 text-white rounded-2xl text-xs font-bold transition-all shadow-xs shrink-0 whitespace-nowrap">
                 검색
             </button>
             <?php if (!empty($keyword)): ?>
-            <a href="/admin/members" class="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-2xl text-xs font-bold transition-all">
+            <a href="/admin/members" class="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-2xl text-xs font-bold transition-all shrink-0 whitespace-nowrap">
                 초기화
             </a>
             <?php endif; ?>

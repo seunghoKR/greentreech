@@ -6,8 +6,8 @@
             <h1 class="text-xl font-bold text-gray-900">알리는 소식 관리</h1>
             <p class="text-xs text-gray-500 mt-1">교회 주요 소식 및 공지사항을 등록하고 첨부파일을 관리합니다.</p>
         </div>
-        <a href="/admin/notices/create" class="px-4 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-2xl text-xs font-bold shadow-sm transition-all inline-flex items-center gap-1.5 self-start">
-            <i class="fas fa-plus"></i> 새 소식 등록
+        <a href="/admin/notices/create" class="px-4 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-2xl text-xs font-bold shadow-sm transition-all inline-flex items-center gap-1.5 self-start whitespace-nowrap shrink-0">
+            <i class="fas fa-plus"></i> <span>새 소식 등록</span>
         </a>
     </div>
 

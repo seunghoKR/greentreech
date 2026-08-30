@@ -33,34 +33,37 @@
 
     <!-- Top Admin Header Bar -->
     <header class="bg-primary text-white shadow-md sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <a href="/admin" class="flex items-center gap-2 font-bold text-lg tracking-tight">
-                    <img src="/public/assets/images/logo.png" alt="Logo" class="w-8 h-8 rounded-full bg-white p-0.5">
-                    <span>푸른나무교회 관리자</span>
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                <a href="/admin" class="flex items-center gap-2 font-bold text-sm sm:text-lg tracking-tight whitespace-nowrap min-w-0">
+                    <img src="/public/assets/images/logo.png" alt="Logo" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white p-0.5 shrink-0">
+                    <span class="truncate">푸른나무교회 <span class="hidden sm:inline">관리자</span></span>
                 </a>
-                <div class="hidden sm:flex items-center gap-1.5 bg-white/15 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm">
+                <div class="hidden md:flex items-center gap-1.5 bg-white/15 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm whitespace-nowrap">
                     <span class="text-white">v2.6.0</span>
                     <span class="text-white/40">|</span>
-                    <span class="text-emerald-200">최종 업데이트: 2026.08.29</span>
+                    <span class="text-emerald-200">최종 업데이트: 2026.08.30</span>
                 </div>
             </div>
 
-            <div class="flex items-center gap-4 text-xs font-semibold">
-                <a href="/" target="_blank" class="hover:text-primary-100 flex items-center gap-1 bg-white/10 px-3 py-1.5 rounded-lg hover:bg-white/20 transition-colors">
-                    <i class="fas fa-external-link-alt text-[10px]"></i> 홈페이지 보기
+            <div class="flex items-center gap-1.5 sm:gap-3 text-xs font-semibold shrink-0 whitespace-nowrap">
+                <a href="/" target="_blank" class="hover:text-primary-100 flex items-center gap-1 bg-white/10 px-2.5 sm:px-3 py-1.5 rounded-xl hover:bg-white/20 transition-colors whitespace-nowrap" title="홈페이지 보기">
+                    <i class="fas fa-external-link-alt text-[10px]"></i>
+                    <span class="hidden sm:inline">홈페이지</span>
                 </a>
-                <a href="/admin/password" class="hover:text-primary-100 flex items-center gap-1 transition-colors">
-                    <i class="fas fa-key text-[10px]"></i> 비밀번호 변경
+                <a href="/admin/password" class="hover:text-primary-100 flex items-center gap-1 bg-white/10 sm:bg-transparent px-2.5 sm:px-2 py-1.5 rounded-xl hover:bg-white/20 transition-colors whitespace-nowrap" title="비밀번호 변경">
+                    <i class="fas fa-key text-[10px]"></i>
+                    <span class="hidden md:inline">비밀번호</span>
                 </a>
-                <a href="/admin/logout" class="text-red-300 hover:text-red-200 flex items-center gap-1 transition-colors">
-                    <i class="fas fa-sign-out-alt"></i> 로그아웃
+                <a href="/admin/logout" class="text-red-200 hover:text-white bg-red-900/30 sm:bg-transparent flex items-center gap-1 px-2.5 sm:px-2 py-1.5 rounded-xl transition-colors whitespace-nowrap" title="로그아웃">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="hidden sm:inline">로그아웃</span>
                 </a>
             </div>
         </div>
     </header>
 
-    <div class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         
         <!-- Flash Alert -->
         <?php if (!empty($flashSuccess)): ?>
@@ -77,19 +80,54 @@
         </div>
         <?php endif; ?>
 
+        <?php 
+            $curAdmin = \App\Core\Auth::user(); 
+            $role = $curAdmin['role'] ?? '';
+            $adminEmail = (string)($curAdmin['username'] ?? '');
+            $isSuperAdmin = ($role === '담임목사' || $role === '담임목사 (최고관리자)' || $role === '사이트 개발자 (최고관리자)' || (int)($curAdmin['id'] ?? 0) === 1);
+            $isDeveloper = ($role === '사이트 개발자 (최고관리자)' || $adminEmail === 'leeshkr@kakao.com' || str_contains($adminEmail, 'leeshkr') || str_contains($adminEmail, 'nurioh'));
+
+            $navTitles = [
+                'dashboard' => '대시보드',
+                'guide' => '홈페이지 사용 설명서',
+                'bulletin_settings' => '주일예배 & 온라인 주보 기획',
+                'worship_servants' => '예배 순서 섬김이 (4주 관리)',
+                'sermons' => '유튜브 영상 분류 & 관리',
+                'notices' => '알리는 소식 관리',
+                'gallery' => '사진첩 / 캘리 관리',
+                'inquiries' => '새가족 / 기도 접수',
+                'members' => '성도 회원 관리',
+                'community' => '나눔터 게시글 관리',
+                'admins' => '관리자/사역자 권한',
+                'hero_settings' => '메인 배너/상단 관리',
+                'settings' => '사이트 기본정보',
+                'notifications' => '알림 발송 내역',
+                'kakao_settings' => '카카오 API 설정 (개발자)',
+            ];
+            $curNavKey = $adminNav ?? 'dashboard';
+            $curNavTitle = $navTitles[$curNavKey] ?? '관리자 메뉴';
+        ?>
+
+        <!-- Mobile Collapsible Menu Header Bar (화면 < lg 일 때 노출) -->
+        <div class="lg:hidden mb-5 bg-white rounded-2xl border border-gray-200/90 shadow-2xs p-3.5 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse shrink-0"></span>
+                <div class="min-w-0">
+                    <div class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">현재 메뉴</div>
+                    <div class="text-xs sm:text-sm font-bold text-primary truncate"><?= e($curNavTitle) ?></div>
+                </div>
+            </div>
+            <button type="button" onclick="toggleAdminMobileNav()" id="adminMobileNavBtn" class="px-3.5 py-2 bg-primary/10 hover:bg-primary text-primary hover:text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap active:scale-95 shadow-xs">
+                <i id="adminMobileNavIcon" class="fas fa-bars"></i>
+                <span id="adminMobileNavText">메뉴 펼치기</span>
+            </button>
+        </div>
+
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
-            <!-- Left Admin Sidebar Nav (3 cols) -->
-            <aside class="lg:col-span-3">
-                <div class="bg-white rounded-3xl border border-gray-200/80 shadow-sm p-4 space-y-1 sticky top-24">
-                    
-                    <?php 
-                        $curAdmin = \App\Core\Auth::user(); 
-                        $role = $curAdmin['role'] ?? '';
-                        $adminEmail = (string)($curAdmin['username'] ?? '');
-                        $isSuperAdmin = ($role === '담임목사' || $role === '담임목사 (최고관리자)' || $role === '사이트 개발자 (최고관리자)' || (int)($curAdmin['id'] ?? 0) === 1);
-                        $isDeveloper = ($role === '사이트 개발자 (최고관리자)' || $adminEmail === 'leeshkr@kakao.com' || str_contains($adminEmail, 'leeshkr') || str_contains($adminEmail, 'nurioh'));
-                    ?>
+            <!-- Left Admin Sidebar Nav (모바일에서는 기본 접힘 hidden, PC에서는 3열 고정) -->
+            <aside id="adminSidebarNav" class="hidden lg:block lg:col-span-3">
+                <div class="bg-white rounded-3xl border border-gray-200/80 shadow-sm p-4 space-y-1 lg:sticky lg:top-24">
 
                     <a href="/admin" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition-all <?= ($adminNav ?? '') === 'dashboard' ? 'bg-primary text-white shadow-sm' : 'text-gray-700 hover:bg-gray-100' ?>">
                         <i class="fas fa-th-large w-5 text-center"></i> 대시보드
@@ -198,5 +236,34 @@
     </div>
 
     <?php include __DIR__ . '/role_simulator.php'; ?>
+
+    <script>
+        function toggleAdminMobileNav() {
+            const sidebar = document.getElementById('adminSidebarNav');
+            const btn = document.getElementById('adminMobileNavBtn');
+            const icon = document.getElementById('adminMobileNavIcon');
+            const text = document.getElementById('adminMobileNavText');
+            if (!sidebar) return;
+
+            const isHidden = sidebar.classList.contains('hidden');
+            if (isHidden) {
+                sidebar.classList.remove('hidden');
+                if (icon) icon.className = 'fas fa-chevron-up';
+                if (text) text.textContent = '메뉴 접기';
+                if (btn) {
+                    btn.classList.add('bg-primary', 'text-white');
+                    btn.classList.remove('bg-primary/10', 'text-primary');
+                }
+            } else {
+                sidebar.classList.add('hidden');
+                if (icon) icon.className = 'fas fa-bars';
+                if (text) text.textContent = '메뉴 펼치기';
+                if (btn) {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('bg-primary/10', 'text-primary');
+                }
+            }
+        }
+    </script>
 </body>
 </html>

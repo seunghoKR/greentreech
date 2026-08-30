@@ -13,12 +13,12 @@
 
         <div class="flex flex-wrap items-center gap-2 shrink-0">
             <!-- YouTube Sync Button -->
-            <a href="/admin/sermons/sync" class="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center gap-2">
+            <a href="/admin/sermons/sync" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap">
                 <i class="fab fa-youtube"></i>
                 <span>유튜브 영상 최신 동기화</span>
             </a>
             <!-- New Video Manual Add -->
-            <a href="/admin/sermons/create" class="px-4 py-2.5 bg-[#154212] hover:bg-[#0d2b0b] text-white rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5">
+            <a href="/admin/sermons/create" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-[#154212] hover:bg-[#0d2b0b] text-white rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap">
                 <i class="fas fa-plus"></i>
                 <span>직접 등록</span>
             </a>
@@ -43,7 +43,7 @@
         <?php foreach ($cats as $catKey => $catInfo): ?>
             <?php $isActive = ($currentCategory ?? '전체') === $catKey; ?>
             <a href="/admin/sermons?category=<?= urlencode($catKey) ?><?= !empty($keyword) ? '&keyword=' . urlencode($keyword) : '' ?>" 
-               class="px-3.5 py-2 rounded-2xl border text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs <?= $isActive ? 'bg-primary text-white border-primary ring-2 ring-primary/20 font-extrabold' : 'bg-gray-50/80 border-gray-200 text-gray-700 hover:bg-gray-100' ?>">
+               class="px-3.5 py-2 rounded-2xl border text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs whitespace-nowrap <?= $isActive ? 'bg-primary text-white border-primary ring-2 ring-primary/20 font-extrabold' : 'bg-gray-50/80 border-gray-200 text-gray-700 hover:bg-gray-100' ?>">
                 <i class="<?= $catInfo['icon'] ?>"></i>
                 <span><?= $catInfo['label'] ?></span>
                 <span class="px-2 py-0.5 rounded-full text-[11px] <?= $isActive ? 'bg-white/20 text-white font-bold' : 'bg-gray-200 text-gray-600' ?>">

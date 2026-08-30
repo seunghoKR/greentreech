@@ -12,12 +12,12 @@
                 향후 4주간의 <strong>[대표기도, 헌금안내, 초청/안내]</strong> 담당자를 미리 배정하시면 주일예배 순서 및 온라인/출력용 주보에 오늘 섬김이와 다음 주 섬김이가 자동으로 반영됩니다.
             </p>
         </div>
-        <div class="flex items-center gap-2">
-            <a href="/bulletin" target="_blank" class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-2xl text-xs font-bold transition-all flex items-center gap-1.5">
-                <i class="fas fa-eye"></i> 온라인 주보
+        <div class="flex flex-wrap items-center gap-2">
+            <a href="/bulletin" target="_blank" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-2xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap">
+                <i class="fas fa-eye"></i> <span>온라인 주보</span>
             </a>
-            <a href="/bulletin/print" target="_blank" class="px-4 py-2.5 bg-[#154212] hover:bg-[#0d2b0b] text-white rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5">
-                <i class="fas fa-print"></i> A4 접지 인쇄
+            <a href="/bulletin/print" target="_blank" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-[#154212] hover:bg-[#0d2b0b] text-white rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap">
+                <i class="fas fa-print"></i> <span>A4 접지 인쇄</span>
             </a>
         </div>
     </div>

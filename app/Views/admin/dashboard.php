@@ -24,35 +24,35 @@
         </div>
 
         <!-- Header Actions (Live Stream Toggle & Web Link) -->
-        <div class="flex flex-wrap items-center gap-3 shrink-0">
+        <div class="flex flex-wrap items-center gap-2 sm:gap-3 shrink-0">
             <!-- Website Guide Book Button -->
-            <a href="/admin/guide" class="px-4 py-2.5 bg-amber-400/30 hover:bg-amber-400/50 text-white border border-amber-300/50 rounded-2xl text-xs font-bold shadow-sm transition-all flex items-center gap-2">
-                <i class="fas fa-book-open text-amber-300"></i>
+            <a href="/admin/guide" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-amber-400/30 hover:bg-amber-400/50 text-white border border-amber-300/50 rounded-2xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 whitespace-nowrap">
+                <i class="fas fa-book-open text-amber-300 text-xs"></i>
                 <span>📖 사용 설명서</span>
             </a>
 
             <?php if ($isSuperAdmin): ?>
             <!-- One-Click DB Backup Download Button -->
-            <a href="/admin/backup-db" class="px-4 py-2.5 bg-blue-500/30 hover:bg-blue-500/50 text-white border border-blue-400/40 rounded-2xl text-xs font-bold shadow-sm transition-all flex items-center gap-2" title="데이터베이스 전체 SQL 백업 다운로드">
-                <i class="fas fa-database text-blue-300"></i>
+            <a href="/admin/backup-db" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-blue-500/30 hover:bg-blue-500/50 text-white border border-blue-400/40 rounded-2xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 whitespace-nowrap" title="데이터베이스 전체 SQL 백업 다운로드">
+                <i class="fas fa-database text-blue-300 text-xs"></i>
                 <span>💾 DB 백업</span>
             </a>
 
             <!-- Bulletin Planning Quick Button (담임목사 전용) -->
-            <a href="/admin/bulletin-settings" class="px-4 py-2.5 bg-green-500/30 hover:bg-green-500/50 text-white border border-green-400/40 rounded-2xl text-xs font-bold shadow-sm transition-all flex items-center gap-2">
-                <i class="fas fa-clipboard-list text-green-300"></i>
+            <a href="/admin/bulletin-settings" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-green-500/30 hover:bg-green-500/50 text-white border border-green-400/40 rounded-2xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 whitespace-nowrap">
+                <i class="fas fa-clipboard-list text-green-300 text-xs"></i>
                 <span>주일예배 & 주보 기획</span>
             </a>
 
             <!-- Live Streaming Switch Button (담임목사 전용) -->
-            <a href="/admin/live-toggle" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 <?= $liveStreamActive ? 'bg-red-500 hover:bg-red-600 text-white animate-pulse' : 'bg-white/20 hover:bg-white/30 text-white' ?>">
+            <a href="/admin/live-toggle" class="px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap <?= $liveStreamActive ? 'bg-red-500 hover:bg-red-600 text-white animate-pulse' : 'bg-white/20 hover:bg-white/30 text-white' ?>">
                 <span class="w-2 h-2 rounded-full <?= $liveStreamActive ? 'bg-white' : 'bg-gray-400' ?>"></span>
                 <span>실시간 중계: <strong><?= $liveStreamActive ? 'ON' : 'OFF' ?></strong></span>
             </a>
             <?php endif; ?>
 
-            <a href="/" target="_blank" class="px-4 py-2.5 bg-white hover:bg-gray-100 text-[#154212] rounded-2xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5">
-                <i class="fas fa-external-link-alt text-[10px]"></i> 홈페이지
+            <a href="/" target="_blank" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-white hover:bg-gray-100 text-[#154212] rounded-2xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 whitespace-nowrap">
+                <i class="fas fa-external-link-alt text-[10px]"></i> <span>홈페이지</span>
             </a>
         </div>
     </div>

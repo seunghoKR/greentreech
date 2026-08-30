@@ -10,31 +10,31 @@
             <h2 class="text-xl font-bold text-gray-900 mt-1">주일예배 순서 및 A5 4면 주보 기획 대시보드</h2>
             <p class="text-xs text-gray-500 mt-0.5">A4 1장을 반으로 접어 사용하는 4면 주보의 각 면(표지, 예배순서, 설교메모/소식, 교회소개/모임)을 편리하게 기획합니다.</p>
         </div>
-        <div class="flex items-center gap-2">
-            <a href="/admin/worship-servants" class="px-4 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-2xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs">
-                <i class="fas fa-hands-holding-child text-emerald-700"></i> 섬김이 4주 관리
+        <div class="flex flex-wrap items-center gap-2">
+            <a href="/admin/worship-servants" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-2xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs whitespace-nowrap">
+                <i class="fas fa-hands-holding-child text-emerald-700"></i> <span>섬김이 4주 관리</span>
             </a>
-            <a href="/bulletin" target="_blank" class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-2xl text-xs font-bold transition-all flex items-center gap-1.5">
-                <i class="fas fa-eye"></i> 온라인 주보
+            <a href="/bulletin" target="_blank" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-2xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap">
+                <i class="fas fa-eye"></i> <span>온라인 주보</span>
             </a>
-            <a href="/bulletin/print" target="_blank" class="px-4 py-2.5 bg-[#154212] hover:bg-[#0d2b0b] text-white rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5">
-                <i class="fas fa-print"></i> A4 접지 인쇄/PDF
+            <a href="/bulletin/print" target="_blank" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-[#154212] hover:bg-[#0d2b0b] text-white rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap">
+                <i class="fas fa-print"></i> <span>A4 접지 인쇄/PDF</span>
             </a>
         </div>
     </div>
 
     <!-- 4-Page Navigation Tabs -->
     <div class="flex items-center gap-2 border-b border-gray-200 pb-2 overflow-x-auto">
-        <button type="button" onclick="switchBulletinTab('tab-page1')" id="btn-tab-page1" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all bg-[#154212] text-white shadow-sm flex items-center gap-1.5">
+        <button type="button" onclick="switchBulletinTab('tab-page1')" id="btn-tab-page1" class="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-xs font-bold transition-all bg-[#154212] text-white shadow-sm flex items-center gap-1.5 shrink-0 whitespace-nowrap">
             <span>[1면] 표지 (Cover)</span>
         </button>
-        <button type="button" onclick="switchBulletinTab('tab-page2')" id="btn-tab-page2" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all text-gray-600 hover:text-primary bg-white border border-gray-200 flex items-center gap-1.5">
+        <button type="button" onclick="switchBulletinTab('tab-page2')" id="btn-tab-page2" class="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-xs font-bold transition-all text-gray-600 hover:text-primary bg-white border border-gray-200 flex items-center gap-1.5 shrink-0 whitespace-nowrap">
             <span>[2면] 주일예배 & 말씀</span>
         </button>
-        <button type="button" onclick="switchBulletinTab('tab-page3')" id="btn-tab-page3" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all text-gray-600 hover:text-primary bg-white border border-gray-200 flex items-center gap-1.5">
+        <button type="button" onclick="switchBulletinTab('tab-page3')" id="btn-tab-page3" class="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-xs font-bold transition-all text-gray-600 hover:text-primary bg-white border border-gray-200 flex items-center gap-1.5 shrink-0 whitespace-nowrap">
             <span>[3면] 설교메모 & 섬김이</span>
         </button>
-        <button type="button" onclick="switchBulletinTab('tab-page4')" id="btn-tab-page4" class="px-4 py-2.5 rounded-2xl text-xs font-bold transition-all text-gray-600 hover:text-primary bg-white border border-gray-200 flex items-center gap-1.5">
+        <button type="button" onclick="switchBulletinTab('tab-page4')" id="btn-tab-page4" class="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-xs font-bold transition-all text-gray-600 hover:text-primary bg-white border border-gray-200 flex items-center gap-1.5 shrink-0 whitespace-nowrap">
             <span>[4면] 교회소개 & 모임안내</span>
         </button>
     </div>
