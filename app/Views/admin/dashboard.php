@@ -1,59 +1,74 @@
 <div class="space-y-8">
     
-    <!-- Welcome Header & Live Banner Toggle -->
-    <div class="bg-gradient-to-r from-[#154212] to-[#256020] rounded-3xl p-6 sm:p-8 text-white shadow-card flex flex-col md:flex-row md:items-center justify-between gap-6">
+    <!-- Welcome Header & Quick Action Banner -->
+    <div class="bg-gradient-to-br from-[#154212] via-[#1b4d17] to-[#256020] rounded-3xl p-6 sm:p-7 text-white shadow-card space-y-4">
         <?php 
             $curAdmin = \App\Core\Auth::user(); 
             $adminDisplayName = $curAdmin['name'] ?? '관리자';
             $adminRoleName = $curAdmin['role'] ?? '관리자';
             $isSuperAdmin = ($adminRoleName === '담임목사' || $adminRoleName === '담임목사 (최고관리자)' || $adminRoleName === '사이트 개발자 (최고관리자)' || (int)($curAdmin['id'] ?? 0) === 1);
         ?>
-        <div class="space-y-2">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-xs font-semibold backdrop-blur-sm">
-                <span class="w-2 h-2 rounded-full bg-green-400 animate-ping"></span>
-                <span><?= e($adminRoleName) ?> 모드</span>
-                <span class="text-white/40">·</span>
-                <span class="text-emerald-200">버전 v2.6.0 (최종 업데이트: 2026.08.29)</span>
+
+        <!-- Top Tier: Welcome Greeting & Live/Home Toggles -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+            <div class="space-y-1.5">
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 text-xs font-bold backdrop-blur-sm whitespace-nowrap">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span><?= e($adminRoleName) ?></span>
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/20 text-xs font-semibold text-emerald-200 backdrop-blur-sm whitespace-nowrap">
+                        <span>v2.6.0</span>
+                        <span class="text-white/30">|</span>
+                        <span>2026.08.30</span>
+                    </span>
+                </div>
+                <h1 class="font-serif-kr text-xl sm:text-2xl lg:text-3xl font-bold leading-tight">
+                    <?= e($adminDisplayName) ?>님, 평안한 하루 되세요! 🌿
+                </h1>
             </div>
-            <h1 class="font-serif-kr text-2xl sm:text-3xl font-bold leading-snug">
-                <?= e($adminDisplayName) ?>님, 평안한 하루 되세요! 🌿
-            </h1>
-            <p class="text-xs sm:text-sm text-white/80">
-                성도님들의 사역 일정을 관리하고 시스템을 안전하게 운영하세요.
-            </p>
+
+            <!-- Live Status Toggle & Home Link -->
+            <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+                <?php if ($isSuperAdmin): ?>
+                <a href="/admin/live-toggle" class="px-3.5 sm:px-4 py-2 rounded-2xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 whitespace-nowrap <?= $liveStreamActive ? 'bg-red-500 hover:bg-red-600 text-white animate-pulse' : 'bg-white/15 hover:bg-white/25 text-white border border-white/20' ?>">
+                    <span class="w-2 h-2 rounded-full <?= $liveStreamActive ? 'bg-white' : 'bg-gray-400' ?>"></span>
+                    <span>실시간 중계: <strong><?= $liveStreamActive ? 'ON' : 'OFF' ?></strong></span>
+                </a>
+                <?php endif; ?>
+                <a href="/" target="_blank" class="px-3.5 sm:px-4 py-2 bg-white hover:bg-gray-100 text-[#154212] rounded-2xl text-xs font-bold shadow-xs transition-all flex items-center gap-1.5 whitespace-nowrap">
+                    <i class="fas fa-external-link-alt text-[10px]"></i> <span>홈페이지</span>
+                </a>
+            </div>
         </div>
 
-        <!-- Header Actions (Live Stream Toggle & Web Link) -->
-        <div class="flex flex-wrap items-center gap-2 sm:gap-3 shrink-0">
-            <!-- Website Guide Book Button -->
-            <a href="/admin/guide" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-amber-400/30 hover:bg-amber-400/50 text-white border border-amber-300/50 rounded-2xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 whitespace-nowrap">
-                <i class="fas fa-book-open text-amber-300 text-xs"></i>
-                <span>📖 사용 설명서</span>
-            </a>
+        <!-- Bottom Tier: Subtitle & Quick Tool Action Buttons -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+            <p class="text-xs text-white/80 font-medium">
+                성도님들의 사역 일정을 관리하고 시스템을 안전하게 운영하세요.
+            </p>
 
-            <?php if ($isSuperAdmin): ?>
-            <!-- One-Click DB Backup Download Button -->
-            <a href="/admin/backup-db" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-blue-500/30 hover:bg-blue-500/50 text-white border border-blue-400/40 rounded-2xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 whitespace-nowrap" title="데이터베이스 전체 SQL 백업 다운로드">
-                <i class="fas fa-database text-blue-300 text-xs"></i>
-                <span>💾 DB 백업</span>
-            </a>
+            <div class="flex items-center gap-2 flex-wrap">
+                <!-- Website Guide Book Button -->
+                <a href="/admin/guide" class="px-3.5 py-2 bg-amber-400/25 hover:bg-amber-400/40 text-amber-100 border border-amber-300/40 rounded-xl text-xs font-bold shadow-2xs transition-all flex items-center gap-1.5 whitespace-nowrap">
+                    <i class="fas fa-book-open text-amber-300 text-xs"></i>
+                    <span>홈페이지 사용 설명서</span>
+                </a>
 
-            <!-- Bulletin Planning Quick Button (담임목사 전용) -->
-            <a href="/admin/bulletin-settings" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-green-500/30 hover:bg-green-500/50 text-white border border-green-400/40 rounded-2xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 whitespace-nowrap">
-                <i class="fas fa-clipboard-list text-green-300 text-xs"></i>
-                <span>주일예배 & 주보 기획</span>
-            </a>
+                <?php if ($isSuperAdmin): ?>
+                <!-- One-Click DB Backup Download Button -->
+                <a href="/admin/backup-db" class="px-3.5 py-2 bg-blue-500/25 hover:bg-blue-500/40 text-blue-100 border border-blue-400/30 rounded-xl text-xs font-bold shadow-2xs transition-all flex items-center gap-1.5 whitespace-nowrap" title="데이터베이스 전체 SQL 백업 다운로드">
+                    <i class="fas fa-database text-blue-300 text-xs"></i>
+                    <span>DB 백업</span>
+                </a>
 
-            <!-- Live Streaming Switch Button (담임목사 전용) -->
-            <a href="/admin/live-toggle" class="px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap <?= $liveStreamActive ? 'bg-red-500 hover:bg-red-600 text-white animate-pulse' : 'bg-white/20 hover:bg-white/30 text-white' ?>">
-                <span class="w-2 h-2 rounded-full <?= $liveStreamActive ? 'bg-white' : 'bg-gray-400' ?>"></span>
-                <span>실시간 중계: <strong><?= $liveStreamActive ? 'ON' : 'OFF' ?></strong></span>
-            </a>
-            <?php endif; ?>
-
-            <a href="/" target="_blank" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-white hover:bg-gray-100 text-[#154212] rounded-2xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 whitespace-nowrap">
-                <i class="fas fa-external-link-alt text-[10px]"></i> <span>홈페이지</span>
-            </a>
+                <!-- Bulletin Planning Quick Button (담임목사 전용) -->
+                <a href="/admin/bulletin-settings" class="px-3.5 py-2 bg-emerald-500/25 hover:bg-emerald-500/40 text-emerald-100 border border-emerald-400/30 rounded-xl text-xs font-bold shadow-2xs transition-all flex items-center gap-1.5 whitespace-nowrap">
+                    <i class="fas fa-clipboard-list text-emerald-300 text-xs"></i>
+                    <span>주일예배 & 주보 기획</span>
+                </a>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 
