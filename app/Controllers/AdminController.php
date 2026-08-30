@@ -1408,7 +1408,36 @@ class AdminController
         $theme = trim((string)($_POST['template_theme'] ?? 'classic'));
         \App\Services\BulletinService::saveTemplateTheme($theme);
 
-        Session::setFlash('success', 'A5 4면 주보 기획 및 인쇄 템플릿 데이터가 성공적으로 저장되었습니다! 🖨️✨');
+        // 8. 1면 표지 이미지 및 표지 문구/스타일 저장
+        $coverText = trim((string)($_POST['cover_text'] ?? '지친 마음에 쉼과 회복을 주는 따뜻한 공동체'));
+        $coverSubtext = trim((string)($_POST['cover_subtext'] ?? '주 예수의 은혜와 평강이 성도 여러분의 가정과 일터에 넘치기를 소망합니다.'));
+        $coverStyle = trim((string)($_POST['cover_style'] ?? 'image_focus'));
+        $coverFrame = trim((string)($_POST['cover_frame'] ?? 'rounded'));
+        $coverImage = trim((string)($_POST['cover_image_url'] ?? ''));
+
+        // Handle uploaded cover image file if provided
+        if (!empty($_FILES['cover_image_file']['name']) && $_FILES['cover_image_file']['error'] === UPLOAD_ERR_OK) {
+            $ext = strtolower(pathinfo($_FILES['cover_image_file']['name'], PATHINFO_EXTENSION));
+            if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif'], true)) {
+                $filename = 'bulletin_cover_' . time() . '.' . $ext;
+                $uploadDir = __DIR__ . '/../../public/uploads/bulletin';
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0755, true);
+                }
+                $destPath = $uploadDir . '/' . $filename;
+                if (move_uploaded_file($_FILES['cover_image_file']['tmp_name'], $destPath)) {
+                    $coverImage = '/uploads/bulletin/' . $filename;
+                }
+            }
+        }
+
+        if (empty($coverImage)) {
+            $coverImage = \App\Models\Setting::get('bulletin_cover_image', '/assets/images/sample2.jpg');
+        }
+
+        \App\Services\BulletinService::saveCoverSettings($coverImage, $coverText, $coverSubtext, $coverStyle, $coverFrame);
+
+        Session::setFlash('success', 'A5 4면 주보 기획 및 표지 디자인 데이터가 성공적으로 저장되었습니다! 🖨️✨');
         header('Location: /admin/bulletin-settings');
         exit;
     }

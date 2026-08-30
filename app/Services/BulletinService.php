@@ -243,7 +243,12 @@ class BulletinService
         ];
 
         // 9. 템플릿 테마 (classic / modern / simple_bw)
-        $templateTheme = Setting::get('bulletin_template_theme', 'classic');
+        // 10. [1면 전용] 표지 이미지 및 표지 문구/스타일 설정
+        $coverImage = Setting::get('bulletin_cover_image', '/assets/images/sample2.jpg');
+        $coverText = Setting::get('bulletin_cover_text', '지친 마음에 쉼과 회복을 주는 따뜻한 공동체');
+        $coverSubtext = Setting::get('bulletin_cover_subtext', '주 예수의 은혜와 평강이 성도 여러분의 가정과 일터에 넘치기를 소망합니다.');
+        $coverStyle = Setting::get('bulletin_cover_style', 'image_focus');
+        $coverFrame = Setting::get('bulletin_cover_frame', 'rounded');
 
         return [
             'bulletin_no' => '제 ' . $sundayDate->format('Y') . '-' . $sundayDate->format('W') . '호',
@@ -262,6 +267,11 @@ class BulletinService
             'page4_info' => $page4Info,
             'page3_info' => $page3Info,
             'template_theme' => $templateTheme,
+            'cover_image' => $coverImage,
+            'cover_text' => $coverText,
+            'cover_subtext' => $coverSubtext,
+            'cover_style' => $coverStyle,
+            'cover_frame' => $coverFrame,
             'current_week_servants' => $currentServantsInfo,
             'next_week_servants' => $nextServantsInfo,
         ];
@@ -321,5 +331,17 @@ class BulletinService
     public static function saveMemoryVerse(array $memoryVerse): void
     {
         Setting::update('bulletin_memory_verse', json_encode($memoryVerse, JSON_UNESCAPED_UNICODE));
+    }
+
+    /**
+     * 1면 표지 이미지 및 스타일 설정 저장
+     */
+    public static function saveCoverSettings(string $image, string $text, string $subtext, string $style = 'image_focus', string $frame = 'rounded'): void
+    {
+        Setting::update('bulletin_cover_image', $image);
+        Setting::update('bulletin_cover_text', $text);
+        Setting::update('bulletin_cover_subtext', $subtext);
+        Setting::update('bulletin_cover_style', $style);
+        Setting::update('bulletin_cover_frame', $frame);
     }
 }

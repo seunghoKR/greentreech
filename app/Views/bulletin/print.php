@@ -21,6 +21,11 @@ $servingTeams = $bulletin['serving_teams'] ?? [];
 $page4 = $bulletin['page4_info'] ?? [];
 $page3 = $bulletin['page3_info'] ?? [];
 $theme = $bulletin['template_theme'] ?? 'classic';
+$coverImage = $bulletin['cover_image'] ?? '/assets/images/sample2.jpg';
+$coverText = $bulletin['cover_text'] ?? '지친 마음에 쉼과 회복을 주는 따뜻한 공동체';
+$coverSubtext = $bulletin['cover_subtext'] ?? '주 예수의 은혜와 평강이 성도 여러분의 가정과 일터에 넘치기를 소망합니다.';
+$coverStyle = $bulletin['cover_style'] ?? 'image_focus';
+$coverFrame = $bulletin['cover_frame'] ?? 'rounded';
 ?>
 <!DOCTYPE html>
 <html lang="ko">
@@ -69,7 +74,7 @@ $theme = $bulletin['template_theme'] ?? 'classic';
         .a5-page {
             width: 148.5mm;
             height: 210mm;
-            padding: 12mm 11mm;
+            padding: 11mm 11mm;
             box-sizing: border-box;
             position: relative;
             display: flex;
@@ -236,7 +241,7 @@ $theme = $bulletin['template_theme'] ?? 'classic';
             </div>
 
             <!-- 4-Page Footer: Address & Pastor Info -->
-            <div class="border-t border-gray-200 pt-2.5 text-[10px] text-gray-500 space-y-0.5">
+            <div class="border-t border-gray-200 pt-2 text-[10px] text-gray-500 space-y-0.5">
                 <p><strong>주소:</strong> <?= htmlspecialchars($address) ?></p>
                 <p><strong>담임목사:</strong> <?= htmlspecialchars($pastorName) ?> (<?= htmlspecialchars($phone) ?>)</p>
                 <p><strong>홈페이지:</strong> greentreech.iwinv.net | <strong>유튜브:</strong> @greentreechurch0405</p>
@@ -250,55 +255,104 @@ $theme = $bulletin['template_theme'] ?? 'classic';
         <!-- ------------------------------------------------------------- -->
         <!-- [1면 (우측)]: 표지 (Cover Page) -->
         <!-- ------------------------------------------------------------- -->
-        <div class="a5-page text-center">
+        <div class="a5-page text-center flex flex-col justify-between">
             
-            <!-- Top Badge & Number -->
+            <!-- Top Section: Header & Church Title -->
             <div>
-                <div class="flex items-center justify-between text-[11px] text-gray-500 border-b border-gray-200 pb-2 mb-4">
+                <!-- Top Badge & Number -->
+                <div class="flex items-center justify-between text-[11px] text-gray-500 border-b border-gray-200 pb-1.5 mb-2.5">
                     <span class="font-bold text-[#154212]"><?= htmlspecialchars($bulletinNo) ?></span>
                     <span><?= htmlspecialchars($dateStr) ?> 주일예배</span>
                 </div>
 
                 <!-- Church Main Title & Slogan -->
-                <div class="my-4">
-                    <p class="text-xs text-gray-500 tracking-widest font-serif-kr mb-1">기독교대한침례회</p>
-                    <h1 class="font-serif-kr text-3xl font-black text-[#154212] tracking-wider mb-2">
+                <div class="mb-2.5 text-center">
+                    <p class="text-[11px] text-gray-500 tracking-widest font-serif-kr mb-0.5">기독교대한침례회</p>
+                    <h1 class="font-serif-kr text-2xl sm:text-[26px] font-black text-[#154212] tracking-wider mb-0.5">
                         푸 른 나 무 교 회
                     </h1>
-                    <p class="font-serif-kr text-xs text-gray-600 italic">
+                    <p class="font-serif-kr text-[11px] text-gray-600 italic">
                         "<?= htmlspecialchars($mainSlogan) ?>"
                     </p>
                 </div>
 
-                <!-- Church Symbol / Illustration Frame -->
-                <div class="my-6 py-4 px-6 border-y-2 border-[#154212]/30 bg-emerald-50/40 rounded-2xl">
-                    <div class="w-12 h-12 mx-auto rounded-full bg-[#154212] text-white flex items-center justify-center text-xl mb-2 shadow-xs">
+                <!-- Church Cover Main Image / Illustration Section -->
+                <?php 
+                    $frameClass = 'rounded-2xl border border-gray-200 shadow-2xs';
+                    if ($coverFrame === 'double_line') {
+                        $frameClass = 'rounded-xl border-4 border-double border-[#154212]/40 shadow-xs';
+                    } elseif ($coverFrame === 'none') {
+                        $frameClass = 'rounded-none border-none';
+                    }
+                ?>
+
+                <?php if ($coverStyle === 'image_focus' && !empty($coverImage)): ?>
+                <!-- 1. 감성 이미지 중심형 (사진 + 따뜻한 메시지) -->
+                <div class="my-2">
+                    <div class="relative w-full h-[58mm] overflow-hidden <?= $frameClass ?> bg-emerald-50/30 flex items-center justify-center">
+                        <img src="<?= htmlspecialchars($coverImage) ?>" alt="주보 표지 이미지" class="w-full h-full object-cover">
+                    </div>
+                    <?php if (!empty($coverText)): ?>
+                    <h3 class="font-serif-kr text-xs font-bold text-[#154212] mt-1.5 tracking-wide">
+                        "<?= htmlspecialchars($coverText) ?>"
+                    </h3>
+                    <?php endif; ?>
+                    <?php if (!empty($coverSubtext)): ?>
+                    <p class="text-[10px] text-gray-500 mt-0.5 font-medium leading-tight">
+                        <?= htmlspecialchars($coverSubtext) ?>
+                    </p>
+                    <?php endif; ?>
+                </div>
+
+                <?php elseif ($coverStyle === 'classic_emblem'): ?>
+                <!-- 2. 클래식 엠블럼형 (단정한 십자가 심볼) -->
+                <div class="my-3 py-4 px-5 border-y-2 border-[#154212]/30 bg-emerald-50/40 <?= $frameClass ?>">
+                    <div class="w-11 h-11 mx-auto rounded-full bg-[#154212] text-white flex items-center justify-center text-lg mb-2 shadow-xs">
                         <i class="fas fa-cross"></i>
                     </div>
-                    <h3 class="font-serif-kr text-sm font-bold text-[#154212]">
-                        "지친 마음에 쉼과 회복을 주는 따뜻한 공동체"
+                    <h3 class="font-serif-kr text-xs sm:text-sm font-bold text-[#154212]">
+                        "<?= htmlspecialchars($coverText) ?>"
                     </h3>
                     <p class="text-[10px] text-gray-500 mt-1">
-                        주 예수의 은혜와 평강이 성도 여러분의 가정과 일터에 넘치기를 소망합니다.
+                        <?= htmlspecialchars($coverSubtext) ?>
                     </p>
                 </div>
 
-                <!-- Memory Verse Box -->
-                <div class="bg-gray-50 border border-gray-200 rounded-xl p-3.5 text-center my-3">
-                    <span class="text-[10px] font-bold text-emerald-800 uppercase tracking-wider bg-emerald-100/60 px-2 py-0.5 rounded-full">
-                        🌿 금주의 말씀
-                    </span>
-                    <p class="font-serif-kr text-xs font-bold text-gray-900 mt-1.5 leading-relaxed">
-                        <?= htmlspecialchars($memoryVerse['verse'] ?? '') ?>
-                    </p>
-                    <p class="text-[10px] text-gray-500 mt-1 font-semibold">
-                        (<?= htmlspecialchars($memoryVerse['reference'] ?? '') ?>)
+                <?php else: ?>
+                <!-- 3. 심플 말씀/여백 중심형 -->
+                <div class="my-3 p-4 bg-emerald-50/30 rounded-2xl border border-emerald-100">
+                    <div class="w-8 h-8 mx-auto rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-sm mb-2">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="font-serif-kr text-xs sm:text-sm font-bold text-[#154212]">
+                        "<?= htmlspecialchars($coverText) ?>"
+                    </h3>
+                    <p class="text-[10px] text-gray-500 mt-1">
+                        <?= htmlspecialchars($coverSubtext) ?>
                     </p>
                 </div>
+                <?php endif; ?>
+
+                <!-- Memory Verse Box (금주의 말씀) -->
+                <?php if (!empty($memoryVerse['verse'])): ?>
+                <div class="bg-gray-50/90 border border-gray-200/90 rounded-xl p-2 text-center mt-1.5 shadow-2xs">
+                    <span class="text-[9px] font-bold text-emerald-800 uppercase tracking-wider bg-emerald-100/70 px-2 py-0.5 rounded-full inline-block">
+                        🌿 금주의 말씀
+                    </span>
+                    <p class="font-serif-kr text-[11px] font-bold text-gray-900 mt-0.5 leading-snug">
+                        <?= htmlspecialchars($memoryVerse['verse']) ?>
+                    </p>
+                    <?php if (!empty($memoryVerse['reference'])): ?>
+                    <p class="text-[10px] text-gray-500 font-semibold">
+                        (<?= htmlspecialchars($memoryVerse['reference']) ?>)
+                    </p>
+                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
             </div>
 
             <!-- 1-Page Footer -->
-            <div class="border-t border-gray-200 pt-2.5 text-[10px] text-gray-500 flex justify-between items-center">
+            <div class="border-t border-gray-200 pt-2 text-[10px] text-gray-500 flex justify-between items-center shrink-0">
                 <span>담임목사 <?= htmlspecialchars($pastorName) ?></span>
                 <span class="font-bold text-gray-400">[1면 표지]</span>
             </div>

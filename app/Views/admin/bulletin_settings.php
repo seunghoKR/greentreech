@@ -39,20 +39,133 @@
         </button>
     </div>
 
-    <form action="/admin/bulletin-settings" method="POST" class="space-y-6">
+    <form action="/admin/bulletin-settings" method="POST" enctype="multipart/form-data" class="space-y-6">
         <input type="hidden" name="csrf_token" value="<?= e($csrfToken) ?>">
 
         <!-- ============================================================= -->
-        <!-- [TAB 1]: 1면 표지 (Cover) 기획 -->
+        <!-- [TAB 1]: 1면 표지 (Cover) 기획 & 이미지 커스텀 -->
         <!-- ============================================================= -->
         <div id="tab-page1" class="bulletin-tab-panel space-y-6">
+            
+            <!-- 1. 표지 메인 이미지 / 일러스트 설정 -->
+            <div class="bg-white rounded-3xl border border-gray-200 p-6 shadow-sm space-y-5">
+                <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+                    <h3 class="text-sm font-bold text-[#154212] flex items-center gap-2">
+                        <i class="fas fa-image"></i> 1면 표지: 메인 이미지 / 사진 / 캘리그라피 첨부
+                    </h3>
+                    <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                        A4 접지 표지 중앙에 고해상도로 인쇄
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+                    <!-- Left: Current Preview Thumbnail -->
+                    <div class="md:col-span-4 bg-gray-50 p-4 rounded-2xl border border-gray-200 text-center space-y-2.5">
+                        <span class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block">현재 표지 이미지 미리보기</span>
+                        <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-white border border-gray-200 shadow-inner flex items-center justify-center">
+                            <img id="coverPreviewImg" src="<?= e($bulletin['cover_image'] ?? '/assets/images/sample2.jpg') ?>" alt="표지 미리보기" class="w-full h-full object-cover">
+                        </div>
+                        <p class="text-[10px] text-gray-400">권장 비율: 4:3 또는 16:9 (가로형)</p>
+                    </div>
+
+                    <!-- Right: Upload and Preset Selection -->
+                    <div class="md:col-span-8 space-y-4">
+                        <!-- Direct File Upload -->
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">
+                                <i class="fas fa-cloud-arrow-up text-primary mr-1"></i> 새 이미지 파일 업로드 (컴퓨터/스마트폰 사진)
+                            </label>
+                            <input 
+                                type="file" 
+                                name="cover_image_file" 
+                                accept="image/*" 
+                                onchange="previewCoverFile(this)"
+                                class="w-full px-3.5 py-2 rounded-2xl border border-gray-200 text-xs bg-white focus:ring-2 focus:ring-primary file:mr-3 file:py-1.5 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-[#154212] hover:file:bg-emerald-100">
+                        </div>
+
+                        <!-- Image URL input -->
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">이미지 파일 경로 / URL</label>
+                            <input 
+                                type="text" 
+                                id="inputCoverImageUrl" 
+                                name="cover_image_url" 
+                                value="<?= e($bulletin['cover_image'] ?? '/assets/images/sample2.jpg') ?>" 
+                                oninput="document.getElementById('coverPreviewImg').src = this.value"
+                                placeholder="/assets/images/sample2.jpg 또는 웹 URL" 
+                                class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm font-mono focus:ring-2 focus:ring-primary">
+                        </div>
+
+                        <!-- Quick Presets -->
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1.5">
+                                🎨 원클릭 추천 감성 이미지 프리셋
+                            </label>
+                            <div class="flex flex-wrap gap-2">
+                                <button type="button" onclick="selectCoverPreset('/assets/images/sample2.jpg')" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-xl text-xs font-semibold text-gray-700 flex items-center gap-1.5 transition-all">
+                                    <span>✝️ 은혜의 십자가/교회</span>
+                                </button>
+                                <button type="button" onclick="selectCoverPreset('/assets/images/logo-tree.png')" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-xl text-xs font-semibold text-gray-700 flex items-center gap-1.5 transition-all">
+                                    <span>🌿 푸른나무 심볼</span>
+                                </button>
+                                <button type="button" onclick="selectCoverPreset('/assets/images/sample1.jpg')" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-xl text-xs font-semibold text-gray-700 flex items-center gap-1.5 transition-all">
+                                    <span>📖 성경과 묵상</span>
+                                </button>
+                                <button type="button" onclick="selectCoverPreset('/assets/images/sample3.jpg')" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-xl text-xs font-semibold text-gray-700 flex items-center gap-1.5 transition-all">
+                                    <span>🌅 빛과 소망</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 표지 디자인 스타일 & 액자 테두리 & 표지 문구 -->
             <div class="bg-white rounded-3xl border border-gray-200 p-6 shadow-sm space-y-4">
                 <h3 class="text-sm font-bold text-[#154212] flex items-center gap-2 border-b border-gray-100 pb-3">
-                    <i class="fas fa-quote-left"></i> 1면 표지: 금주의 암송 말씀 및 표지 문구
+                    <i class="fas fa-palette"></i> 1면 표지: 디자인 레이아웃 및 문구 설정
+                </h3>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">표지 디자인 스타일</label>
+                        <select name="cover_style" class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm focus:ring-2 focus:ring-primary bg-white font-bold">
+                            <option value="image_focus" <?= ($bulletin['cover_style'] ?? 'image_focus') === 'image_focus' ? 'selected' : '' ?>>🖼️ 감성 이미지 중심형 (사진 + 환영 메시지)</option>
+                            <option value="classic_emblem" <?= ($bulletin['cover_style'] ?? '') === 'classic_emblem' ? 'selected' : '' ?>>✝️ 클래식 엠블럼형 (단정한 십자가 심볼)</option>
+                            <option value="minimal_text" <?= ($bulletin['cover_style'] ?? '') === 'minimal_text' ? 'selected' : '' ?>>📜 성경 말씀 & 묵상 중심형 (심플 여백)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">이미지 액자 테두리 스타일</label>
+                        <select name="cover_frame" class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm focus:ring-2 focus:ring-primary bg-white font-bold">
+                            <option value="rounded" <?= ($bulletin['cover_frame'] ?? 'rounded') === 'rounded' ? 'selected' : '' ?>>둥근 라운드 액자 (부드럽고 모던함)</option>
+                            <option value="double_line" <?= ($bulletin['cover_frame'] ?? '') === 'double_line' ? 'selected' : '' ?>>클래식 이중 실선 테두리 (전통적이고 정돈됨)</option>
+                            <option value="none" <?= ($bulletin['cover_frame'] ?? '') === 'none' ? 'selected' : '' ?>>심플 테두리 없음</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">표지 중앙 메인 문구</label>
+                        <input type="text" name="cover_text" value="<?= e($bulletin['cover_text'] ?? '지친 마음에 쉼과 회복을 주는 따뜻한 공동체') ?>" placeholder="예: 지친 마음에 쉼과 회복을 주는 따뜻한 공동체" class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm font-serif-kr font-bold focus:ring-2 focus:ring-primary">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">표지 서브 환영 문구</label>
+                        <input type="text" name="cover_subtext" value="<?= e($bulletin['cover_subtext'] ?? '주 예수의 은혜와 평강이 성도 여러분의 가정과 일터에 넘치기를 소망합니다.') ?>" placeholder="예: 주 예수의 은혜와 평강이 성도 여러분의 가정과 일터에 넘치기를 소망합니다." class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm focus:ring-2 focus:ring-primary">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 금주의 암송 말씀 & 인쇄 테마 -->
+            <div class="bg-white rounded-3xl border border-gray-200 p-6 shadow-sm space-y-4">
+                <h3 class="text-sm font-bold text-[#154212] flex items-center gap-2 border-b border-gray-100 pb-3">
+                    <i class="fas fa-quote-left"></i> 1면 표지: 금주의 암송 말씀 및 인쇄 테마
                 </h3>
                 <div>
                     <label class="block text-xs font-bold text-gray-700 mb-1">금주의 암송 구절 본문</label>
-                    <textarea name="verse_text" rows="3" class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm focus:ring-2 focus:ring-primary"><?= e($bulletin['memory_verse']['verse'] ?? '') ?></textarea>
+                    <textarea name="verse_text" rows="2" class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm focus:ring-2 focus:ring-primary font-serif-kr"><?= e($bulletin['memory_verse']['verse'] ?? '') ?></textarea>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -60,7 +173,7 @@
                         <input type="text" name="verse_ref" value="<?= e($bulletin['memory_verse']['reference'] ?? '') ?>" placeholder="예: 마태복음 11장 28절" class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm focus:ring-2 focus:ring-primary">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">인쇄 테마 선택</label>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">전체 인쇄 테마 선택</label>
                         <select name="template_theme" class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm focus:ring-2 focus:ring-primary bg-white font-bold">
                             <option value="classic" <?= ($bulletin['template_theme'] ?? 'classic') === 'classic' ? 'selected' : '' ?>>🌿 푸른나무 클래식 (기본)</option>
                             <option value="modern" <?= ($bulletin['template_theme'] ?? '') === 'modern' ? 'selected' : '' ?>>💎 모던 에메랄드</option>
@@ -383,5 +496,20 @@ function loadDefault12Steps() {
         `;
         container.appendChild(row);
     });
+}
+
+function selectCoverPreset(url) {
+    document.getElementById('inputCoverImageUrl').value = url;
+    document.getElementById('coverPreviewImg').src = url;
+}
+
+function previewCoverFile(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('coverPreviewImg').src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
 }
 </script>
