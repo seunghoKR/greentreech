@@ -200,10 +200,6 @@
                         담임목사 전용 관리
                     </div>
 
-                    <a href="/admin/admins" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition-all <?= ($adminNav ?? '') === 'admins' ? 'bg-primary text-white shadow-sm' : 'text-gray-700 hover:bg-gray-100' ?>">
-                        <i class="fas fa-users-gear text-blue-600 w-5 text-center"></i> 관리자/사역자 권한
-                    </a>
-
                     <a href="/admin/hero" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition-all <?= ($adminNav ?? '') === 'hero_settings' ? 'bg-primary text-white shadow-sm' : 'text-gray-700 hover:bg-gray-100' ?>">
                         <i class="fas fa-image text-emerald-600 w-5 text-center"></i> 메인 배너/상단 관리
                     </a>
