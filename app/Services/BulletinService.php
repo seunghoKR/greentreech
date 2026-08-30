@@ -274,9 +274,50 @@ class BulletinService
             'cover_subtext' => $coverSubtext,
             'cover_style' => $coverStyle,
             'cover_frame' => $coverFrame,
+            'cover_presets' => self::getCoverPresets(),
             'current_week_servants' => $currentServantsInfo,
             'next_week_servants' => $nextServantsInfo,
         ];
+    }
+
+    /**
+     * 표지 이미지 프리셋 5개 목록 가져오기
+     */
+    public static function getCoverPresets(): array
+    {
+        $raw = Setting::get('bulletin_cover_presets', '');
+        $presets = [];
+        if (!empty($raw)) {
+            $presets = json_decode($raw, true) ?: [];
+        }
+
+        $defaultSlots = [
+            ['id' => 1, 'name' => '십자가 / 교회 전경', 'image' => '/public/assets/images/sample2.jpg'],
+            ['id' => 2, 'name' => '푸른나무 심볼 마크', 'image' => '/public/assets/images/logo-tree.png'],
+            ['id' => 3, 'name' => '성경과 묵상 일러스트', 'image' => '/public/assets/images/sample1.jpg'],
+            ['id' => 4, 'name' => '빛과 소망 (풍경)', 'image' => '/public/assets/images/sample3.jpg'],
+            ['id' => 5, 'name' => '절기/특별 주보 이미지', 'image' => ''],
+        ];
+
+        $result = [];
+        for ($i = 0; $i < 5; $i++) {
+            $slot = $presets[$i] ?? $defaultSlots[$i] ?? ['id' => $i + 1, 'name' => '프리셋 ' . ($i + 1), 'image' => ''];
+            $result[] = [
+                'id' => $i + 1,
+                'name' => (string)($slot['name'] ?? ('프리셋 ' . ($i + 1))),
+                'image' => (string)($slot['image'] ?? ''),
+            ];
+        }
+
+        return $result;
+    }
+
+    /**
+     * 표지 이미지 프리셋 5개 저장
+     */
+    public static function saveCoverPresets(array $presets): void
+    {
+        Setting::update('bulletin_cover_presets', json_encode($presets, JSON_UNESCAPED_UNICODE));
     }
 
     /**

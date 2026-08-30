@@ -51,7 +51,7 @@
             <div class="bg-white rounded-3xl border border-gray-200 p-6 shadow-sm space-y-5">
                 <div class="flex items-center justify-between border-b border-gray-100 pb-3">
                     <h3 class="text-sm font-bold text-[#154212] flex items-center gap-2">
-                        <i class="fas fa-image"></i> 1면 표지: 메인 이미지 / 사진 / 캘리그라피 첨부
+                        <i class="fas fa-image"></i> 1면 표지: 현재 인쇄될 메인 이미지
                     </h3>
                     <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
                         A4 접지 표지 중앙에 고해상도로 인쇄
@@ -61,9 +61,9 @@
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
                     <!-- Left: Current Preview Thumbnail -->
                     <div class="md:col-span-4 bg-gray-50 p-4 rounded-2xl border border-gray-200 text-center space-y-2.5">
-                        <span class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block">현재 표지 이미지 미리보기</span>
+                        <span class="text-[11px] font-bold text-gray-500 uppercase tracking-wider block">현재 선택된 표지 이미지</span>
                         <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-white border border-gray-200 shadow-inner flex items-center justify-center">
-                            <img id="coverPreviewImg" src="<?= e($bulletin['cover_image'] ?? '/public/assets/images/sample2.jpg') ?>" alt="표지 미리보기" class="w-full h-full object-cover">
+                            <img id="coverPreviewImg" src="<?= e($bulletin['cover_image'] ?? '/public/assets/images/sample2.jpg') ?>" onerror="this.src='/public/assets/images/logo.png'" alt="표지 미리보기" class="w-full h-full object-cover">
                         </div>
                         <p class="text-[10px] text-gray-400">권장 비율: 4:3 또는 16:9 (가로형)</p>
                     </div>
@@ -73,7 +73,7 @@
                         <!-- Direct File Upload -->
                         <div>
                             <label class="block text-xs font-bold text-gray-700 mb-1">
-                                <i class="fas fa-cloud-arrow-up text-primary mr-1"></i> 새 이미지 파일 업로드 (컴퓨터/스마트폰 사진)
+                                <i class="fas fa-cloud-arrow-up text-primary mr-1"></i> 새 이미지 파일 직접 업로드 (컴퓨터/스마트폰 사진)
                             </label>
                             <input 
                                 type="file" 
@@ -85,7 +85,7 @@
 
                         <!-- Image URL input -->
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">이미지 파일 경로 / URL</label>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">현재 이미지 파일 경로 / URL</label>
                             <input 
                                 type="text" 
                                 id="inputCoverImageUrl" 
@@ -98,22 +98,28 @@
 
                         <!-- Quick Presets -->
                         <div>
-                            <label class="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1.5">
-                                🎨 원클릭 추천 감성 이미지 프리셋
-                            </label>
-                            <div class="flex flex-wrap gap-2">
-                                <button type="button" onclick="selectCoverPreset('/public/assets/images/sample2.jpg')" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-xl text-xs font-semibold text-gray-700 flex items-center gap-1.5 transition-all">
-                                    <span>✝️ 은혜의 십자가/교회</span>
+                            <div class="flex items-center justify-between mb-1.5">
+                                <label class="block text-[11px] font-bold text-gray-600 uppercase tracking-wider">
+                                    ⚡ 5대 프리셋에서 원클릭 표지 선택
+                                </label>
+                                <span class="text-[10px] text-gray-400">아래 프리셋 보관함에서 등록/수정</span>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                                <?php foreach (($bulletin['cover_presets'] ?? []) as $pIdx => $preset): ?>
+                                <button type="button" 
+                                    onclick="applyPresetToCover(<?= $pIdx ?>)" 
+                                    class="px-3 py-2 bg-gray-50 hover:bg-emerald-50 hover:border-emerald-300 border border-gray-200 rounded-xl text-xs font-semibold text-gray-700 hover:text-emerald-900 flex items-center gap-2 transition-all text-left shadow-2xs group">
+                                    <span class="w-6 h-6 rounded-lg bg-white border border-gray-200 overflow-hidden flex items-center justify-center shrink-0 shadow-2xs">
+                                        <?php if (!empty($preset['image'])): ?>
+                                        <img id="quickPresetThumb_<?= $pIdx ?>" src="<?= e($preset['image']) ?>" onerror="this.src='/public/assets/images/logo.png'" class="w-full h-full object-cover">
+                                        <?php else: ?>
+                                        <i class="fas fa-image text-gray-300 text-[10px]" id="quickPresetIcon_<?= $pIdx ?>"></i>
+                                        <?php endif; ?>
+                                    </span>
+                                    <span class="truncate flex-1 font-bold text-[11px]" id="quickPresetLabel_<?= $pIdx ?>"><?= e($preset['name'] ?: ('프리셋 ' . ($pIdx + 1))) ?></span>
+                                    <i class="fas fa-check text-[10px] text-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                                 </button>
-                                <button type="button" onclick="selectCoverPreset('/public/assets/images/logo-tree.png')" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-xl text-xs font-semibold text-gray-700 flex items-center gap-1.5 transition-all">
-                                    <span>🌿 푸른나무 심볼</span>
-                                </button>
-                                <button type="button" onclick="selectCoverPreset('/public/assets/images/sample1.jpg')" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-xl text-xs font-semibold text-gray-700 flex items-center gap-1.5 transition-all">
-                                    <span>📖 성경과 묵상</span>
-                                </button>
-                                <button type="button" onclick="selectCoverPreset('/public/assets/images/sample3.jpg')" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-xl text-xs font-semibold text-gray-700 flex items-center gap-1.5 transition-all">
-                                    <span>🌅 빛과 소망</span>
-                                </button>
+                                <?php endforeach; ?>
                             </div>
                         </div>
 
@@ -121,7 +127,92 @@
                 </div>
             </div>
 
-            <!-- 2. 표지 디자인 스타일 & 액자 테두리 & 표지 문구 -->
+            <!-- 2. 표지 이미지 5대 프리셋 보관함 (이름 & 이미지 자유 관리) -->
+            <div class="bg-white rounded-3xl border border-gray-200 p-6 shadow-sm space-y-4">
+                <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+                    <div>
+                        <h3 class="text-sm font-bold text-[#154212] flex items-center gap-2">
+                            <i class="fas fa-bookmark text-primary"></i> 표지 이미지 5대 프리셋 보관함 (이름 & 이미지 등록)
+                        </h3>
+                        <p class="text-[11px] text-gray-500 mt-0.5">
+                            자주 쓰는 5가지 표지 이미지(십자가, 절기, 교회전경, 캘리 등)를 이름과 함께 보관해 두고 원클릭으로 꺼내 쓰실 수 있습니다.
+                        </p>
+                    </div>
+                    <span class="text-[11px] font-bold text-emerald-800 bg-emerald-100/70 px-2.5 py-1 rounded-full">
+                        총 5개 슬롯 지원
+                    </span>
+                </div>
+
+                <div class="space-y-3.5">
+                    <?php foreach (($bulletin['cover_presets'] ?? []) as $i => $preset): ?>
+                    <div class="bg-gray-50/80 p-3.5 rounded-2xl border border-gray-200 hover:border-gray-300 transition-all space-y-3">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-200/60 pb-2">
+                            <div class="flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-[#154212] text-white flex items-center justify-center text-xs font-bold shadow-2xs shrink-0">
+                                    <?= $i + 1 ?>
+                                </span>
+                                <input 
+                                    type="text" 
+                                    name="presets[<?= $i ?>][name]" 
+                                    id="presetName_<?= $i ?>"
+                                    value="<?= e($preset['name'] ?: ('프리셋 ' . ($i + 1))) ?>" 
+                                    oninput="document.getElementById('quickPresetLabel_<?= $i ?>').innerText = this.value || '프리셋 <?= $i + 1 ?>'"
+                                    placeholder="프리셋 이름 (예: 평상시 십자가, 부활절, 교회전경)" 
+                                    class="px-3 py-1.5 rounded-xl border border-gray-300 text-xs font-bold text-gray-800 bg-white focus:ring-2 focus:ring-primary w-52 sm:w-64">
+                            </div>
+                            <div class="flex items-center gap-1.5 self-end sm:self-auto">
+                                <button type="button" onclick="applyPresetToCover(<?= $i ?>)" class="px-2.5 py-1 bg-emerald-100 hover:bg-emerald-200 text-emerald-900 rounded-lg text-[11px] font-bold flex items-center gap-1 transition-all">
+                                    <i class="fas fa-check"></i> <span>표지로 즉시 적용</span>
+                                </button>
+                                <button type="button" onclick="clearPresetSlot(<?= $i ?>)" class="px-2 py-1 bg-gray-200 hover:bg-red-100 hover:text-red-700 text-gray-600 rounded-lg text-[11px] font-bold transition-all" title="이 슬롯 비우기">
+                                    <i class="fas fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-12 gap-3 items-center">
+                            <!-- Mini thumbnail -->
+                            <div class="col-span-3 sm:col-span-2">
+                                <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-white border border-gray-200 shadow-inner flex items-center justify-center">
+                                    <img 
+                                        id="presetThumb_<?= $i ?>" 
+                                        src="<?= e($preset['image'] ?: '/public/assets/images/logo.png') ?>" 
+                                        onerror="this.src='/public/assets/images/logo.png'" 
+                                        alt="프리셋 <?= $i + 1 ?>" 
+                                        class="w-full h-full object-cover <?= empty($preset['image']) ? 'opacity-30' : '' ?>">
+                                </div>
+                            </div>
+
+                            <!-- Input fields -->
+                            <div class="col-span-9 sm:col-span-10 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-gray-500 mb-0.5">📁 새 파일 업로드</label>
+                                    <input 
+                                        type="file" 
+                                        name="preset_file_<?= $i ?>" 
+                                        accept="image/*" 
+                                        onchange="previewPresetSlotFile(this, <?= $i ?>)"
+                                        class="w-full px-2.5 py-1.5 rounded-xl border border-gray-200 text-xs bg-white focus:ring-2 focus:ring-primary file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-gray-500 mb-0.5">🔗 이미지 경로 / URL</label>
+                                    <input 
+                                        type="text" 
+                                        name="presets[<?= $i ?>][image]" 
+                                        id="presetImage_<?= $i ?>"
+                                        value="<?= e($preset['image']) ?>" 
+                                        oninput="updatePresetSlotPreview(<?= $i ?>)"
+                                        placeholder="/public/assets/images/... 또는 웹 URL" 
+                                        class="w-full px-3 py-1.5 rounded-xl border border-gray-300 text-xs font-mono bg-white focus:ring-2 focus:ring-primary">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
+            <!-- 3. 표지 디자인 스타일 & 액자 테두리 & 표지 문구 -->
             <div class="bg-white rounded-3xl border border-gray-200 p-6 shadow-sm space-y-4">
                 <h3 class="text-sm font-bold text-[#154212] flex items-center gap-2 border-b border-gray-100 pb-3">
                     <i class="fas fa-palette"></i> 1면 표지: 디자인 레이아웃 및 문구 설정
@@ -499,6 +590,22 @@ function loadDefault12Steps() {
 }
 
 function selectCoverPreset(url) {
+    if (!url) return;
+    document.getElementById('inputCoverImageUrl').value = url;
+    document.getElementById('coverPreviewImg').src = url;
+}
+
+function applyPresetToCover(idx) {
+    const imgInput = document.getElementById('presetImage_' + idx);
+    const nameInput = document.getElementById('presetName_' + idx);
+    const pName = nameInput ? nameInput.value.trim() : ('프리셋 ' + (idx + 1));
+    const url = imgInput ? imgInput.value.trim() : '';
+
+    if (!url) {
+        alert('[' + pName + '] 슬롯에 등록된 이미지가 없습니다.\n먼저 파일 업로드 또는 이미지 경로를 입력해주세요~ 😊');
+        return;
+    }
+
     document.getElementById('inputCoverImageUrl').value = url;
     document.getElementById('coverPreviewImg').src = url;
 }
@@ -510,6 +617,57 @@ function previewCoverFile(input) {
             document.getElementById('coverPreviewImg').src = e.target.result;
         };
         reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function previewPresetSlotFile(input, idx) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const dataUrl = e.target.result;
+            const thumb = document.getElementById('presetThumb_' + idx);
+            if (thumb) {
+                thumb.src = dataUrl;
+                thumb.classList.remove('opacity-30');
+            }
+            const quickThumb = document.getElementById('quickPresetThumb_' + idx);
+            if (quickThumb) {
+                quickThumb.src = dataUrl;
+            }
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function updatePresetSlotPreview(idx) {
+    const input = document.getElementById('presetImage_' + idx);
+    const thumb = document.getElementById('presetThumb_' + idx);
+    const quickThumb = document.getElementById('quickPresetThumb_' + idx);
+    const val = input ? input.value.trim() : '';
+
+    if (thumb) {
+        if (val) {
+            thumb.src = val;
+            thumb.classList.remove('opacity-30');
+        } else {
+            thumb.src = '/public/assets/images/logo.png';
+            thumb.classList.add('opacity-30');
+        }
+    }
+    if (quickThumb && val) {
+        quickThumb.src = val;
+    }
+}
+
+function clearPresetSlot(idx) {
+    const nameInput = document.getElementById('presetName_' + idx);
+    const imgInput = document.getElementById('presetImage_' + idx);
+    const thumb = document.getElementById('presetThumb_' + idx);
+
+    if (imgInput) imgInput.value = '';
+    if (thumb) {
+        thumb.src = '/public/assets/images/logo.png';
+        thumb.classList.add('opacity-30');
     }
 }
 </script>

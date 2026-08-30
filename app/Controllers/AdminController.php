@@ -1432,12 +1432,46 @@ class AdminController
         }
 
         if (empty($coverImage)) {
-            $coverImage = \App\Models\Setting::get('bulletin_cover_image', '/assets/images/sample2.jpg');
+            $coverImage = \App\Models\Setting::get('bulletin_cover_image', '/public/assets/images/sample2.jpg');
         }
 
         \App\Services\BulletinService::saveCoverSettings($coverImage, $coverText, $coverSubtext, $coverStyle, $coverFrame);
 
-        Session::setFlash('success', 'A5 4면 주보 기획 및 표지 디자인 데이터가 성공적으로 저장되었습니다! 🖨️✨');
+        // 9. 1면 표지 5대 프리셋 보관함 저장 (이름 및 이미지/파일 업로드 처리)
+        $rawPresets = $_POST['presets'] ?? [];
+        $presetsToSave = [];
+        $uploadDir = __DIR__ . '/../../public/uploads/bulletin';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+
+        for ($i = 0; $i < 5; $i++) {
+            $pName = trim((string)($rawPresets[$i]['name'] ?? ('프리셋 ' . ($i + 1))));
+            $pImage = trim((string)($rawPresets[$i]['image'] ?? ''));
+
+            // 프리셋 슬롯별 개별 이미지 업로드 지원
+            $fileKey = 'preset_file_' . $i;
+            if (!empty($_FILES[$fileKey]['name']) && $_FILES[$fileKey]['error'] === UPLOAD_ERR_OK) {
+                $ext = strtolower(pathinfo($_FILES[$fileKey]['name'], PATHINFO_EXTENSION));
+                if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif'], true)) {
+                    $pFilename = 'preset_' . ($i + 1) . '_' . time() . '.' . $ext;
+                    $pDest = $uploadDir . '/' . $pFilename;
+                    if (move_uploaded_file($_FILES[$fileKey]['tmp_name'], $pDest)) {
+                        $pImage = '/uploads/bulletin/' . $pFilename;
+                    }
+                }
+            }
+
+            $presetsToSave[] = [
+                'id' => $i + 1,
+                'name' => $pName ?: ('프리셋 ' . ($i + 1)),
+                'image' => $pImage,
+            ];
+        }
+
+        \App\Services\BulletinService::saveCoverPresets($presetsToSave);
+
+        Session::setFlash('success', 'A5 4면 주보 기획 및 표지 5종 프리셋 데이터가 성공적으로 저장되었습니다! 🖨️✨');
         header('Location: /admin/bulletin-settings');
         exit;
     }
