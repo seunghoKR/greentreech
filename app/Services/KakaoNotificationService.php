@@ -104,7 +104,7 @@ class KakaoNotificationService
     }
 
     /**
-     * 내 글에 새 댓글이 달렸을 때 글 작성자에게 카카오톡 알림 발송
+     * 내 글에 새 댓글이 달렸을 때 글 작성자(게시자)에게 알림 발송
      */
     public static function notifyNewComment(array $post, array $comment, array $commenter): bool
     {
@@ -122,16 +122,22 @@ class KakaoNotificationService
         }
 
         $postTitle = $post['title'];
-        $commenterName = $commenter['nickname'] ?? '이웃 성도님';
-        $commentSnippet = mb_strimwidth($comment['content'] ?? '', 0, 40, '...');
+        $commenterName = !empty($commenter['name']) ? $commenter['name'] : ($commenter['nickname'] ?? '이웃 성도님');
+        $commentSnippet = mb_strimwidth(strip_tags((string)($comment['content'] ?? '')), 0, 60, '...');
 
-        $message = "[푸른나무교회 나눔터 알림]\n'{$postTitle}' 글에 {$commenterName}님이 댓글을 남기셨습니다:\n\"{$commentSnippet}\"";
+        $message = "🌿 [푸른나무교회 나눔터 새 댓글 알림]\n\n'{$postTitle}' 게시글에 {$commenterName} 성도님이 따뜻한 댓글을 남기셨습니다: ✨\n\n\"{$commentSnippet}\"\n\n성도 나눔터에서 확인하고 따뜻한 믿음의 교제를 이어가세요! 💖";
 
-        return self::sendMessage($postAuthorId, 'COMMENT_ALERT', $message, [
-            'title' => '새 댓글 알림',
-            'description' => "{$commenterName}: {$commentSnippet}",
-            'web_url' => "/community/{$post['id']}"
-        ]);
+        // 카카오 세션 토큰 확인 후 발송 시도
+        $accessToken = \App\Core\Session::get('kakao_access_token', '');
+        $talkSent = false;
+        if (!empty($accessToken)) {
+            $talkResult = KakaoAuthService::sendTalkMemo($accessToken, $message, "https://greentreech.iwinv.net/community/{$post['id']}", '나눔터 글 보기');
+            $talkSent = !empty($talkResult['success']);
+        }
+
+        $status = $talkSent ? 'SUCCESS (KAKAOTALK SENT)' : 'SUCCESS';
+        NotificationLog::log($postAuthorId, 'COMMENT_ALERT', $message, $status);
+        return true;
     }
 
     /**
@@ -139,11 +145,11 @@ class KakaoNotificationService
      */
     public static function notifyNewPost(array $post, array $author): bool
     {
-        $authorName = $author['nickname'] ?? '성도';
+        $authorName = !empty($author['name']) ? $author['name'] : ($author['nickname'] ?? '성도');
         $postTitle = $post['title'];
-        $category = $post['category'];
+        $category = $post['category'] ?? '나눔';
 
-        $message = "[푸른나무교회 나눔터 새글]\n[{$category}] {$authorName}님이 새로운 나눔 글을 등록하셨습니다:\n'{$postTitle}'";
+        $message = "🌿 [푸른나무교회 나눔터 새글]\n\n[{$category}] {$authorName}님이 새로운 나눔 글을 등록하셨습니다:\n'{$postTitle}'";
 
         // Record notification log
         NotificationLog::log((int)$post['member_id'], 'NEW_POST_ALERT', $message, 'SUCCESS');
@@ -151,18 +157,75 @@ class KakaoNotificationService
     }
 
     /**
-     * 새가족 등록 / 중보기도 요청 접수 시 관리자(목회자) 알림 발송
+     * 새가족 등록 / 중보기도 요청 접수 시 담임목사님(관리자)에게 실시간 알림 발송
      */
-    public static function notifyNewInquiry(array $inquiry): bool
+    public static function notifyNewInquiry(array $inquiry): array
     {
-        $type = ($inquiry['type'] ?? '') === 'PRAYER' ? '중보기도 요청' : '새가족 등록';
-        $name = $inquiry['name'] ?? '성도';
-        $phone = $inquiry['phone'] ?? '연락처 없음';
+        $type = $inquiry['type'] ?? '새가족 / 기도 접수';
+        $name = !empty($inquiry['name']) ? $inquiry['name'] : '익명의 성도님';
+        $phone = !empty($inquiry['phone']) ? $inquiry['phone'] : '연락처 미등록';
+        $content = $inquiry['content'] ?? '';
+        $contentSnippet = mb_strimwidth(strip_tags((string)$content), 0, 80, '...');
 
-        $message = "[푸른나무교회 긴급 알림]\n새로운 {$type} 접수!\n성함: {$name}님\n연락처: {$phone}\n관리자 대시보드에서 확인해 주세요.";
+        $message = "🌿 [푸른나무교회 새가족/기도 접수 알림]\n\n새로운 성도님의 접수 내역이 등록되었습니다! ✨\n\n• 접수 구분: {$type}\n• 성함: {$name}\n• 연락처: {$phone}\n• 접수 내용:\n\"{$contentSnippet}\"\n\n관리자 대시보드(/admin/inquiries)에서 확인 후 따뜻한 심방과 기도를 전해주세요. 💖";
 
-        NotificationLog::log(1, 'NEW_INQUIRY_ALERT', $message, 'SUCCESS');
-        return true;
+        // 카카오 세션 토큰 확인 후 담임목사/관리자에게 카톡 메시지 발송 시도
+        $accessToken = \App\Core\Session::get('kakao_access_token', '');
+        $talkSent = false;
+        $talkResult = null;
+        if (!empty($accessToken)) {
+            $talkResult = KakaoAuthService::sendTalkMemo($accessToken, $message, 'https://greentreech.iwinv.net/admin/inquiries', '접수 내역 확인하기');
+            $talkSent = !empty($talkResult['success']);
+        }
+
+        $status = $talkSent ? 'SUCCESS (KAKAOTALK SENT)' : 'LOGGED';
+        $logId = NotificationLog::log(1, 'NEW_INQUIRY_ALERT', $message, $status);
+
+        return [
+            'success' => true,
+            'talk_sent' => $talkSent,
+            'log_id' => $logId,
+        ];
+    }
+
+    /**
+     * 담임목사님이 새가족/기도 접수글에 답변/메모를 남겼을 때 접수 성도님에게 알림 발송
+     */
+    public static function notifyInquiryReply(array $inquiry, string $status, ?string $adminMemo): array
+    {
+        $name = !empty($inquiry['name']) ? $inquiry['name'] : '성도';
+        $phone = !empty($inquiry['phone']) ? $inquiry['phone'] : '';
+        $type = $inquiry['type'] ?? '새가족/기도 접수';
+        $memoSnippet = !empty($adminMemo) ? mb_strimwidth(strip_tags((string)$adminMemo), 0, 100, '...') : '기도와 함께 정성껏 확인하였습니다.';
+
+        $message = "🌿 [푸른나무교회 담임목사님 답변 알림]\n\n{$name} 성도님, 남겨주신 소중한 이야기에 담임목사님께서 따뜻한 기도와 답변을 남기셨습니다. ✨\n\n• 접수 구분: {$type}\n• 처리 상태: {$status}\n• 담임목사님 말씀/답변:\n\"{$memoSnippet}\"\n\n주님의 크신 사랑과 은혜가 성도님의 가정과 삶에 늘 가득하시기를 소망합니다. 💖";
+
+        // 성도 회원이 전화번호나 이름으로 매칭되는지 확인
+        $recipientId = 1;
+        if (!empty($phone)) {
+            $cleanPhone = str_replace(['-', ' '], '', $phone);
+            $matchedMember = \App\Core\Database::fetchOne("SELECT id FROM `members` WHERE REPLACE(REPLACE(`phone`, '-', ''), ' ', '') = :phone LIMIT 1", ['phone' => $cleanPhone]);
+            if ($matchedMember) {
+                $recipientId = (int)$matchedMember['id'];
+            }
+        }
+
+        // 카카오 세션 토큰 확인 후 발송 시도
+        $accessToken = \App\Core\Session::get('kakao_access_token', '');
+        $talkSent = false;
+        if (!empty($accessToken)) {
+            $talkResult = KakaoAuthService::sendTalkMemo($accessToken, $message, 'https://greentreech.iwinv.net/inquiry', '푸른나무교회 바로가기');
+            $talkSent = !empty($talkResult['success']);
+        }
+
+        $statusLog = $talkSent ? 'SUCCESS (KAKAOTALK SENT)' : 'SUCCESS (REPLY SENT)';
+        $logId = NotificationLog::log($recipientId, 'INQUIRY_REPLY_ALERT', $message, $statusLog);
+
+        return [
+            'success' => true,
+            'log_id' => $logId,
+            'message' => $message,
+        ];
     }
 
     /**

@@ -161,15 +161,20 @@
                         $badgeClass = 'bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold';
                         $typeName = '누리오 테스트';
                     } elseif ($log['type'] === 'COMMENT_ALERT') {
-                        $badgeClass = 'bg-amber-100 text-amber-800';
-                        $typeName = '댓글 알림';
+                        $badgeClass = 'bg-amber-100 text-amber-800 font-semibold';
+                        $typeName = '댓글 알림 💬';
                     } elseif ($log['type'] === 'NEW_INQUIRY_ALERT') {
                         $badgeClass = 'bg-red-100 text-red-800 font-bold';
-                        $typeName = '새가족/기도';
+                        $typeName = '새가족/기도 🚨';
+                    } elseif ($log['type'] === 'INQUIRY_REPLY_ALERT') {
+                        $badgeClass = 'bg-purple-100 text-purple-800 border border-purple-200 font-bold';
+                        $typeName = '담임목사 답변 💌';
                     } elseif ($log['type'] === 'NEW_POST_ALERT') {
                         $badgeClass = 'bg-blue-100 text-blue-800';
                         $typeName = '새글 알림';
                     }
+
+                    $recipientDisplay = !empty($log['recipient_name']) ? $log['recipient_name'] : ($log['type'] === 'NEW_INQUIRY_ALERT' ? '담임목사 (심민보 목사)' : '성도님');
                 ?>
                 <div class="p-4 space-y-2 hover:bg-gray-50/80 transition-colors">
                     <!-- Line 1: Type, Recipient, Status, Date -->
@@ -179,7 +184,7 @@
                                 <?= $typeName ?>
                             </span>
                             <span class="font-bold text-gray-900 text-xs truncate">
-                                <?= e($log['recipient_name'] ?: '이승호 대표님') ?>
+                                <?= e($recipientDisplay) ?>
                             </span>
                         </div>
                         <div class="flex items-center gap-2 shrink-0">
@@ -206,9 +211,9 @@
                 <thead>
                     <tr class="bg-gray-50 text-gray-600 text-xs font-bold uppercase tracking-wider border-b border-gray-200">
                         <th class="p-4 w-36 whitespace-nowrap">알림 유형</th>
-                        <th class="p-4 w-36 whitespace-nowrap">수신자</th>
+                        <th class="p-4 w-40 whitespace-nowrap">수신 대상</th>
                         <th class="p-4">알림 메시지 내용</th>
-                        <th class="p-4 w-24 text-center whitespace-nowrap">전송 상태</th>
+                        <th class="p-4 w-28 text-center whitespace-nowrap">전송 상태</th>
                         <th class="p-4 w-40 text-center whitespace-nowrap">발송 일시</th>
                     </tr>
                 </thead>
@@ -225,15 +230,20 @@
                                 $badgeClass = 'bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold';
                                 $typeName = '누리오 테스트';
                             } elseif ($log['type'] === 'COMMENT_ALERT') {
-                                $badgeClass = 'bg-amber-100 text-amber-800';
-                                $typeName = '댓글 알림';
+                                $badgeClass = 'bg-amber-100 text-amber-800 font-semibold';
+                                $typeName = '댓글 알림 💬';
                             } elseif ($log['type'] === 'NEW_INQUIRY_ALERT') {
                                 $badgeClass = 'bg-red-100 text-red-800 font-bold';
-                                $typeName = '새가족/기도';
+                                $typeName = '새가족/기도 🚨';
+                            } elseif ($log['type'] === 'INQUIRY_REPLY_ALERT') {
+                                $badgeClass = 'bg-purple-100 text-purple-800 border border-purple-200 font-bold';
+                                $typeName = '담임목사 답변 💌';
                             } elseif ($log['type'] === 'NEW_POST_ALERT') {
                                 $badgeClass = 'bg-blue-100 text-blue-800';
                                 $typeName = '새글 알림';
                             }
+
+                            $recipientDisplay = !empty($log['recipient_name']) ? $log['recipient_name'] : ($log['type'] === 'NEW_INQUIRY_ALERT' ? '담임목사 (심민보 목사)' : '성도님');
                         ?>
                         <tr class="hover:bg-gray-50/80 transition-colors">
                             <td class="p-4 whitespace-nowrap">
@@ -242,7 +252,7 @@
                                 </span>
                             </td>
                             <td class="p-4 font-bold text-gray-900 whitespace-nowrap">
-                                <?= e($log['recipient_name'] ?: '이승호 대표님') ?>
+                                <?= e($recipientDisplay) ?>
                             </td>
                             <td class="p-4 text-xs font-mono text-gray-700 whitespace-pre-line leading-relaxed">
                                 <?= e($log['message']) ?>

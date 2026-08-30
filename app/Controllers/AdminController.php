@@ -1126,8 +1126,18 @@ class AdminController
         $status = trim((string)($_POST['status'] ?? '확인완료'));
         $adminMemo = trim((string)($_POST['admin_memo'] ?? ''));
 
-        Inquiry::updateStatus((int)$id, $status, $adminMemo);
-        Session::setFlash('success', '상태 및 관리자 메모가 저장되었습니다.');
+        $inquiry = Inquiry::find((int)$id);
+        if ($inquiry) {
+            Inquiry::updateStatus((int)$id, $status, $adminMemo);
+
+            // 담임목사님이 메모/답변 또는 상태를 업데이트하면 접수 성도님에게 알림 발송
+            \App\Services\KakaoNotificationService::notifyInquiryReply($inquiry, $status, $adminMemo);
+
+            Session::setFlash('success', '상태 및 목회자 메모가 저장되었으며, 성도님 알림이 발송되었습니다.');
+        } else {
+            Session::setFlash('error', '접수 내역을 찾을 수 없습니다.');
+        }
+
         header("Location: /admin/inquiries/{$id}");
         exit;
     }

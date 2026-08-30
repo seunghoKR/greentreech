@@ -63,12 +63,21 @@ class InquiryController
         }
 
         try {
-            Inquiry::create([
+            $inquiryId = Inquiry::create([
                 'type' => $type,
                 'name' => $name,
                 'phone' => $phone,
                 'content' => $content,
                 'is_private' => $isPrivate,
+            ]);
+
+            // 담임목사에게 실시간 새가족/기도 접수 알림 발송
+            \App\Services\KakaoNotificationService::notifyNewInquiry([
+                'id' => $inquiryId,
+                'type' => $type,
+                'name' => $name,
+                'phone' => $phone,
+                'content' => $content,
             ]);
 
             Session::setFlash('success', '따뜻한 마음으로 접수되었습니다. 담임목사님께서 확인 후 연락드리겠습니다. 평안한 하루 되세요!');
