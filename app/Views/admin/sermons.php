@@ -64,10 +64,10 @@
         <div class="bg-white p-4 rounded-3xl border border-gray-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
             <!-- Bulk Action Selector -->
             <div class="flex items-center gap-2 flex-wrap">
-                <span class="text-xs font-bold text-gray-600 flex items-center gap-1">
+                <span class="text-xs font-bold text-gray-600 flex items-center gap-1 shrink-0 whitespace-nowrap">
                     <i class="fas fa-check-double text-primary"></i> 선택 항목 일괄 변경:
                 </span>
-                <select name="bulk_category" class="px-3 py-1.5 rounded-xl border border-gray-300 text-xs font-bold focus:ring-2 focus:ring-primary bg-gray-50">
+                <select name="bulk_category" class="px-3 py-1.5 rounded-xl border border-gray-300 text-xs font-bold focus:ring-2 focus:ring-primary bg-gray-50 flex-1 sm:flex-initial">
                     <option value="">-- 변경할 분류 선택 --</option>
                     <option value="설교 영상">📖 설교 영상</option>
                     <option value="예배 영상">✝️ 예배 영상</option>
@@ -77,14 +77,14 @@
                     <option value="교회 행사/일상">🌿 교회 행사/일상</option>
                     <option value="기타">📦 기타</option>
                 </select>
-                <button type="submit" onclick="return confirmBulkAction();" class="px-3.5 py-1.5 bg-gray-800 hover:bg-gray-900 text-white rounded-xl text-xs font-bold transition-all shadow-xs">
+                <button type="submit" onclick="return confirmBulkAction();" class="px-3.5 py-1.5 bg-gray-800 hover:bg-gray-900 text-white rounded-xl text-xs font-bold transition-all shadow-xs shrink-0 whitespace-nowrap">
                     일괄 적용
                 </button>
             </div>
 
             <!-- Search Form -->
-            <div class="flex items-center gap-2">
-                <div class="relative">
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+                <div class="relative flex-1 sm:flex-initial">
                     <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
                     <input 
                         type="text" 
@@ -93,13 +93,13 @@
                         value="<?= e($keyword ?? '') ?>" 
                         placeholder="영상 제목, 설교자 검색" 
                         onkeydown="if(event.key==='Enter'){ event.preventDefault(); doSearch(); }"
-                        class="pl-8 pr-3 py-1.5 rounded-xl border border-gray-200 text-xs w-48 sm:w-60 focus:ring-2 focus:ring-primary bg-gray-50/70">
+                        class="pl-8 pr-3 py-1.5 rounded-xl border border-gray-200 text-xs w-full sm:w-60 focus:ring-2 focus:ring-primary bg-gray-50/70">
                 </div>
-                <button type="button" onclick="doSearch();" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-bold transition-all">
+                <button type="button" onclick="doSearch();" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-bold transition-all shrink-0 whitespace-nowrap">
                     검색
                 </button>
                 <?php if (!empty($keyword)): ?>
-                <a href="/admin/sermons?category=<?= urlencode($currentCategory ?? '전체') ?>" class="px-2.5 py-1.5 text-gray-400 hover:text-gray-600 text-xs font-bold">
+                <a href="/admin/sermons?category=<?= urlencode($currentCategory ?? '전체') ?>" class="px-2.5 py-1.5 text-gray-400 hover:text-gray-600 text-xs font-bold shrink-0 whitespace-nowrap">
                     초기화
                 </a>
                 <?php endif; ?>
@@ -108,19 +108,117 @@
 
         <!-- Video Table Card -->
         <div class="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
-            <div class="overflow-x-auto">
+            
+            <!-- Mobile 2-Line / Card List (화면 < md 일 때 노출되어 짤림 방지) -->
+            <div class="md:hidden divide-y divide-gray-100">
+                <?php if (!empty($pagination['items'])): ?>
+                    <div class="p-3 bg-gray-50/80 border-b border-gray-100 flex items-center justify-between">
+                        <label class="flex items-center gap-2 cursor-pointer text-xs font-bold text-gray-700">
+                            <input type="checkbox" onclick="toggleSelectAll(this)" class="rounded text-primary focus:ring-primary h-4 w-4">
+                            <span>전체 선택</span>
+                        </label>
+                        <span class="text-[11px] text-gray-400 font-medium">총 <?= number_format($pagination['total'] ?? 0) ?>개 영상</span>
+                    </div>
+
+                    <?php foreach ($pagination['items'] as $item): ?>
+                    <?php 
+                        $yid = \App\Models\Sermon::extractYoutubeId($item['youtube_id'] ?? '');
+                        $isShorts = ($item['video_type'] ?? '') === 'shorts' || str_contains($item['category'] ?? '', '쇼츠');
+                    ?>
+                    <div class="p-3.5 space-y-2.5 hover:bg-gray-50/80 transition-colors">
+                        <!-- Top Row: Checkbox, Thumbnail, Title & Meta -->
+                        <div class="flex items-start gap-2.5">
+                            <div class="pt-1 shrink-0">
+                                <input type="checkbox" name="ids[]" value="<?= e($item['id']) ?>" class="video-checkbox rounded text-primary focus:ring-primary h-4 w-4">
+                            </div>
+                            
+                            <!-- Thumbnail (Compact 80px) -->
+                            <div class="relative w-20 aspect-video rounded-xl overflow-hidden shadow-2xs border border-gray-200 bg-gray-900 shrink-0">
+                                <?php if ($yid): ?>
+                                    <img src="https://img.youtube.com/vi/<?= e($yid) ?>/hqdefault.jpg" alt="Thumbnail" class="w-full h-full object-cover">
+                                    <a href="https://www.youtube.com/watch?v=<?= e($yid) ?>" target="_blank" class="absolute inset-0 bg-black/30 flex items-center justify-center text-white text-xs">
+                                        <i class="fas fa-play text-[10px]"></i>
+                                    </a>
+                                <?php else: ?>
+                                    <div class="w-full h-full flex items-center justify-center text-gray-500">
+                                        <i class="fab fa-youtube text-base"></i>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if ($isShorts): ?>
+                                    <span class="absolute bottom-0.5 right-0.5 px-1 py-0.2 bg-red-600 text-white rounded text-[7px] font-bold">Shorts</span>
+                                <?php endif; ?>
+                            </div>
+
+                            <!-- Title & Info -->
+                            <div class="min-w-0 flex-1">
+                                <div class="font-bold text-gray-900 text-xs line-clamp-2 leading-snug break-words">
+                                    <?= e($item['title']) ?>
+                                </div>
+                                <div class="flex items-center gap-2 mt-1 text-[11px] text-gray-500 font-medium flex-wrap">
+                                    <span class="font-semibold text-gray-700"><?= e($item['preacher'] ?: '심민보 목사') ?></span>
+                                    <span><?= e($item['sermon_date']) ?></span>
+                                    <span class="px-1.5 py-0.2 rounded text-[9px] font-bold <?= $isShorts ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700' ?>">
+                                        <?= $isShorts ? '쇼츠' : '일반' ?>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Row: Category Selector (Instant Save) + Edit/Delete Actions -->
+                        <div class="flex items-center gap-2 pt-1 border-t border-gray-100">
+                            <div class="relative flex-1">
+                                <select onchange="updateVideoCategory(<?= e($item['id']) ?>, this.value)" class="w-full px-2.5 py-1.5 rounded-xl border border-gray-300 text-xs font-bold focus:ring-2 focus:ring-primary bg-white shadow-2xs">
+                                    <option value="설교 영상" <?= ($item['category'] === '설교 영상' || $item['category'] === '주일 설교' || empty($item['category'])) ? 'selected' : '' ?>>📖 설교 영상</option>
+                                    <option value="예배 영상" <?= ($item['category'] === '예배 영상') ? 'selected' : '' ?>>✝️ 예배 영상</option>
+                                    <option value="듣는 성경" <?= ($item['category'] === '듣는 성경') ? 'selected' : '' ?>>🎧 듣는 성경</option>
+                                    <option value="설교 쇼츠" <?= ($item['category'] === '설교 쇼츠' || $item['category'] === '설교 말씀 쇼츠') ? 'selected' : '' ?>>⚡ 설교 쇼츠</option>
+                                    <option value="예배 쇼츠" <?= ($item['category'] === '예배 쇼츠') ? 'selected' : '' ?>>🙏 예배 쇼츠</option>
+                                    <option value="교회 행사/일상" <?= ($item['category'] === '교회 행사/일상' || $item['category'] === '교회 일상 & 애찬 쇼츠' || $item['category'] === '교회 행사 & 특별 찬양') ? 'selected' : '' ?>>🌿 교회 행사/일상</option>
+                                    <option value="기타" <?= ($item['category'] === '기타' || $item['category'] === '성도 간증 & 교우 소식' || $item['category'] === '미분류 / 기타') ? 'selected' : '' ?>>📦 기타</option>
+                                </select>
+                                <span class="saved-badge-<?= e($item['id']) ?> hidden absolute right-8 top-1/2 -translate-y-1/2 text-[10px] text-green-600 font-bold">
+                                    <i class="fas fa-check"></i>
+                                </span>
+                            </div>
+
+                            <?php if ($yid): ?>
+                            <a href="https://www.youtube.com/watch?v=<?= e($yid) ?>" target="_blank" class="p-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs shrink-0" title="유튜브 재생">
+                                <i class="fab fa-youtube text-sm"></i>
+                            </a>
+                            <?php endif; ?>
+
+                            <a href="/admin/sermons/edit/<?= e($item['id']) ?>?page=<?= $pagination['page'] ?>&category=<?= urlencode($currentCategory ?? '전체') ?><?= !empty($keyword) ? '&keyword=' . urlencode($keyword) : '' ?>" class="p-1.5 bg-gray-100 hover:bg-primary hover:text-white text-gray-600 rounded-lg text-xs transition-all shrink-0" title="상세 정보 수정">
+                                <i class="fas fa-pen-to-square"></i>
+                            </a>
+                            
+                            <a href="/admin/sermons/delete/<?= e($item['id']) ?>?page=<?= $pagination['page'] ?>&category=<?= urlencode($currentCategory ?? '전체') ?><?= !empty($keyword) ? '&keyword=' . urlencode($keyword) : '' ?>" onclick="return confirm('정말 이 영상을 목록에서 삭제하시겠습니까?');" class="p-1.5 bg-red-50 text-red-500 hover:bg-red-100 rounded-lg text-xs transition-all shrink-0" title="삭제">
+                                <i class="fas fa-trash-can"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="p-12 text-center text-xs text-gray-400">
+                        <i class="fab fa-youtube text-3xl mb-2 text-gray-300 block"></i>
+                        해당 분류에 등록된 영상이 없습니다. 상단의 <b>[유튜브 영상 최신 동기화]</b> 버튼을 눌러보세요!
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <!-- Desktop Full Table (hidden md:block) -->
+            <div class="hidden md:block overflow-x-auto">
                 <table class="w-full text-left border-collapse text-xs">
                     <thead>
                         <tr class="bg-gray-50 text-gray-600 font-bold border-b border-gray-200">
                             <th class="py-3.5 px-3 w-10 text-center">
                                 <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)" class="rounded text-primary focus:ring-primary">
                             </th>
-                            <th class="py-3.5 px-3 w-28 text-center">썸네일</th>
+                            <th class="py-3.5 px-3 w-28 text-center whitespace-nowrap">썸네일</th>
                             <th class="py-3.5 px-4">영상 제목 & 유튜브 링크</th>
-                            <th class="py-3.5 px-3 w-28">설교자 / 일자</th>
-                            <th class="py-3.5 px-3 w-56">분류 카테고리 (직접 변경)</th>
-                            <th class="py-3.5 px-3 w-24 text-center">영상 형식</th>
-                            <th class="py-3.5 px-4 w-20 text-center">관리</th>
+                            <th class="py-3.5 px-3 w-28 whitespace-nowrap">설교자 / 일자</th>
+                            <th class="py-3.5 px-3 w-56 whitespace-nowrap">분류 카테고리 (직접 변경)</th>
+                            <th class="py-3.5 px-3 w-24 text-center whitespace-nowrap">영상 형식</th>
+                            <th class="py-3.5 px-4 w-20 text-center whitespace-nowrap">관리</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100 text-gray-700">
@@ -162,12 +260,12 @@
                                     </div>
                                     <div class="flex items-center gap-2 mt-1">
                                         <?php if ($yid): ?>
-                                        <a href="https://www.youtube.com/watch?v=<?= e($yid) ?>" target="_blank" class="text-[11px] text-red-600 hover:underline flex items-center gap-1 font-semibold">
+                                        <a href="https://www.youtube.com/watch?v=<?= e($yid) ?>" target="_blank" class="text-[11px] text-red-600 hover:underline flex items-center gap-1 font-semibold whitespace-nowrap">
                                             <i class="fab fa-youtube"></i> 유튜브 열기
                                         </a>
                                         <?php endif; ?>
                                         <?php if (!empty($item['scripture'])): ?>
-                                        <span class="text-[10px] text-gray-400 bg-gray-100 px-1.5 py-0.2 rounded font-medium">
+                                        <span class="text-[10px] text-gray-400 bg-gray-100 px-1.5 py-0.2 rounded font-medium whitespace-nowrap">
                                             <?= e($item['scripture']) ?>
                                         </span>
                                         <?php endif; ?>
@@ -175,7 +273,7 @@
                                 </td>
 
                                 <!-- Preacher & Date -->
-                                <td class="py-3.5 px-3">
+                                <td class="py-3.5 px-3 whitespace-nowrap">
                                     <div class="font-bold text-gray-800"><?= e($item['preacher'] ?: '심민보 목사') ?></div>
                                     <div class="text-[11px] text-gray-400 mt-0.5"><?= e($item['sermon_date']) ?></div>
                                 </td>
@@ -192,21 +290,21 @@
                                              <option value="교회 행사/일상" <?= ($item['category'] === '교회 행사/일상' || $item['category'] === '교회 일상 & 애찬 쇼츠' || $item['category'] === '교회 행사 & 특별 찬양') ? 'selected' : '' ?>>🌿 교회 행사/일상</option>
                                              <option value="기타" <?= ($item['category'] === '기타' || $item['category'] === '성도 간증 & 교우 소식' || $item['category'] === '미분류 / 기타') ? 'selected' : '' ?>>📦 기타</option>
                                          </select>
-                                         <span id="saved-badge-<?= e($item['id']) ?>" class="hidden text-[10px] text-green-600 font-bold shrink-0">
+                                         <span class="saved-badge-<?= e($item['id']) ?> hidden text-[10px] text-green-600 font-bold shrink-0">
                                              <i class="fas fa-check"></i>
                                          </span>
                                      </div>
                                 </td>
 
                                 <!-- Video Type -->
-                                <td class="py-3.5 px-3 text-center">
+                                <td class="py-3.5 px-3 text-center whitespace-nowrap">
                                     <span class="px-2 py-1 rounded-full text-[10px] font-bold <?= $isShorts ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700' ?>">
                                         <?= $isShorts ? '세로 쇼츠' : '일반 영상' ?>
                                     </span>
                                 </td>
 
                                 <!-- Actions -->
-                                <td class="py-3.5 px-4 text-center">
+                                <td class="py-3.5 px-4 text-center whitespace-nowrap">
                                     <div class="flex items-center justify-center gap-1.5">
                                         <a href="/admin/sermons/edit/<?= e($item['id']) ?>?page=<?= $pagination['page'] ?>&category=<?= urlencode($currentCategory ?? '전체') ?><?= !empty($keyword) ? '&keyword=' . urlencode($keyword) : '' ?>" class="p-1.5 text-gray-500 hover:text-primary hover:bg-gray-100 rounded-lg transition-all" title="상세 정보 수정">
                                             <i class="fas fa-pen-to-square"></i>
@@ -275,7 +373,7 @@ function doSearch() {
 
 // Instant AJAX Auto-Save on Category Change
 function updateVideoCategory(id, newCategory) {
-    const badge = document.getElementById(`saved-badge-${id}`);
+    const badges = document.querySelectorAll(`.saved-badge-${id}`);
     
     const formData = new FormData();
     formData.append('id', id);
@@ -291,12 +389,12 @@ function updateVideoCategory(id, newCategory) {
     .then(res => res.json())
     .then(data => {
         if (data.success) {
-            if (badge) {
+            badges.forEach(badge => {
                 badge.classList.remove('hidden');
                 setTimeout(() => {
                     badge.classList.add('hidden');
                 }, 2000);
-            }
+            });
         }
     })
     .catch(err => {
