@@ -146,15 +146,70 @@
             </h3>
             <span class="text-xs text-gray-400 font-medium">최근 30건 표시</span>
         </div>
-        <div class="overflow-x-auto">
+        
+        <!-- Mobile 2-Line Log List (md:hidden) -->
+        <div class="md:hidden divide-y divide-gray-100">
+            <?php if (!empty($logs)): ?>
+                <?php foreach ($logs as $log): ?>
+                <?php 
+                    $badgeClass = 'bg-gray-100 text-gray-800';
+                    $typeName = '일반 알림';
+                    if ($log['type'] === 'WELCOME_ALERT') {
+                        $badgeClass = 'bg-amber-100 text-amber-900 border border-amber-300 font-bold';
+                        $typeName = '첫 로그인 환영 🌿';
+                    } elseif ($log['type'] === 'NURIO_TEST_ALERT' || $log['type'] === 'YOUNGJA_TEST_ALERT') {
+                        $badgeClass = 'bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold';
+                        $typeName = '누리오 테스트';
+                    } elseif ($log['type'] === 'COMMENT_ALERT') {
+                        $badgeClass = 'bg-amber-100 text-amber-800';
+                        $typeName = '댓글 알림';
+                    } elseif ($log['type'] === 'NEW_INQUIRY_ALERT') {
+                        $badgeClass = 'bg-red-100 text-red-800 font-bold';
+                        $typeName = '새가족/기도';
+                    } elseif ($log['type'] === 'NEW_POST_ALERT') {
+                        $badgeClass = 'bg-blue-100 text-blue-800';
+                        $typeName = '새글 알림';
+                    }
+                ?>
+                <div class="p-4 space-y-2 hover:bg-gray-50/80 transition-colors">
+                    <!-- Line 1: Type, Recipient, Status, Date -->
+                    <div class="flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-1.5 min-w-0">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] <?= $badgeClass ?> shrink-0">
+                                <?= $typeName ?>
+                            </span>
+                            <span class="font-bold text-gray-900 text-xs truncate">
+                                <?= e($log['recipient_name'] ?: '이승호 대표님') ?>
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-green-100 text-green-700">
+                                <i class="fas fa-check text-[8px]"></i> <?= e($log['status']) ?>
+                            </span>
+                            <span class="text-[10px] text-gray-400"><?= date('m/d H:i', strtotime($log['created_at'])) ?></span>
+                        </div>
+                    </div>
+                    <!-- Line 2: Message Box (모바일에서도 짤림 없이 노출) -->
+                    <div class="text-xs font-mono text-gray-700 bg-gray-50/80 p-2.5 rounded-xl border border-gray-100 whitespace-pre-line leading-relaxed break-words">
+                        <?= e($log['message']) ?>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="p-8 text-center text-xs text-gray-400">발송된 알림 내역이 없습니다.</div>
+            <?php endif; ?>
+        </div>
+
+        <!-- Desktop Table (hidden md:block) -->
+        <div class="hidden md:block overflow-x-auto">
             <table class="w-full text-left border-collapse">
                 <thead>
                     <tr class="bg-gray-50 text-gray-600 text-xs font-bold uppercase tracking-wider border-b border-gray-200">
-                        <th class="p-4 w-36">알림 유형</th>
-                        <th class="p-4 w-36">수신자</th>
+                        <th class="p-4 w-36 whitespace-nowrap">알림 유형</th>
+                        <th class="p-4 w-36 whitespace-nowrap">수신자</th>
                         <th class="p-4">알림 메시지 내용</th>
-                        <th class="p-4 w-24 text-center">전송 상태</th>
-                        <th class="p-4 w-40 text-center">발송 일시</th>
+                        <th class="p-4 w-24 text-center whitespace-nowrap">전송 상태</th>
+                        <th class="p-4 w-40 text-center whitespace-nowrap">발송 일시</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100 text-xs sm:text-sm text-gray-700">
@@ -181,23 +236,23 @@
                             }
                         ?>
                         <tr class="hover:bg-gray-50/80 transition-colors">
-                            <td class="p-4">
+                            <td class="p-4 whitespace-nowrap">
                                 <span class="px-2.5 py-1 rounded-full text-[11px] <?= $badgeClass ?>">
                                     <?= $typeName ?>
                                 </span>
                             </td>
-                            <td class="p-4 font-bold text-gray-900">
+                            <td class="p-4 font-bold text-gray-900 whitespace-nowrap">
                                 <?= e($log['recipient_name'] ?: '이승호 대표님') ?>
                             </td>
                             <td class="p-4 text-xs font-mono text-gray-700 whitespace-pre-line leading-relaxed">
                                 <?= e($log['message']) ?>
                             </td>
-                            <td class="p-4 text-center">
+                            <td class="p-4 text-center whitespace-nowrap">
                                 <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-green-100 text-green-700 flex items-center justify-center gap-1 w-fit mx-auto">
                                     <i class="fas fa-check text-[9px]"></i> <?= e($log['status']) ?>
                                 </span>
                             </td>
-                            <td class="p-4 text-center text-xs text-gray-400">
+                            <td class="p-4 text-center text-xs text-gray-400 whitespace-nowrap">
                                 <?= e($log['created_at']) ?>
                             </td>
                         </tr>
@@ -206,7 +261,7 @@
                         <tr>
                             <td colspan="5" class="p-10 text-center text-xs text-gray-400">
                                 <i class="fas fa-bell-slash text-2xl text-gray-300 mb-2 block"></i>
-                                발송된 알림 내역이 없습니다. 상단의 [지금 테스트 알림 보내기]를 눌러보세요!
+                                발송된 알림 내역이 없습니다.
                             </td>
                         </tr>
                     <?php endif; ?>
