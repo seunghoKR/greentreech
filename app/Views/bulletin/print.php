@@ -182,70 +182,90 @@ $coverFrame = $bulletin['cover_frame'] ?? 'rounded';
         <div class="fold-divider"></div>
 
         <!-- ------------------------------------------------------------- -->
-        <!-- [4면 (좌측)]: 교회 소개 & 예배/모임 안내 & 오시는 길 -->
+        <!-- [4면 (좌측)]: 교회 소개 & 예배안내 & 알리는 말씀(소식) & 오시는 길 -->
         <!-- ------------------------------------------------------------- -->
-        <div class="a5-page border-r border-gray-100 print:border-none">
-            <!-- 4-Page Header -->
+        <div class="a5-page border-r border-gray-100 print:border-none flex flex-col justify-between">
             <div>
-                <div class="flex items-center justify-between border-b-2 border-[#154212] pb-2 mb-3">
-                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">ABOUT & SCHEDULE</span>
-                    <span class="text-[11px] font-bold text-[#154212]">교회 안내 및 오시는 길</span>
+                <!-- 4-Page Header -->
+                <div class="flex items-center justify-between border-b-2 border-[#154212] pb-1.5 mb-2.5">
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">ABOUT & CHURCH NEWS</span>
+                    <span class="text-[11px] font-bold text-[#154212]">교회 안내 및 알리는 말씀</span>
                 </div>
 
-                <!-- 1. 교회 비전 -->
-                <div class="bg-gray-50/80 p-3 rounded-xl border border-gray-200/80 mb-3.5">
-                    <h4 class="text-xs font-bold text-[#154212] mb-1 flex items-center gap-1.5">
-                        <i class="fas fa-tree"></i> 푸른나무 비전
-                    </h4>
-                    <p class="text-[11px] text-gray-700 leading-relaxed font-serif-kr">
-                        <?= nl2br(htmlspecialchars($page4['vision'] ?? '푸른나무교회는 외롭고 지친 마음에 하나님의 참된 안식을 선물하고, 서로를 깊이 사랑하며 함께 자라나는 믿음의 공동체입니다.')) ?>
-                    </p>
-                </div>
-
-                <!-- 2. 주간 예배 및 모임 시간표 -->
-                <div class="mb-3.5">
-                    <h4 class="text-xs font-bold text-gray-900 mb-1.5 flex items-center gap-1.5">
-                        <i class="fas fa-clock text-[#154212]"></i> 정기 예배 및 모임 안내
-                    </h4>
-                    <table class="w-full text-[11px] border border-gray-200 rounded-lg overflow-hidden">
-                        <thead class="bg-gray-100 text-gray-700 font-bold">
-                            <tr>
-                                <th class="py-1 px-2 text-left">구분</th>
-                                <th class="py-1 px-2 text-left">일시 / 시간</th>
-                                <th class="py-1 px-2 text-left">장소</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100">
-                            <?php foreach (($page4['schedules'] ?? []) as $sch): ?>
-                            <tr>
-                                <td class="py-1 px-2 font-semibold text-gray-900"><?= htmlspecialchars($sch['name']) ?></td>
-                                <td class="py-1 px-2 text-gray-700"><?= htmlspecialchars($sch['time']) ?></td>
-                                <td class="py-1 px-2 text-gray-500"><?= htmlspecialchars($sch['place']) ?></td>
-                            </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- 3. 온라인 헌금 안내 -->
-                <div class="bg-gray-50 p-2.5 rounded-xl border border-gray-200/80 mb-3 text-[11px]">
-                    <div class="flex items-center justify-between mb-0.5">
-                        <span class="font-bold text-gray-900"><i class="fas fa-hand-holding-heart text-amber-600 mr-1"></i> 온라인 헌금 계좌</span>
-                        <span class="text-gray-500 font-semibold"><?= htmlspecialchars($page4['giving']['bank'] ?? '농협') ?></span>
+                <!-- 1. 주간 예배 및 모임 시간표 & 비전 (2열 콤팩트 그리드) -->
+                <div class="grid grid-cols-1 gap-2 mb-2.5">
+                    <div class="bg-gray-50/90 p-2.5 rounded-xl border border-gray-200">
+                        <div class="flex items-center justify-between mb-1">
+                            <h4 class="text-[11px] font-bold text-gray-900 flex items-center gap-1">
+                                <i class="fas fa-clock text-[#154212]"></i> 정기 예배 및 모임 시간
+                            </h4>
+                            <span class="text-[10px] text-gray-500 font-semibold font-serif-kr">"<?= htmlspecialchars($mainSlogan) ?>"</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-1.5 text-center text-[10px]">
+                            <div class="bg-white p-1.5 rounded-lg border border-gray-100 shadow-3xs">
+                                <span class="font-bold text-gray-900 block">주일 낮 예배</span>
+                                <span class="text-[#154212] font-semibold">오전 11:00</span>
+                            </div>
+                            <div class="bg-white p-1.5 rounded-lg border border-gray-100 shadow-3xs">
+                                <span class="font-bold text-gray-900 block">주일 애찬교제</span>
+                                <span class="text-gray-600">예배 직후</span>
+                            </div>
+                            <div class="bg-white p-1.5 rounded-lg border border-gray-100 shadow-3xs">
+                                <span class="font-bold text-gray-900 block">수요/중보기도</span>
+                                <span class="text-gray-600">매주 수 / 주간</span>
+                            </div>
+                        </div>
                     </div>
-                    <p class="font-bold text-gray-900 text-xs tracking-wider">
-                        <?= htmlspecialchars($page4['giving']['account'] ?? '351-9559-8623-03') ?> 
-                        <span class="font-normal text-[10px] text-gray-500">(예금주: <?= htmlspecialchars($page4['giving']['holder'] ?? '푸른나무교회') ?>)</span>
-                    </p>
+                </div>
+
+                <!-- 2. 알리는 말씀 (교회 소식 - 4면 배치) -->
+                <div class="mb-2.5">
+                    <div class="flex items-center justify-between mb-1.5 pb-1 border-b border-gray-200">
+                        <h4 class="text-xs font-bold text-[#154212] flex items-center gap-1.5">
+                            <i class="fas fa-bullhorn"></i> 알리는 말씀 (교회 소식)
+                        </h4>
+                        <span class="text-[10px] text-gray-400 font-bold"><?= htmlspecialchars($bulletinNo) ?></span>
+                    </div>
+                    
+                    <div class="space-y-1.5 text-[11px]">
+                        <?php if (!empty($news)): ?>
+                            <?php foreach (array_slice($news, 0, 4) as $idx => $n): ?>
+                            <div class="bg-gray-50/70 p-2 rounded-xl border border-gray-200/80">
+                                <div class="flex items-start gap-1.5 leading-tight">
+                                    <span class="font-black text-[#154212] shrink-0 text-xs"><?= $idx + 1 ?>.</span>
+                                    <div class="flex-grow">
+                                        <h5 class="font-bold text-gray-900 text-xs"><?= htmlspecialchars($n['title']) ?></h5>
+                                        <?php if (!empty($n['content'])): ?>
+                                        <p class="text-gray-600 text-[10.5px] mt-0.5 leading-snug font-serif-kr whitespace-pre-line"><?= htmlspecialchars(trim(strip_tags($n['content']))) ?></p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="p-3 text-center text-gray-400 bg-gray-50 rounded-xl">
+                                등록된 교회 소식이 없습니다.
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <!-- 3. 온라인 헌금 계좌 안내 -->
+                <div class="bg-emerald-50/60 p-2 rounded-xl border border-emerald-200 text-[10.5px] flex items-center justify-between">
+                    <div class="flex items-center gap-1.5">
+                        <i class="fas fa-hand-holding-heart text-emerald-800"></i>
+                        <span class="font-bold text-emerald-950">온라인 헌금:</span>
+                        <span class="font-bold text-gray-900 tracking-wider font-mono"><?= htmlspecialchars($page4['giving']['account'] ?? '351-9559-8623-03') ?></span>
+                        <span class="text-emerald-800 font-semibold">(<?= htmlspecialchars($page4['giving']['bank'] ?? '농협') ?>, 푸른나무교회)</span>
+                    </div>
                 </div>
             </div>
 
             <!-- 4-Page Footer: Address & Pastor Info -->
-            <div class="border-t border-gray-200 pt-2 text-[10px] text-gray-500 space-y-0.5">
-                <p><strong>주소:</strong> <?= htmlspecialchars($address) ?></p>
-                <p><strong>담임목사:</strong> <?= htmlspecialchars($pastorName) ?> (<?= htmlspecialchars($phone) ?>)</p>
-                <p><strong>홈페이지:</strong> greentreech.kr | <strong>유튜브:</strong> @greentreechurch0405</p>
-                <div class="flex justify-between items-center text-gray-400 pt-1">
+            <div class="border-t border-gray-200 pt-1.5 text-[10px] text-gray-500 space-y-0.5 mt-2">
+                <p><strong>주소:</strong> <?= htmlspecialchars($address) ?> | <strong>Tel.</strong> <?= htmlspecialchars($phone) ?></p>
+                <p><strong>담임목사:</strong> <?= htmlspecialchars($pastorName) ?> | <strong>홈페이지:</strong> greentreech.kr</p>
+                <div class="flex justify-between items-center text-gray-400 pt-0.5 text-[9px]">
                     <span>[4면]</span>
                     <span>푸른나무교회 주보</span>
                 </div>
@@ -362,120 +382,61 @@ $coverFrame = $bulletin['cover_frame'] ?? 'rounded';
 
 
     <!-- ================================================================= -->
-    <!-- SHEET 2 (안쪽면 / 속장): Left = [Page 2: 주일예배], Right = [Page 3: 설교메모/소식] -->
+    <!-- SHEET 2 (안쪽면 / 속장): Left = [Page 2: 주일예배/섬김이], Right = [Page 3: 설교메모] -->
     <!-- ================================================================= -->
     <div class="sheet-container" id="sheet2">
         <div class="fold-divider"></div>
 
         <!-- ------------------------------------------------------------- -->
-        <!-- [2면 (좌측)]: 주일예배 순서 (교회 공식 12순서 양식) -->
+        <!-- [2면 (좌측)]: 주일예배 순서 & 하단: 섬기는 사람들(섬김이 안내) -->
         <!-- ------------------------------------------------------------- -->
-        <div class="a5-page border-r border-gray-100 print:border-none">
-            <div class="flex flex-col justify-between h-full px-2 sm:px-3">
-                <div>
-                    <!-- 2-Page Header -->
-                    <div class="flex items-center justify-between border-b-2 border-[#154212] pb-2 mb-3">
-                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">ORDER OF WORSHIP</span>
-                        <span class="text-[11px] font-bold text-[#154212]">주일 낮 예배 (오전 11:00)</span>
-                    </div>
-
-                    <!-- 12대 예배 순서표 (Zebra Striping & Clean Layout) -->
-                    <div class="border border-gray-200/80 rounded-2xl overflow-hidden shadow-2xs font-serif-kr">
-                        <?php foreach ($worshipOrder as $idx => $item): ?>
-                        <?php 
-                            $name = trim((string)($item['name'] ?? ''));
-                            $content = trim((string)($item['content'] ?? $item['desc'] ?? ''));
-                            $lead = trim((string)($item['lead'] ?? ''));
-                            $isEven = ($idx % 2 === 1);
-                        ?>
-                        <div class="flex items-center justify-between px-3 py-1.5 text-xs leading-normal <?= $isEven ? 'bg-[#f4f7f3]/90' : 'bg-white' ?> border-b border-gray-100/60 last:border-b-0">
-                            <!-- 좌측: 순서명 -->
-                            <span class="font-bold text-gray-950 tracking-wider shrink-0 w-24 whitespace-nowrap">
-                                <?= htmlspecialchars($name) ?>
-                            </span>
-
-                            <!-- 가운데: 상세 내용 (가운데 정렬) -->
-                            <div class="flex-grow px-2 text-center text-[11px] font-semibold text-gray-800 truncate">
-                                <?php if (!empty($content)): ?>
-                                    <span class="text-[#154212] font-bold"><?= htmlspecialchars($content) ?></span>
-                                <?php endif; ?>
-                            </div>
-
-                            <!-- 우측: 담당자 / 인도 -->
-                            <span class="font-bold text-gray-900 shrink-0 w-24 text-right whitespace-nowrap text-xs">
-                                <?= htmlspecialchars($lead) ?>
-                            </span>
-                        </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-
-                <!-- 2-Page Footer -->
-                <div class="border-t border-gray-200 pt-2 text-[10px] text-gray-500 flex justify-between items-center mt-3">
-                    <span>* 표는 일어서서 경건히 참여합니다.</span>
-                    <span class="font-bold text-gray-400">[2면]</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- ------------------------------------------------------------- -->
-        <!-- [3면 (우측)]: 설교 메모 / 알리는 말씀 / 섬김이 / 중보기도 -->
-        <!-- ------------------------------------------------------------- -->
-        <div class="a5-page">
+        <div class="a5-page border-r border-gray-100 print:border-none flex flex-col justify-between">
             <div>
-                <!-- 3-Page Header -->
-                <div class="flex items-center justify-between border-b-2 border-[#154212] pb-2 mb-3">
-                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">SERMON NOTES & NEWS</span>
-                    <span class="text-[11px] font-bold text-[#154212]">설교 메모 및 교회 소식</span>
+                <!-- 2-Page Header -->
+                <div class="flex items-center justify-between border-b-2 border-[#154212] pb-1.5 mb-2.5">
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">ORDER OF WORSHIP</span>
+                    <span class="text-[11px] font-bold text-[#154212]">주일 낮 예배 (오전 11:00)</span>
                 </div>
 
-                <!-- 1. 설교 메모 줄칸 (성도 필기용) -->
-                <div class="mb-3.5">
-                    <h4 class="text-xs font-bold text-gray-900 mb-1 flex items-center justify-between">
-                        <span><i class="fas fa-pencil-alt text-[#154212] mr-1"></i> 설교 메모 (Sermon Notes)</span>
-                        <span class="text-[9px] text-gray-400 font-normal">말씀을 마음에 새깁니다</span>
-                    </h4>
-                    <div class="bg-gray-50/40 p-2 rounded-xl border border-gray-200">
-                        <?php for ($i = 0; $i < (int)($page3['notes_line_count'] ?? 6); $i++): ?>
-                        <div class="note-line"></div>
-                        <?php endfor; ?>
+                <!-- 12대 예배 순서표 (Zebra Striping & Clean Layout) -->
+                <div class="border border-gray-200/80 rounded-2xl overflow-hidden shadow-2xs font-serif-kr mb-2.5">
+                    <?php foreach ($worshipOrder as $idx => $item): ?>
+                    <?php 
+                        $name = trim((string)($item['name'] ?? ''));
+                        $content = trim((string)($item['content'] ?? $item['desc'] ?? ''));
+                        $lead = trim((string)($item['lead'] ?? ''));
+                        $isEven = ($idx % 2 === 1);
+                    ?>
+                    <div class="flex items-center justify-between px-3 py-1.5 text-xs leading-normal <?= $isEven ? 'bg-[#f4f7f3]/90' : 'bg-white' ?> border-b border-gray-100/60 last:border-b-0">
+                        <!-- 좌측: 순서명 -->
+                        <span class="font-bold text-gray-950 tracking-wider shrink-0 w-24 whitespace-nowrap">
+                            <?= htmlspecialchars($name) ?>
+                        </span>
+
+                        <!-- 가운데: 상세 내용 (가운데 정렬) -->
+                        <div class="flex-grow px-2 text-center text-[11px] font-semibold text-gray-800 truncate">
+                            <?php if (!empty($content)): ?>
+                                <span class="text-[#154212] font-bold"><?= htmlspecialchars($content) ?></span>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- 우측: 담당자 / 인도 -->
+                        <span class="font-bold text-gray-900 shrink-0 w-24 text-right whitespace-nowrap text-xs">
+                            <?= htmlspecialchars($lead) ?>
+                        </span>
                     </div>
+                    <?php endforeach; ?>
                 </div>
 
-                <!-- 2. 알리는 말씀 (교회 소식) -->
-                <div class="mb-3">
-                    <h4 class="text-xs font-bold text-gray-900 mb-1 flex items-center gap-1.5">
-                        <i class="fas fa-bullhorn text-[#154212]"></i> 알리는 말씀
-                    </h4>
-                    <ul class="text-[11px] text-gray-700 space-y-1">
-                        <?php if (!empty($news)): ?>
-                            <?php foreach (array_slice($news, 0, 4) as $idx => $n): ?>
-                            <li class="flex items-start gap-1.5 leading-tight">
-                                <span class="font-bold text-[#154212] shrink-0"><?= $idx + 1 ?>.</span>
-                                <div>
-                                    <strong><?= htmlspecialchars($n['title']) ?></strong>
-                                    <?php if (!empty($n['content'])): ?>
-                                    <span class="text-gray-500 line-clamp-1"><?= htmlspecialchars(strip_tags($n['content'])) ?></span>
-                                    <?php endif; ?>
-                                </div>
-                            </li>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <li class="text-gray-400">등록된 교회 소식이 없습니다.</li>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-
-                <!-- 3. 섬기는 사람들 (이번 주 & 다음 주 예고) -->
-                <div class="space-y-2 text-[10px]">
-                    
+                <!-- 2면 하단: 예배 순서 담당자 안내 (이번 주 섬김이 & 다음 주 예고) -->
+                <div class="space-y-1.5 text-[10px]">
                     <!-- 이번 주 섬김이 -->
                     <div class="bg-gray-50/90 p-2 rounded-xl border border-gray-200">
-                        <div class="font-bold text-gray-900 mb-1 flex items-center justify-between">
-                            <span class="flex items-center gap-1">
-                                <i class="fas fa-hands-holding-child text-emerald-700"></i> 이번 주 섬김이
+                        <div class="font-bold text-gray-900 mb-0.5 flex items-center justify-between">
+                            <span class="flex items-center gap-1 text-[#154212]">
+                                <i class="fas fa-hands-holding-child"></i> 이번 주 섬김이
                             </span>
-                            <span class="text-[9px] text-gray-400"><?= htmlspecialchars($bulletinNo) ?></span>
+                            <span class="text-[9px] text-gray-400 font-semibold"><?= htmlspecialchars($bulletinNo) ?></span>
                         </div>
                         <div class="grid grid-cols-3 gap-1 text-gray-700">
                             <div><strong>대표기도:</strong> <?= htmlspecialchars($bulletin['current_week_servants']['servants']['prayer'] ?? $servingTeams['대표기도'] ?? '담당자') ?></div>
@@ -489,10 +450,10 @@ $coverFrame = $bulletin['cover_frame'] ?? 'rounded';
                         $nxt = $bulletin['next_week_servants'] ?? [];
                         $nxtServ = $nxt['servants'] ?? [];
                     ?>
-                    <div class="bg-emerald-50/50 p-2 rounded-xl border border-emerald-200/80">
-                        <div class="font-bold text-emerald-950 mb-1 flex items-center justify-between">
-                            <span class="flex items-center gap-1">
-                                <i class="fas fa-calendar-check text-emerald-700"></i> 다음 주 예배 섬김이 예고
+                    <div class="bg-emerald-50/60 p-2 rounded-xl border border-emerald-200/80">
+                        <div class="font-bold text-emerald-950 mb-0.5 flex items-center justify-between">
+                            <span class="flex items-center gap-1 text-emerald-800">
+                                <i class="fas fa-calendar-check"></i> 다음 주 예배 섬김이 예고
                             </span>
                             <span class="text-[9px] text-emerald-800 font-semibold"><?= htmlspecialchars($nxt['formatted_date'] ?? '다음 주일') ?> (<?= htmlspecialchars($nxt['bulletin_no'] ?? '') ?>)</span>
                         </div>
@@ -502,17 +463,59 @@ $coverFrame = $bulletin['cover_frame'] ?? 'rounded';
                             <div><strong>초청/안내:</strong> <?= htmlspecialchars($nxtServ['usher'] ?: '예정') ?></div>
                         </div>
                     </div>
+                </div>
+            </div>
 
+            <!-- 2-Page Footer -->
+            <div class="border-t border-gray-200 pt-1.5 text-[10px] text-gray-500 flex justify-between items-center mt-2">
+                <span>* 표는 일어서서 경건히 참여합니다.</span>
+                <span class="font-bold text-gray-400">[2면]</span>
+            </div>
+        </div>
+
+        <!-- ------------------------------------------------------------- -->
+        <!-- [3면 (우측)]: 설교 말씀 요약 & 넉넉한 설교 메모(Sermon Notes) -->
+        <!-- ------------------------------------------------------------- -->
+        <div class="a5-page flex flex-col justify-between">
+            <div>
+                <!-- 3-Page Header -->
+                <div class="flex items-center justify-between border-b-2 border-[#154212] pb-1.5 mb-2.5">
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">SERMON NOTES</span>
+                    <span class="text-[11px] font-bold text-[#154212]">설교 메모 및 말씀 나눔</span>
+                </div>
+
+                <!-- 설교 정보 요약 헤더 카드 -->
+                <div class="bg-[#154212]/5 p-2.5 rounded-xl border border-[#154212]/20 mb-3">
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="font-serif-kr font-bold text-[#154212]">
+                            <i class="fas fa-bible mr-1"></i> <?= htmlspecialchars($sermon['scripture'] ?? '마태복음 11장 28절') ?>
+                        </span>
+                        <span class="text-[11px] font-bold text-gray-700">말씀: <?= htmlspecialchars($sermon['preacher'] ?? '심민보 목사') ?></span>
+                    </div>
+                    <h3 class="font-serif-kr text-sm font-bold text-gray-900 mt-1">
+                        "<?= htmlspecialchars($sermon['title'] ?? '그리스도 안에서 누리는 참된 쉼과 회복') ?>"
+                    </h3>
+                </div>
+
+                <!-- 설교 메모 줄칸 (넉넉한 12줄 필기 노트 영역) -->
+                <div>
+                    <h4 class="text-xs font-bold text-gray-900 mb-1 flex items-center justify-between">
+                        <span><i class="fas fa-pencil-alt text-[#154212] mr-1"></i> 설교 메모 (Sermon Notes)</span>
+                        <span class="text-[9px] text-gray-400 font-normal">말씀을 마음에 새깁니다</span>
+                    </h4>
+                    <div class="bg-gray-50/40 p-3 rounded-2xl border border-gray-200 space-y-0">
+                        <?php for ($i = 0; $i < 11; $i++): ?>
+                        <div class="note-line"></div>
+                        <?php endfor; ?>
+                    </div>
                 </div>
             </div>
 
             <!-- 3-Page Footer -->
-            <div class="border-t border-gray-200 pt-2 text-[10px] text-gray-500 flex justify-between items-center">
-                <span>* 정성된 마음과 기도로 섬김에 동참해 주시기 바랍니다.</span>
+            <div class="border-t border-gray-200 pt-1.5 text-[10px] text-gray-500 flex justify-between items-center mt-2">
+                <span>* 기록된 말씀을 마음에 품고 한 주간 승리하시기를 축복합니다.</span>
                 <span class="font-bold text-gray-400">[3면]</span>
             </div>
-        </div>
-
     </div>
 
     <!-- Script for Dynamic Theme Toggle -->
