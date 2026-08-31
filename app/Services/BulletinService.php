@@ -39,9 +39,8 @@ class BulletinService
             'content' => '수고하고 무거운 짐 진 자들아 다 내게로 오라 내가 너희를 쉬게 하리라.',
         ]);
 
-        // 3. 최신 공지사항 1건의 내용 가져오기 (가장 최근 게시물 기준)
-        $latestNotices = Notice::getLatest(1);
-        $latestNotice = !empty($latestNotices) ? $latestNotices[0] : null;
+        // 3. 주일(일요일) 게시일 기준 알리는 소식 가져오기 (해당 주일 일치 우선 -> 일요일 게시물 우선 -> 최근 게시물)
+        $latestNotice = Notice::getNoticeForSunday($rawDate);
         $churchNews = [];
 
         if ($latestNotice) {

@@ -27,8 +27,43 @@ class Notice
             }
         }
 
-        $sql = "SELECT * FROM `notices` {$whereSql} ORDER BY `id` DESC LIMIT {$limit}";
+        $sql = "SELECT * FROM `notices` {$whereSql} ORDER BY `created_at` DESC, `id` DESC LIMIT {$limit}";
         return Database::query($sql, $params);
+    }
+
+    /**
+     * 주보용 소식 조회:
+     * 1순위: 해당 주일 날짜(targetSundayDate)와 정확히 일치하는 게시물
+     * 2순위: 게시일이 일요일(w = 0)인 소식 중 가장 최근 게시물
+     * 3순위: 전체 소식 중 가장 최근 게시물
+     */
+    public static function getNoticeForSunday(?string $targetSundayDate = null): ?array
+    {
+        $recentNotices = self::getLatest(30);
+        if (empty($recentNotices)) {
+            return null;
+        }
+
+        // 1순위: 해당 주일 날짜와 정확히 일치하는 소식
+        if (!empty($targetSundayDate)) {
+            foreach ($recentNotices as $n) {
+                $nDate = date('Y-m-d', strtotime($n['created_at'] ?? ''));
+                if ($nDate === $targetSundayDate) {
+                    return $n;
+                }
+            }
+        }
+
+        // 2순위: 게시일이 일요일(w = 0)인 게시물 중 가장 최근 1건
+        foreach ($recentNotices as $n) {
+            $w = (int)date('w', strtotime($n['created_at'] ?? ''));
+            if ($w === 0) { // 0: 일요일(Sunday)
+                return $n;
+            }
+        }
+
+        // 3순위: 최근 게시물 1건
+        return $recentNotices[0];
     }
 
     public static function getPaginated(int $page = 1, int $limit = 10, ?string $category = null, ?string $keyword = null): array
