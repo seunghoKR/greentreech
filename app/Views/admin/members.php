@@ -36,7 +36,7 @@
     <!-- Table Card -->
     <div class="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
         
-        <!-- Mobile 2-Line Card List (md:hidden) -->
+        <!-- Mobile Card List (md:hidden) -->
         <div class="md:hidden divide-y divide-gray-100">
             <?php if (!empty($pagination['items'])): ?>
                 <?php foreach ($pagination['items'] as $m): ?>
@@ -59,11 +59,11 @@
                     $perms = !empty($m['permissions']) ? (is_array($m['permissions']) ? $m['permissions'] : json_decode($m['permissions'], true)) : [];
                     $perms = is_array($perms) ? $perms : [];
                 ?>
-                <div class="p-4 space-y-3 hover:bg-gray-50/80 transition-colors">
-                    <!-- Line 1: Profile Image, Name, Duty Badge, Actions -->
+                <div class="p-4 bg-white hover:bg-gray-50/80 transition-colors space-y-2.5">
+                    <!-- Top Row: Avatar + Name + Nickname + Duty Badge -->
                     <div class="flex items-center justify-between gap-2">
-                        <div class="flex items-center gap-2.5 min-w-0">
-                            <img src="<?= e($m['profile_image'] ?: '/public/assets/images/logo.png') ?>" alt="Profile" class="w-10 h-10 rounded-full object-cover border border-gray-200 shrink-0">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <img src="<?= e($m['profile_image'] ?: '/public/assets/images/logo.png') ?>" alt="Profile" class="w-10 h-10 rounded-full object-cover border border-gray-200 shadow-2xs shrink-0">
                             <div class="min-w-0">
                                 <div class="font-bold text-gray-900 text-sm flex items-center gap-1.5 truncate">
                                     <span><?= e(!empty($m['name']) ? $m['name'] : $m['nickname']) ?></span>
@@ -76,48 +76,67 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center gap-1.5 shrink-0">
-                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold border <?= $dutyBadge ?>">
-                                <?= e($dutyVal) ?>
-                            </span>
-                            <a href="/admin/members/send-welcome/<?= e($m['id']) ?>" onclick="return confirm('🌿 [<?= e($m['name'] ?: $m['nickname']) ?>] 성도님에게 환영 메시지를 발송하시겠습니까?');" class="p-1.5 bg-yellow-50 hover:bg-yellow-100 text-yellow-900 border border-yellow-300 rounded-lg text-xs font-bold" title="환영 메시지 발송">
-                                <i class="fas fa-paper-plane text-amber-700"></i>
-                            </a>
-                            <button type="button" onclick='openEditModal(<?= json_encode($m, JSON_UNESCAPED_UNICODE) ?>)' class="p-1.5 bg-gray-100 hover:bg-primary hover:text-white text-gray-700 rounded-lg text-xs" title="회원 정보 수정">
-                                <i class="fas fa-user-pen"></i>
-                            </button>
-                            <a href="/admin/members/delete/<?= e($m['id']) ?>" onclick="return confirm('정말 [<?= e($m['nickname']) ?>] 성도 회원을 삭제하시겠습니까?');" class="p-1.5 bg-red-50 text-red-500 hover:bg-red-100 rounded-lg text-xs" title="회원 삭제">
-                                <i class="fas fa-trash-can"></i>
-                            </a>
+                        <span class="px-2.5 py-0.5 rounded-full text-xs font-bold border shrink-0 <?= $dutyBadge ?>">
+                            <?= e($dutyVal) ?>
+                        </span>
+                    </div>
+
+                    <!-- Middle Row: Contact & Notification Info -->
+                    <div class="bg-gray-50/90 rounded-xl p-2.5 text-xs text-gray-600 flex flex-wrap items-center justify-between gap-2">
+                        <div class="space-y-0.5">
+                            <?php if (!empty($m['phone']) && $m['phone'] !== '-'): ?>
+                                <div class="font-bold text-gray-900 flex items-center gap-1.5">
+                                    <i class="fas fa-phone text-[10px] text-primary"></i>
+                                    <span><?= e($m['phone']) ?></span>
+                                </div>
+                            <?php else: ?>
+                                <div class="text-gray-400 text-[11px] flex items-center gap-1">
+                                    <i class="fas fa-phone-slash text-[10px] text-gray-300"></i>
+                                    <span>연락처 미등록</span>
+                                </div>
+                            <?php endif; ?>
+                            <div class="text-[11px] text-gray-500 truncate max-w-[200px]">
+                                <i class="fas fa-envelope text-[10px] text-gray-400 mr-1"></i><?= e($m['email'] ?: '카카오 간편연동') ?>
+                            </div>
+                        </div>
+                        <div class="shrink-0">
+                            <?= (int)$m['notify_kakao'] === 1 ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-50 text-green-700 border border-green-200"><i class="fas fa-bell text-[9px]"></i> 알림 수신</span>' : '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] bg-gray-100 text-gray-400"><i class="fas fa-bell-slash text-[9px]"></i> 알림 거부</span>' ?>
                         </div>
                     </div>
 
-                    <!-- Line 2: Contact, Roles, Last Login -->
-                    <div class="flex items-center justify-between text-[11px] text-gray-500 pt-1 border-t border-gray-100 flex-wrap gap-2">
-                        <div class="flex items-center gap-2">
-                            <?php if (!empty($m['phone']) && $m['phone'] !== '-'): ?>
-                                <span class="font-bold text-gray-800"><i class="fas fa-phone text-[10px] text-primary mr-1"></i><?= e($m['phone']) ?></span>
-                            <?php else: ?>
-                                <span class="text-gray-400">연락처 미등록</span>
-                            <?php endif; ?>
-                            <span class="text-gray-400 truncate max-w-[130px]"><?= e($m['email'] ?: '카카오') ?></span>
-                        </div>
-                        <div class="flex items-center gap-1.5">
+                    <!-- Bottom Row: Permissions & Actions -->
+                    <div class="flex items-center justify-between gap-2 pt-1">
+                        <div class="flex flex-wrap gap-1 min-w-0">
                             <?php if (!empty($perms)): ?>
                                 <?php foreach ($perms as $p): ?>
                                     <?php 
+                                        $badgeStyle = 'bg-gray-100 text-gray-700';
                                         $label = $p;
-                                        if ($p === 'worship') $label = '찬양';
-                                        elseif ($p === 'media') $label = '미디어';
-                                        elseif ($p === 'gallery') $label = '갤러리';
-                                        elseif ($p === 'notice') $label = '소식';
-                                        elseif ($p === 'community') $label = '나눔';
-                                        elseif ($p === 'inquiry') $label = '새가족';
+                                        if ($p === 'worship') { $badgeStyle = 'bg-purple-50 text-purple-700 border-purple-200'; $label = '찬양'; }
+                                        elseif ($p === 'media') { $badgeStyle = 'bg-red-50 text-red-700 border-red-200'; $label = '미디어'; }
+                                        elseif ($p === 'gallery') { $badgeStyle = 'bg-pink-50 text-pink-700 border-pink-200'; $label = '갤러리'; }
+                                        elseif ($p === 'notice') { $badgeStyle = 'bg-blue-50 text-blue-700 border-blue-200'; $label = '소식/주보'; }
+                                        elseif ($p === 'community') { $badgeStyle = 'bg-emerald-50 text-emerald-700 border-emerald-200'; $label = '나눔/성도'; }
+                                        elseif ($p === 'inquiry') { $badgeStyle = 'bg-amber-50 text-amber-700 border-amber-200'; $label = '새가족/초대'; }
                                     ?>
-                                    <span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-gray-100 text-gray-700"><?= e($label) ?></span>
+                                    <span class="px-1.5 py-0.5 rounded text-[9px] font-bold border whitespace-nowrap <?= $badgeStyle ?>"><?= e($label) ?></span>
                                 <?php endforeach; ?>
+                            <?php else: ?>
+                                <span class="text-gray-400 text-[11px]">권한: 일반 성도</span>
                             <?php endif; ?>
-                            <span class="text-gray-400 text-[10px]"><?= $m['last_login'] ? date('m/d H:i', strtotime($m['last_login'])) : '-' ?></span>
+                        </div>
+                        <div class="flex items-center gap-1 shrink-0">
+                            <a href="/admin/members/send-welcome/<?= e($m['id']) ?>" onclick="return confirm('🌿 [<?= e($m['name'] ?: $m['nickname']) ?>] 성도님에게 환영 메시지를 발송하시겠습니까?');" class="px-2.5 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 rounded-xl text-xs font-bold flex items-center gap-1 shadow-2xs" title="환영 메시지 발송">
+                                <i class="fas fa-paper-plane text-amber-700 text-[10px]"></i>
+                                <span class="text-[11px]">환영톡</span>
+                            </a>
+                            <button type="button" onclick='openEditModal(<?= json_encode($m, JSON_UNESCAPED_UNICODE) ?>)' class="px-2.5 py-1.5 bg-gray-100 hover:bg-primary hover:text-white text-gray-700 rounded-xl text-xs font-bold flex items-center gap-1 shadow-2xs" title="회원 정보 수정">
+                                <i class="fas fa-user-pen text-[10px]"></i>
+                                <span class="text-[11px]">수정</span>
+                            </button>
+                            <a href="/admin/members/delete/<?= e($m['id']) ?>" onclick="return confirm('정말 [<?= e($m['nickname']) ?>] 성도 회원을 삭제하시겠습니까?');" class="p-1.5 text-red-400 hover:text-red-600 rounded-xl hover:bg-red-50" title="회원 삭제">
+                                <i class="fas fa-trash-can text-xs"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -131,18 +150,16 @@
         </div>
 
         <!-- Desktop Full Table (hidden md:block) -->
-        <div class="hidden md:block overflow-x-auto">
-            <table class="w-full text-left border-collapse text-xs min-w-[960px]">
+        <div class="hidden md:block overflow-hidden">
+            <table class="w-full text-left border-collapse text-xs">
                 <thead>
                     <tr class="bg-gray-50 text-gray-600 font-bold border-b border-gray-200">
-                        <th class="py-3.5 px-4 w-12 text-center whitespace-nowrap">번호</th>
-                        <th class="py-3.5 px-4 whitespace-nowrap">성도 정보 (프로필/실명/닉네임)</th>
-                        <th class="py-3.5 px-4 whitespace-nowrap">연락처 / 이메일</th>
-                        <th class="py-3.5 px-4 text-center whitespace-nowrap">직분</th>
-                        <th class="py-3.5 px-4 whitespace-nowrap">담당 사역 권한</th>
-                        <th class="py-3.5 px-3 text-center whitespace-nowrap">알림</th>
-                        <th class="py-3.5 px-4 text-center whitespace-nowrap">최근 로그인</th>
-                        <th class="py-3.5 px-4 text-center whitespace-nowrap">관리</th>
+                        <th class="py-3.5 px-3.5 whitespace-nowrap">성도 정보 (프로필/실명/닉네임)</th>
+                        <th class="py-3.5 px-3.5 whitespace-nowrap">연락처 / 이메일</th>
+                        <th class="py-3.5 px-3 text-center whitespace-nowrap">직분</th>
+                        <th class="py-3.5 px-3 whitespace-nowrap">담당 사역 권한</th>
+                        <th class="py-3.5 px-2.5 text-center whitespace-nowrap">알림</th>
+                        <th class="py-3.5 px-3.5 text-center whitespace-nowrap">관리</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100 text-gray-700">
@@ -168,12 +185,9 @@
                             $perms = is_array($perms) ? $perms : [];
                         ?>
                         <tr class="hover:bg-gray-50/80 transition-colors">
-                            <td class="py-4 px-4 text-center text-gray-400 font-semibold whitespace-nowrap">
-                                <?= e($m['id']) ?>
-                            </td>
-                            <td class="py-4 px-4">
-                                <div class="flex items-center gap-3">
-                                    <img src="<?= e($m['profile_image'] ?: '/public/assets/images/logo.png') ?>" alt="Profile" class="w-10 h-10 rounded-full object-cover border border-gray-200 shadow-2xs shrink-0">
+                            <td class="py-3 px-3.5">
+                                <div class="flex items-center gap-2.5">
+                                    <img src="<?= e($m['profile_image'] ?: '/public/assets/images/logo.png') ?>" alt="Profile" class="w-9 h-9 rounded-full object-cover border border-gray-200 shadow-2xs shrink-0">
                                     <div>
                                         <div class="font-bold text-gray-900 text-sm flex items-center gap-1.5 whitespace-nowrap">
                                             <span><?= e(!empty($m['name']) ? $m['name'] : $m['nickname']) ?></span>
@@ -187,7 +201,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="py-4 px-4 whitespace-nowrap">
+                            <td class="py-3 px-3.5 whitespace-nowrap">
                                 <?php if (!empty($m['phone']) && $m['phone'] !== '-'): ?>
                                     <div class="font-bold text-gray-800 flex items-center gap-1.5">
                                         <i class="fas fa-phone text-[10px] text-primary"></i>
@@ -199,16 +213,16 @@
                                         <span>연락처 미등록</span>
                                     </div>
                                 <?php endif; ?>
-                                <div class="text-[11px] text-gray-400 mt-0.5 truncate max-w-[170px]" title="<?= e($m['email']) ?>">
+                                <div class="text-[11px] text-gray-400 mt-0.5 truncate max-w-[160px]" title="<?= e($m['email']) ?>">
                                     <?= e($m['email'] ?: '카카오 간편연동') ?>
                                 </div>
                             </td>
-                            <td class="py-4 px-4 text-center whitespace-nowrap">
-                                <span class="inline-block px-3 py-1 rounded-full text-xs font-bold border shadow-2xs whitespace-nowrap <?= $dutyBadge ?>">
+                            <td class="py-3 px-3 text-center whitespace-nowrap">
+                                <span class="inline-block px-2.5 py-1 rounded-full text-xs font-bold border shadow-2xs whitespace-nowrap <?= $dutyBadge ?>">
                                     <?= e($dutyVal) ?>
                                 </span>
                             </td>
-                            <td class="py-4 px-4">
+                            <td class="py-3 px-3">
                                 <?php if (!empty($perms)): ?>
                                     <div class="flex flex-wrap gap-1">
                                         <?php foreach ($perms as $p): ?>
@@ -231,13 +245,10 @@
                                     <span class="text-gray-300 text-xs font-medium">-</span>
                                 <?php endif; ?>
                             </td>
-                            <td class="py-4 px-3 text-center whitespace-nowrap">
+                            <td class="py-3 px-2.5 text-center whitespace-nowrap">
                                 <?= (int)$m['notify_kakao'] === 1 ? '<span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-50 text-green-700 border border-green-200">수신</span>' : '<span class="inline-block px-2 py-0.5 rounded-full text-[10px] bg-gray-100 text-gray-400">거부</span>' ?>
                             </td>
-                            <td class="py-4 px-4 text-center text-[11px] text-gray-500 whitespace-nowrap">
-                                <?= $m['last_login'] ? date('m/d H:i', strtotime($m['last_login'])) : '-' ?>
-                            </td>
-                            <td class="py-4 px-4 text-center whitespace-nowrap">
+                            <td class="py-3 px-3.5 text-center whitespace-nowrap">
                                 <div class="flex items-center justify-center gap-1.5">
                                     <a href="/admin/members/send-welcome/<?= e($m['id']) ?>" onclick="return confirm('🌿 [<?= e($m['name'] ?: $m['nickname']) ?>] 성도님에게 환영 메시지를 발송하시겠습니까?');" class="px-2.5 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 rounded-xl font-bold transition-all shadow-2xs flex items-center gap-1 text-xs shrink-0 whitespace-nowrap" title="환영 메시지 발송">
                                         <i class="fas fa-paper-plane text-amber-700 text-[11px]"></i>
@@ -256,7 +267,7 @@
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="8" class="p-12 text-center text-xs text-gray-400">
+                            <td colspan="6" class="p-12 text-center text-xs text-gray-400">
                                 <i class="fas fa-user-slash text-2xl mb-2 text-gray-300 block"></i>
                                 검색된 성도 회원이 없습니다.
                             </td>
