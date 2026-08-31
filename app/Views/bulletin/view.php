@@ -19,13 +19,9 @@
             </div>
             
             <div class="flex items-center gap-2">
-                <a href="/bulletin/print" target="_blank" class="inline-flex items-center gap-2 bg-[#154212] hover:bg-[#0d2b0b] text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]">
-                    <i class="fas fa-print"></i>
-                    <span>인쇄 및 PDF 저장</span>
-                </a>
-                <button type="button" onclick="copyToClipboard(window.location.href, '온라인 주보 링크가 복사되었습니다! 💌')" class="inline-flex items-center gap-1.5 px-3.5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-xs font-bold transition-all shadow-2xs" title="주보 링크 복사 및 공유">
-                    <i class="fas fa-share-nodes text-primary"></i>
-                    <span class="hidden sm:inline">주보 공유</span>
+                <button type="button" onclick="copyToClipboard(window.location.href, '웹주보 링크가 복사되었습니다! 💌')" class="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-100 hover:bg-[#154212] hover:text-white text-gray-700 rounded-xl text-xs font-bold transition-all shadow-xs" title="웹주보 링크 복사 및 공유">
+                    <i class="fas fa-share-nodes text-primary group-hover:text-white"></i>
+                    <span>웹주보 공유</span>
                 </button>
             </div>
         </div>
