@@ -22,7 +22,7 @@ class KakaoNotificationService
         $talkSent = false;
 
         if (!empty($accessToken)) {
-            $talkResult = KakaoAuthService::sendTalkMemo($accessToken, $message, 'https://greentreech.iwinv.net/admin');
+            $talkResult = KakaoAuthService::sendTalkMemo($accessToken, $message, 'https://greentreech.kr/admin');
             $talkSent = !empty($talkResult['success']);
         }
 
@@ -87,7 +87,7 @@ class KakaoNotificationService
         $talkSent = false;
         $talkResult = null;
         if (!empty($accessToken)) {
-            $talkResult = KakaoAuthService::sendTalkMemo($accessToken, $message, 'https://greentreech.iwinv.net/community');
+            $talkResult = KakaoAuthService::sendTalkMemo($accessToken, $message, 'https://greentreech.kr/community');
             $talkSent = !empty($talkResult['success']);
         }
 
@@ -131,7 +131,7 @@ class KakaoNotificationService
         $accessToken = \App\Core\Session::get('kakao_access_token', '');
         $talkSent = false;
         if (!empty($accessToken)) {
-            $talkResult = KakaoAuthService::sendTalkMemo($accessToken, $message, "https://greentreech.iwinv.net/community/{$post['id']}", '나눔터 글 보기');
+            $talkResult = KakaoAuthService::sendTalkMemo($accessToken, $message, "https://greentreech.kr/community/{$post['id']}", '나눔터 글 보기');
             $talkSent = !empty($talkResult['success']);
         }
 
@@ -174,7 +174,7 @@ class KakaoNotificationService
         $talkSent = false;
         $talkResult = null;
         if (!empty($accessToken)) {
-            $talkResult = KakaoAuthService::sendTalkMemo($accessToken, $message, 'https://greentreech.iwinv.net/admin/inquiries', '접수 내역 확인하기');
+            $talkResult = KakaoAuthService::sendTalkMemo($accessToken, $message, 'https://greentreech.kr/admin/inquiries', '접수 내역 확인하기');
             $talkSent = !empty($talkResult['success']);
         }
 
@@ -214,7 +214,7 @@ class KakaoNotificationService
         $accessToken = \App\Core\Session::get('kakao_access_token', '');
         $talkSent = false;
         if (!empty($accessToken)) {
-            $talkResult = KakaoAuthService::sendTalkMemo($accessToken, $message, 'https://greentreech.iwinv.net/inquiry', '푸른나무교회 바로가기');
+            $talkResult = KakaoAuthService::sendTalkMemo($accessToken, $message, 'https://greentreech.kr/inquiry', '푸른나무교회 바로가기');
             $talkSent = !empty($talkResult['success']);
         }
 

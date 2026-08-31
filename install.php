@@ -224,8 +224,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     VALUES ('kakao_rest_api_key', '8b820609fa278e982a52ffea4621f099', '카카오 REST API 키')
                     ON DUPLICATE KEY UPDATE `key_value` = '8b820609fa278e982a52ffea4621f099'");
         $pdo->exec("INSERT INTO `site_settings` (`key_name`, `key_value`, `description`) 
-                    VALUES ('kakao_redirect_uri', 'http://greentreech.iwinv.net/auth/kakao/callback', '카카오 리다이렉트 URI')
-                    ON DUPLICATE KEY UPDATE `key_value` = 'http://greentreech.iwinv.net/auth/kakao/callback'");
+                    VALUES ('kakao_redirect_uri', 'https://greentreech.kr/auth/kakao/callback', '카카오 리다이렉트 URI')
+                    ON DUPLICATE KEY UPDATE `key_value` = 'https://greentreech.kr/auth/kakao/callback'");
 
         // Seed Default Settings
         $cnt = $pdo->query("SELECT COUNT(*) as c FROM site_settings")->fetch()['c'] ?? 0;

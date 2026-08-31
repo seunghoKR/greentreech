@@ -43,7 +43,7 @@ class KakaoAuthService
     /**
      * 카카오톡 '나와의 채팅방'으로 실제 메시지 전송 (카카오 메시지 API)
      */
-    public static function sendTalkMemo(string $accessToken, string $text, string $webUrl = 'https://greentreech.iwinv.net', string $buttonTitle = '푸른나무교회 바로가기'): array
+    public static function sendTalkMemo(string $accessToken, string $text, string $webUrl = 'https://greentreech.kr', string $buttonTitle = '푸른나무교회 바로가기'): array
     {
         $templateObject = [
             'object_type' => 'text',

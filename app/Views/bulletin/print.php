@@ -244,7 +244,7 @@ $coverFrame = $bulletin['cover_frame'] ?? 'rounded';
             <div class="border-t border-gray-200 pt-2 text-[10px] text-gray-500 space-y-0.5">
                 <p><strong>주소:</strong> <?= htmlspecialchars($address) ?></p>
                 <p><strong>담임목사:</strong> <?= htmlspecialchars($pastorName) ?> (<?= htmlspecialchars($phone) ?>)</p>
-                <p><strong>홈페이지:</strong> greentreech.iwinv.net | <strong>유튜브:</strong> @greentreechurch0405</p>
+                <p><strong>홈페이지:</strong> greentreech.kr | <strong>유튜브:</strong> @greentreechurch0405</p>
                 <div class="flex justify-between items-center text-gray-400 pt-1">
                     <span>[4면]</span>
                     <span>푸른나무교회 주보</span>

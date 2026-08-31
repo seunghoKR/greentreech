@@ -45,7 +45,7 @@ class HomeController
 
     public function sitemap(): void
     {
-        $baseUrl = 'https://greentreech.iwinv.net';
+        $baseUrl = 'https://greentreech.kr';
         $today = date('Y-m-d');
 
         $staticUrls = [
@@ -101,7 +101,7 @@ class HomeController
         echo "Disallow: /api\n";
         echo "Disallow: /storage\n";
         echo "\n";
-        echo "Sitemap: https://greentreech.iwinv.net/sitemap.xml\n";
+        echo "Sitemap: https://greentreech.kr/sitemap.xml\n";
         exit;
     }
 }

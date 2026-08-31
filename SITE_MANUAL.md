@@ -66,7 +66,7 @@
 
 ## 2. 담임목사님 & 사역자를 위한 목회 운영 매뉴얼
 
-> 💡 **관리자 접속 주소**: `https://greentreech.iwinv.net/admin`  
+> 💡 **관리자 접속 주소**: `https://greentreech.kr/admin`  
 > 💡 **초기 관리자 계정**: `admin` / `admin1234!` *(로그인 후 우측 상단 [비밀번호 변경]에서 변경 가능)*
 
 ### 2.1. 주간 목회 사역 4단계 루틴
@@ -121,7 +121,7 @@
   👉 **A.** 대시보드에서 **`[유튜브 영상 동기화]`** 버튼을 한 번 눌러주시면 즉시 1초 만에 반영됩니다.
 
 - **Q. 주보를 종이로 출력해서 인쇄하고 싶어요.**  
-  👉 **A.** 브라우저 주소창에 `https://greentreech.iwinv.net/bulletin/print`를 입력하시거나 스마트 주보 페이지에서 **[A4 인쇄]**를 누르시면 됩니다.
+  👉 **A.** 브라우저 주소창에 `https://greentreech.kr/bulletin/print`를 입력하시거나 스마트 주보 페이지에서 **[A4 인쇄]**를 누르시면 됩니다.
 
 - **Q. 관리자 비밀번호를 바꾸고 싶어요.**  
   👉 **A.** 관리자 페이지 상단 우측의 **`[비밀번호 변경]`** 메뉴에서 안전하게 변경하실 수 있습니다.
@@ -135,10 +135,9 @@
 
 | 항목 | 내용 |
 | :--- | :--- |
-| **공식 도메인** | `https://greentreech.iwinv.net/` (SSL 보안 적용) |
-| **서버 IP / 웹 루트** | `115.68.168.246` / `/public_html/` |
-| **서버 환경** | PHP 8.4 (UTF-8) / MariaDB 10.X (`greentreech`) |
-| **관리자 접속 URL** | `https://greentreech.iwinv.net/admin` |
+| **공식 도메인** | `https://greentreech.kr/` (SSL 보안 적용) |
+| **호스팅 환경** | iwinv 클라우드 호스팅 (PHP 8.2+ / MariaDB 10.x / Apache) |
+| **관리자 접속 URL** | `https://greentreech.kr/admin` |
 
 ---
 
