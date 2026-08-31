@@ -1,5 +1,35 @@
 <?php
-// Developer Role Simulator Bar Component
+// Developer Role Simulator Bar Component (개발자가 로그인했을 때만 표시)
+$isDeveloper = false;
+
+// 1. 개발자 세션 플래그 확인
+if (\App\Core\Session::get('is_developer') === true) {
+    $isDeveloper = true;
+}
+
+// 2. 카카오 로그인 계정이 개발자인 경우 (leeshkr@kakao.com 또는 개발자 역할)
+if (\App\Core\Auth::isMember()) {
+    $curMember = \App\Core\Auth::member();
+    if (($curMember['email'] ?? '') === 'leeshkr@kakao.com' || str_contains($curMember['role'] ?? '', '개발자')) {
+        $isDeveloper = true;
+        \App\Core\Session::set('is_developer', true);
+    }
+}
+
+// 3. 관리자 로그인 계정이 개발자인 경우
+if (\App\Core\Auth::check()) {
+    $curAdmin = \App\Core\Auth::user();
+    if (($curAdmin['username'] ?? '') === 'developer' || str_contains($curAdmin['role'] ?? '', '개발자')) {
+        $isDeveloper = true;
+        \App\Core\Session::set('is_developer', true);
+    }
+}
+
+// 개발자가 로그인한 상태가 아니면 시뮬레이터 바를 화면에 전혀 렌더링하지 않음!
+if (!$isDeveloper) {
+    return;
+}
+
 $isLoggedInAdmin = \App\Core\Auth::check();
 $isLoggedInMember = \App\Core\Auth::isMember();
 $curAdmin = \App\Core\Auth::user();

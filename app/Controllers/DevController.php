@@ -18,10 +18,32 @@ class DevController
 
         Session::start();
 
+        // 개발자 본인 확인
+        $isDev = Session::get('is_developer') === true;
+        if (Auth::isMember()) {
+            $m = Auth::member();
+            if (($m['email'] ?? '') === 'leeshkr@kakao.com' || str_contains($m['role'] ?? '', '개발자')) {
+                $isDev = true;
+            }
+        }
+        if (Auth::check()) {
+            $a = Auth::user();
+            if (($a['username'] ?? '') === 'developer' || str_contains($a['role'] ?? '', '개발자')) {
+                $isDev = true;
+            }
+        }
+
+        // 개발자가 아니면 엔드포인트 직접 호출 차단
+        if (!$isDev) {
+            header('Location: /');
+            exit;
+        }
+
         switch ($role) {
             case 'guest':
                 // 1. 비로그인 (Guest)
                 Auth::logout();
+                Session::set('is_developer', true);
                 Session::setFlash('info', '👤 [1. 비로그인] 상태로 전환되었습니다.');
                 $defaultRedirect = '/';
                 break;
@@ -29,6 +51,7 @@ class DevController
             case 'unverified':
                 // 2. 인증전로그인 (일반교우 - 카카오 가입 직후 승인 대기 상태)
                 Auth::logout();
+                Session::set('is_developer', true);
                 $unverifiedMember = [
                     'id' => 9991,
                     'kakao_id' => 'kakao_unverified_9991',
@@ -37,18 +60,20 @@ class DevController
                     'email' => 'eunhye@example.com',
                     'phone' => '010-1234-5678',
                     'role' => '일반교우',
+                    'duty' => '귀한 손님',
                     'profile_image' => 'https://api.dicebear.com/7.x/bottts/svg?seed=Eunhye',
                     'notify_kakao' => 1,
                     'created_at' => date('Y-m-d H:i:s'),
                 ];
                 Auth::loginMember($unverifiedMember);
-                Session::setFlash('info', '⏳ [2. 인증전로그인 (일반교우)] 상태로 전환되었습니다. (나눔터 글쓰기 승인 대기 상태)');
+                Session::setFlash('info', '⏳ [2. 인증전로그인 (귀한 손님)] 상태로 전환되었습니다. (나눔터 글쓰기 승인 대기 상태)');
                 $defaultRedirect = '/community';
                 break;
 
             case 'member':
                 // 3. 푸른나무가족 (나눔터 글/댓글 작성 승인 정회원)
                 Auth::logout();
+                Session::set('is_developer', true);
                 $verifiedMember = [
                     'id' => 9992,
                     'kakao_id' => 'kakao_member_9992',
@@ -57,18 +82,20 @@ class DevController
                     'email' => 'faith@example.com',
                     'phone' => '010-8765-4321',
                     'role' => '푸른나무가족',
+                    'duty' => '성도',
                     'profile_image' => 'https://api.dicebear.com/7.x/bottts/svg?seed=Faith',
                     'notify_kakao' => 1,
                     'created_at' => date('Y-m-d H:i:s'),
                 ];
                 Auth::loginMember($verifiedMember);
-                Session::setFlash('success', '🌿 [3. 푸른나무가족] 상태로 전환되었습니다. (나눔터 자유 소통 가능)');
+                Session::setFlash('success', '🌿 [3. 푸른나무가족 (등록성도)] 상태로 전환되었습니다. (나눔터 자유 소통 가능)');
                 $defaultRedirect = '/community';
                 break;
 
             case 'admin_media':
                 // 4-A. 관리자 - 영상분류/관리 & 사진첩 관리자
                 Auth::logout();
+                Session::set('is_developer', true);
                 $adminUser = [
                     'id' => 9981,
                     'username' => 'manager_media',
@@ -86,6 +113,7 @@ class DevController
             case 'admin_bulletin':
                 // 4-B. 관리자 - 알리는소식 관리자
                 Auth::logout();
+                Session::set('is_developer', true);
                 $adminUser = [
                     'id' => 9982,
                     'username' => 'manager_notices',
@@ -102,6 +130,7 @@ class DevController
             case 'admin_community':
                 // 4-C. 관리자 - 나눔터 & 성도회원 관리자
                 Auth::logout();
+                Session::set('is_developer', true);
                 $adminUser = [
                     'id' => 9983,
                     'username' => 'manager_community',
@@ -118,6 +147,7 @@ class DevController
             case 'admin_inquiry':
                 // 4-D. 관리자 - 새가족 & 기도접수 관리자
                 Auth::logout();
+                Session::set('is_developer', true);
                 $adminUser = [
                     'id' => 9984,
                     'username' => 'manager_inquiry',
@@ -135,6 +165,7 @@ class DevController
             default:
                 // 5. 심민보 담임목사 (전체 대시보드 및 시스템 설정 총괄)
                 Auth::logout();
+                Session::set('is_developer', true);
                 $pastorUser = [
                     'id' => 1,
                     'username' => 'admin',
