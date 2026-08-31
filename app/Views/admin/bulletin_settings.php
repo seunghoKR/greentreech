@@ -218,25 +218,10 @@
                     <i class="fas fa-palette"></i> 1면 표지: 디자인 레이아웃 및 문구 설정
                 </h3>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">표지 디자인 스타일</label>
-                        <select name="cover_style" class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm focus:ring-2 focus:ring-primary bg-white font-bold">
-                            <option value="image_focus" <?= ($bulletin['cover_style'] ?? 'image_focus') === 'image_focus' ? 'selected' : '' ?>>🖼️ 감성 이미지 중심형 (사진 + 환영 메시지)</option>
-                            <option value="classic_emblem" <?= ($bulletin['cover_style'] ?? '') === 'classic_emblem' ? 'selected' : '' ?>>✝️ 클래식 엠블럼형 (단정한 십자가 심볼)</option>
-                            <option value="minimal_text" <?= ($bulletin['cover_style'] ?? '') === 'minimal_text' ? 'selected' : '' ?>>📜 성경 말씀 & 묵상 중심형 (심플 여백)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">이미지 액자 테두리 스타일</label>
-                        <select name="cover_frame" class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm focus:ring-2 focus:ring-primary bg-white font-bold">
-                            <option value="rounded" <?= ($bulletin['cover_frame'] ?? 'rounded') === 'rounded' ? 'selected' : '' ?>>둥근 라운드 액자 (부드럽고 모던함)</option>
-                            <option value="double_line" <?= ($bulletin['cover_frame'] ?? '') === 'double_line' ? 'selected' : '' ?>>클래식 이중 실선 테두리 (전통적이고 정돈됨)</option>
-                            <option value="none" <?= ($bulletin['cover_frame'] ?? '') === 'none' ? 'selected' : '' ?>>심플 테두리 없음</option>
-                        </select>
                     </div>
                 </div>
 
+                <!-- Cover Styling Options -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-bold text-gray-700 mb-1">표지 중앙 메인 문구</label>
@@ -249,7 +234,7 @@
                 </div>
             </div>
 
-            <!-- 3. 금주의 암송 말씀 & 인쇄 테마 -->
+            <!-- 2. 금주의 암송 말씀 & 인쇄 테마 -->
             <div class="bg-white rounded-3xl border border-gray-200 p-6 shadow-sm space-y-4">
                 <h3 class="text-sm font-bold text-[#154212] flex items-center gap-2 border-b border-gray-100 pb-3">
                     <i class="fas fa-quote-left"></i> 1면 표지: 금주의 암송 말씀 및 인쇄 테마
@@ -276,7 +261,7 @@
         </div>
 
         <!-- ============================================================= -->
-        <!-- [TAB 2]: 2면 주일예배 순서 & 주일 말씀 기획 -->
+        <!-- [TAB 2]: 2면 주일예배 순서 & 섬김이 안내 (예배순서 + 섬김이) -->
         <!-- ============================================================= -->
         <div id="tab-page2" class="bulletin-tab-panel hidden space-y-6">
             <!-- 설교 기획 -->
@@ -325,10 +310,6 @@
                         placeholder="예: 다니엘 6장 1-5절" 
                         class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm font-bold focus:ring-2 focus:ring-primary">
                 </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1">말씀 요약 및 본문 내용</label>
-                    <textarea name="sermon_content" rows="3" class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm focus:ring-2 focus:ring-primary resize-none"><?= e($bulletin['sermon']['content'] ?? '') ?></textarea>
-                </div>
             </div>
 
             <!-- 예배 순서표 (교회 표준 12순서 양식) -->
@@ -336,21 +317,13 @@
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-100 pb-3">
                     <div>
                         <h3 class="text-sm font-bold text-[#154212] flex items-center gap-2">
-                            <i class="fas fa-church"></i> 2면 하단: 주일예배 순서표 (순서명 · 가운데 내용 · 인도/담당자)
+                            <i class="fas fa-church"></i> 2면 중간: 주일예배 12대 순서표 (순서명 · 가운데 내용 · 인도/담당자)
                         </h3>
                         <p class="text-[11px] text-gray-500 mt-0.5">가운데 내용(찬송 제목, 교독문, 성경본문 등)을 입력하시면 주보에 점선 또는 내용으로 깔끔하게 정렬됩니다.</p>
                     </div>
                     <button type="button" onclick="loadDefault12Steps()" class="px-3.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 self-start sm:self-auto shadow-2xs">
                         <i class="fas fa-rotate-left text-[10px]"></i> 교회 기본 12순서로 채우기
                     </button>
-                </div>
-
-                <!-- Column Titles -->
-                <div class="hidden sm:grid grid-cols-12 gap-3 px-3 text-[11px] font-bold text-gray-500 uppercase tracking-wider">
-                    <div class="col-span-1 text-center">번호</div>
-                    <div class="col-span-3">순서명 (좌측)</div>
-                    <div class="col-span-5">가운데 내용 (찬송/교독문/본문/설교제목 등)</div>
-                    <div class="col-span-3">담당자 / 인도 (우측)</div>
                 </div>
 
                 <div id="worshipOrderContainer" class="space-y-2.5">
@@ -373,59 +346,101 @@
                     <?php endforeach; ?>
                 </div>
             </div>
-        </div>
 
-        <!-- ============================================================= -->
-        <!-- [TAB 3]: 3면 설교 메모 & 섬김이 -->
-        <!-- ============================================================= -->
-        <div id="tab-page3" class="bulletin-tab-panel hidden space-y-6">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <!-- 설교 메모 설정 -->
-                <div class="bg-white rounded-3xl border border-gray-200 p-6 shadow-sm space-y-3">
-                    <h3 class="text-sm font-bold text-[#154212] flex items-center gap-2 border-b border-gray-100 pb-3">
-                        <i class="fas fa-pencil-alt"></i> 3면 상단: 설교 메모 줄칸
+            <!-- 2면 하단: 예배 섬김이 안내 (이번 주 & 다음 주 예고 연동) -->
+            <div class="bg-white rounded-3xl border border-gray-200 p-6 shadow-sm space-y-4">
+                <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+                    <h3 class="text-sm font-bold text-[#154212] flex items-center gap-2">
+                        <i class="fas fa-hands-holding-child"></i> 2면 하단: 이번 주 및 다음 주 예배 섬김이 연동
                     </h3>
-                    <p class="text-xs text-gray-500">성도들이 주일 설교를 들으며 기록할 수 있는 필기용 줄칸 수입니다.</p>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">메모 줄 수</label>
-                        <input type="number" name="notes_line_count" min="4" max="12" value="<?= e($bulletin['page3_info']['notes_line_count'] ?? 7) ?>" class="w-32 px-4 py-2 rounded-2xl border border-gray-200 text-xs sm:text-sm font-bold">
-                    </div>
+                    <a href="/admin/worship-servants" class="text-xs text-emerald-800 font-bold hover:underline flex items-center gap-1">
+                        <i class="fas fa-calendar-check"></i> 4주 섬김이 스케줄 관리 →
+                    </a>
                 </div>
+                
+                <p class="text-xs text-gray-500">
+                    2면 순서표 하단에는 <strong>[예배 섬김이 4주 관리]</strong>에서 등록한 이번 주(대표기도, 헌금안내, 초청안내) 및 다음 주 섬김이 예고가 <strong>주보에 자동 인쇄</strong>됩니다.
+                </p>
 
-                <!-- 섬김이 팀 -->
-                <div class="bg-white rounded-3xl border border-gray-200 p-6 shadow-sm space-y-3">
-                    <h3 class="text-sm font-bold text-[#154212] flex items-center gap-2 border-b border-gray-100 pb-3">
-                        <i class="fas fa-hands-holding-child"></i> 3면 하단: 이번 주 섬김이 담당자
-                    </h3>
-                    <div class="space-y-2">
-                        <?php foreach ($bulletin['serving_teams'] as $role => $person): ?>
-                        <div class="flex items-center gap-3">
-                            <span class="w-24 text-xs font-bold text-gray-600 shrink-0"><?= e($role) ?></span>
-                            <input type="text" name="teams[<?= e($role) ?>]" value="<?= e($person) ?>" class="flex-1 px-3 py-1.5 rounded-xl border border-gray-200 text-xs font-semibold bg-gray-50 focus:bg-white">
-                        </div>
-                        <?php endforeach; ?>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div class="bg-gray-50 p-3 rounded-2xl border border-gray-200 text-center">
+                        <span class="text-[11px] text-gray-500 block mb-0.5">이번 주 대표기도</span>
+                        <span class="text-xs font-bold text-gray-900"><?= e($bulletin['current_week_servants']['servants']['prayer'] ?? '담당자') ?></span>
+                    </div>
+                    <div class="bg-gray-50 p-3 rounded-2xl border border-gray-200 text-center">
+                        <span class="text-[11px] text-gray-500 block mb-0.5">이번 주 헌금안내</span>
+                        <span class="text-xs font-bold text-gray-900"><?= e($bulletin['current_week_servants']['servants']['offering'] ?? '봉사팀') ?></span>
+                    </div>
+                    <div class="bg-gray-50 p-3 rounded-2xl border border-gray-200 text-center">
+                        <span class="text-[11px] text-gray-500 block mb-0.5">이번 주 초청/안내</span>
+                        <span class="text-xs font-bold text-gray-900"><?= e($bulletin['current_week_servants']['servants']['usher'] ?? '안내위원') ?></span>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- ============================================================= -->
-        <!-- [TAB 4]: 4면 교회소개 & 정기예배 시간표 & 온라인 헌금 -->
+        <!-- [TAB 3]: 3면 설교 메모 (Sermon Notes) -->
+        <!-- ============================================================= -->
+        <div id="tab-page3" class="bulletin-tab-panel hidden space-y-6">
+            <div class="bg-white rounded-3xl border border-gray-200 p-6 shadow-sm space-y-4">
+                <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+                    <h3 class="text-sm font-bold text-[#154212] flex items-center gap-2">
+                        <i class="fas fa-pencil-alt"></i> 3면: 성도용 설교 메모 (Sermon Notes) 줄칸 설정
+                    </h3>
+                    <span class="text-xs text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 font-bold">
+                        3면 전체에 넉넉한 필기 노트로 인쇄
+                    </span>
+                </div>
+                
+                <p class="text-xs text-gray-500 leading-relaxed">
+                    A4 2단 접지 3면에는 <strong>금주의 설교 정보 카드</strong>와 함께 성도님들이 예배 중 말씀을 기록할 수 있는 <strong>필기용 줄칸(Note Lines)</strong>이 넉넉하게 인쇄됩니다.
+                </p>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">인쇄할 메모 줄 수 (기본 11줄 권장)</label>
+                    <div class="flex items-center gap-3">
+                        <input type="number" name="notes_line_count" min="6" max="14" value="<?= e($bulletin['page3_info']['notes_line_count'] ?? 11) ?>" class="w-32 px-4 py-2 rounded-2xl border border-gray-200 text-xs sm:text-sm font-bold focus:ring-2 focus:ring-primary">
+                        <span class="text-xs text-gray-500">줄 (6~14줄 사이 조절 가능)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================= -->
+        <!-- [TAB 4]: 4면 교회소개 & 정기모임 & 알리는 말씀(소식) -->
         <!-- ============================================================= -->
         <div id="tab-page4" class="bulletin-tab-panel hidden space-y-6">
-            <div class="bg-white rounded-3xl border border-gray-200 p-6 shadow-sm space-y-4">
-                <h3 class="text-sm font-bold text-[#154212] flex items-center gap-2 border-b border-gray-100 pb-3">
-                    <i class="fas fa-info-circle"></i> 4면: 교회 비전 & 정기 모임 시간표
-                </h3>
+            <div class="bg-white rounded-3xl border border-gray-200 p-6 shadow-sm space-y-5">
+                <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+                    <h3 class="text-sm font-bold text-[#154212] flex items-center gap-2">
+                        <i class="fas fa-info-circle"></i> 4면: 교회 비전 & 정기 모임 시간표 & 알리는 말씀
+                    </h3>
+                </div>
                 
                 <div>
                     <label class="block text-xs font-bold text-gray-700 mb-1">푸른나무 비전 문구</label>
                     <textarea name="page4_vision" rows="3" class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm focus:ring-2 focus:ring-primary"><?= e($bulletin['page4_info']['vision'] ?? '') ?></textarea>
                 </div>
 
+                <!-- 4면 하단: 알리는 말씀(교회 소식) 자동 연동 안내 -->
+                <div class="bg-emerald-50/70 p-4 rounded-2xl border border-emerald-200 space-y-2 text-xs">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-emerald-950 flex items-center gap-1.5">
+                            <i class="fas fa-bullhorn text-emerald-700"></i> 4면 하단: 알리는 말씀 (교회 소식) 자동 연동
+                        </h4>
+                        <a href="/admin/notices" class="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-[11px] font-bold transition-all shadow-xs flex items-center gap-1">
+                            <i class="fas fa-pen-to-square"></i> 알리는 소식 관리 →
+                        </a>
+                    </div>
+                    <p class="text-emerald-800 text-[11px]">
+                        <strong>[알리는 소식 관리]</strong>에서 게시일이 이번 주 일요일(주일)로 등록된 최신 소식 내용이 4면 하단에 <strong>넘버링 카드(1., 2., 3...)로 자동 조판</strong>되어 인쇄됩니다.
+                    </p>
+                </div>
+
                 <!-- 정기 모임 시간표 -->
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-2">정기 예배 및 모임 시간표 (4개)</label>
+                    <label class="block text-xs font-bold text-gray-700 mb-2">정기 예배 및 모임 시간표</label>
                     <div class="space-y-2.5">
                         <?php foreach (($bulletin['page4_info']['schedules'] ?? []) as $sIdx => $sch): ?>
                         <div class="grid grid-cols-12 gap-2 bg-gray-50 p-2.5 rounded-2xl border border-gray-100">
