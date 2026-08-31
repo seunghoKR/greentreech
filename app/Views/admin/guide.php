@@ -77,9 +77,13 @@
                 <i class="fas fa-map-location-dot text-teal-600"></i>
                 <span>10. 내비 길안내 & 캘리</span>
             </a>
-            <a href="#faq" class="p-3 rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-800 flex items-center gap-2 transition-colors col-span-2 sm:col-span-2">
+            <a href="#roadmap" class="p-3 rounded-2xl bg-emerald-50/70 hover:bg-emerald-100 text-emerald-900 flex items-center gap-2 transition-colors">
+                <i class="fas fa-rocket text-emerald-600"></i>
+                <span>11. 🚀 개발 계획 기능</span>
+            </a>
+            <a href="#faq" class="p-3 rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-800 flex items-center gap-2 transition-colors">
                 <i class="fas fa-question-circle text-gray-600"></i>
-                <span>11. 자주 묻는 질문 (FAQ) & 문제 해결</span>
+                <span>12. 자주 묻는 질문 (FAQ)</span>
             </a>
         </div>
     </div>
@@ -476,11 +480,72 @@
         </div>
     </div>
 
-    <!-- Section 11: 자주 묻는 질문 (FAQ) -->
+    <!-- Section 11: 🚀 향후 개발 계획 기능 (Roadmap) -->
+    <div id="roadmap" class="bg-gradient-to-br from-emerald-950 via-[#154212] to-emerald-900 rounded-3xl p-6 sm:p-8 text-white shadow-card space-y-6">
+        <div class="flex items-center gap-3 border-b border-white/20 pb-4">
+            <div class="w-10 h-10 rounded-2xl bg-amber-400 text-emerald-950 flex items-center justify-center text-lg font-bold shadow-sm">
+                11
+            </div>
+            <div>
+                <span class="text-xs font-bold text-amber-300 uppercase tracking-wider">Future Roadmap Features</span>
+                <h2 class="text-lg sm:text-xl font-bold text-white">🚀 향후 개발 계획 기능 소개</h2>
+            </div>
+        </div>
+
+        <p class="text-xs sm:text-sm text-green-100 leading-relaxed">
+            푸른나무교회 홈페이지는 성도님들과 목회 현장의 필요에 맞춰 지속적으로 고도화된 스마트 기능을 확장해 나갈 계획입니다.
+        </p>
+
+        <!-- Feature 1: 스마트 비용지출요청서 -->
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-5 sm:p-6 border border-white/20 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-3">
+                <div class="flex items-center gap-2">
+                    <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-400 text-emerald-950">기획 완료 / 개발 예정</span>
+                    <h3 class="font-bold text-base sm:text-lg text-white">
+                        💳 1. 스마트 비용지출요청서 시스템 (모바일 영수증 촬영 & 3단계 전자결재)
+                    </h3>
+                </div>
+                <span class="text-xs text-green-200">어르신도 성도님도 손쉬운 원터치 재정 소통</span>
+            </div>
+
+            <p class="text-xs sm:text-sm text-green-100 leading-relaxed font-serif-kr">
+                기존의 번거롭고 분실 위험이 높던 <strong>종이 영수증 및 수기 지출결의서 행정을 100% 디지털화</strong>하여, 성도님이나 사역자가 스마트폰으로 10초 만에 영수증을 찍어 청구하고 실시간 결재/입금 상태를 확인하는 시스템입니다.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                <div class="bg-white/10 p-3.5 rounded-xl border border-white/10 space-y-1">
+                    <h4 class="font-bold text-xs text-amber-300 flex items-center gap-1.5">
+                        <i class="fas fa-mobile-screen-button"></i> 시니어 친화형 대형 터치 UI
+                    </h4>
+                    <p class="text-[11px] text-green-100 leading-snug">
+                        글씨가 큼직하고 버튼 명암비가 높아 어르신 교우분들도 3번의 터치만으로 쉽게 청구할 수 있습니다.
+                    </p>
+                </div>
+                <div class="bg-white/10 p-3.5 rounded-xl border border-white/10 space-y-1">
+                    <h4 class="font-bold text-xs text-amber-300 flex items-center gap-1.5">
+                        <i class="fas fa-camera"></i> 영수증 즉시 촬영 & 전자서명
+                    </h4>
+                    <p class="text-[11px] text-green-100 leading-snug">
+                        카메라로 영수증을 찍어 바로 첨부하고, 스마트폰 화면 위에서 손가락 터치로 직접 서명합니다.
+                    </p>
+                </div>
+                <div class="bg-white/10 p-3.5 rounded-xl border border-white/10 space-y-1">
+                    <h4 class="font-bold text-xs text-amber-300 flex items-center gap-1.5">
+                        <i class="fas fa-list-check"></i> 3단계 결재선 & A4 인쇄
+                    </h4>
+                    <p class="text-[11px] text-green-100 leading-snug">
+                        <code>[신청]</code> ➔ <code>[목회자 승인]</code> ➔ <code>[재정부 입금]</code> 진행 상황을 실시간 확인하고 표준 지출결의서를 출력합니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 12: 자주 묻는 질문 (FAQ) -->
     <div id="faq" class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm space-y-6">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-2xl bg-gray-100 text-gray-700 flex items-center justify-center text-lg font-bold">
-                11
+                12
             </div>
             <div>
                 <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">FAQ & Troubleshooting</span>
