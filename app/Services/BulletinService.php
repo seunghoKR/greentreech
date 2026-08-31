@@ -46,27 +46,32 @@ class BulletinService
 
         if ($latestNotice) {
             $rawContent = trim((string)$latestNotice['content']);
-            // 줄바꿈 또는 번호(1., 2., [1], ① 등) 패턴으로 소식 세부 단락 파싱
-            $lines = preg_split('/\r\n|\r|\n/', $rawContent);
-            $currentSectionTitle = $latestNotice['title'];
+            // HTML 태그 제거 및 텍스트 정리
+            $plainContent = strip_tags(str_replace(['<br>', '<br/>', '<br />', '</p>', '</div>'], "\n", $rawContent));
+            $lines = preg_split('/\r\n|\r|\n/', $plainContent);
+            $currentSectionTitle = '';
             $currentSectionBody = [];
 
             foreach ($lines as $line) {
                 $trimmed = trim($line);
                 if (empty($trimmed)) continue;
 
-                // 번호나 특수기호로 시작하는 헤더 감지 (예: 1. 예배 안내, [모임], ① 새가족 등)
-                if (preg_match('/^(?:[0-9]+[\.\)]|\[.+\]|[①-⑩]|▪|•|\*)\s*(.+)/u', $trimmed, $matches)) {
-                    if (!empty($currentSectionBody)) {
+                // 개요 번호 또는 대제목 패턴 감지:
+                // 1. 또는 1) 또는 ①~⑩ 또는 [제목] 또는 【제목】 또는 ## 제목
+                if (preg_match('/^(?:[0-9]+[\.\)]\s*|[①-⑩]\s*|\[.+\]|【.+】|#{1,3}\s+)(.+)$/u', $trimmed, $matches)) {
+                    if (!empty($currentSectionTitle) || !empty($currentSectionBody)) {
                         $churchNews[] = [
                             'category' => '알리는소식',
-                            'title' => $currentSectionTitle,
+                            'title' => !empty($currentSectionTitle) ? $currentSectionTitle : $latestNotice['title'],
                             'content' => implode("\n", $currentSectionBody),
                         ];
                         $currentSectionBody = [];
                     }
                     $currentSectionTitle = $trimmed;
                 } else {
+                    if (empty($currentSectionTitle)) {
+                        $currentSectionTitle = $latestNotice['title'];
+                    }
                     $currentSectionBody[] = $trimmed;
                 }
             }
@@ -74,7 +79,7 @@ class BulletinService
             if (!empty($currentSectionTitle) || !empty($currentSectionBody)) {
                 $churchNews[] = [
                     'category' => '알리는소식',
-                    'title' => $currentSectionTitle,
+                    'title' => !empty($currentSectionTitle) ? $currentSectionTitle : $latestNotice['title'],
                     'content' => implode("\n", $currentSectionBody),
                 ];
             }

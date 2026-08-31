@@ -85,32 +85,43 @@ class Notice
 
     public static function create(array $data): int
     {
-        $sql = "INSERT INTO `notices` (`category`, `title`, `content`, `attachment_url`, `view_count`) 
-                VALUES (:category, :title, :content, :attachment_url, 0)";
+        $createdAt = !empty($data['created_at']) ? $data['created_at'] . ' ' . date('H:i:s') : date('Y-m-d H:i:s');
+        $sql = "INSERT INTO `notices` (`category`, `title`, `content`, `attachment_url`, `created_at`, `view_count`) 
+                VALUES (:category, :title, :content, :attachment_url, :created_at, 0)";
         Database::execute($sql, [
             'category' => $data['category'] ?: '공지사항',
             'title' => $data['title'],
             'content' => $data['content'] ?? '',
             'attachment_url' => $data['attachment_url'] ?? null,
+            'created_at' => $createdAt,
         ]);
         return (int)Database::lastInsertId();
     }
 
     public static function update(int $id, array $data): bool
     {
-        $sql = "UPDATE `notices` SET 
-                `category` = :category, 
-                `title` = :title, 
-                `content` = :content, 
-                `attachment_url` = :attachment_url 
-                WHERE `id` = :id";
-        return Database::execute($sql, [
+        $params = [
             'id' => $id,
             'category' => $data['category'] ?: '공지사항',
             'title' => $data['title'],
             'content' => $data['content'] ?? '',
             'attachment_url' => $data['attachment_url'] ?? null,
-        ]) >= 0;
+        ];
+
+        $dateSql = "";
+        if (!empty($data['created_at'])) {
+            $dateSql = ", `created_at` = :created_at";
+            $params['created_at'] = $data['created_at'] . ' ' . date('H:i:s');
+        }
+
+        $sql = "UPDATE `notices` SET 
+                `category` = :category, 
+                `title` = :title, 
+                `content` = :content, 
+                `attachment_url` = :attachment_url 
+                {$dateSql}
+                WHERE `id` = :id";
+        return Database::execute($sql, $params) >= 0;
     }
 
     public static function delete(int $id): bool

@@ -1021,9 +1021,10 @@ class AdminController
         }
 
         $id = !empty($_POST['id']) ? (int)$_POST['id'] : null;
-        $category = trim((string)($_POST['category'] ?? '공지'));
+        $category = trim((string)($_POST['category'] ?? '소식'));
         $title = trim((string)($_POST['title'] ?? ''));
         $content = trim((string)($_POST['content'] ?? ''));
+        $createdAt = !empty($_POST['created_at']) ? trim((string)$_POST['created_at']) : null;
         $attachmentUrl = $_POST['existing_attachment'] ?? null;
 
         $newAttachment = $this->handleSingleUpload('attachment', 'notices');
@@ -1036,6 +1037,7 @@ class AdminController
             'title' => $title,
             'content' => $content,
             'attachment_url' => $attachmentUrl,
+            'created_at' => $createdAt,
         ];
 
         if (empty($title) || empty($content)) {
