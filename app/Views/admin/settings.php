@@ -1,7 +1,7 @@
 <div class="bg-white rounded-3xl border border-gray-200/80 shadow-sm p-6 sm:p-8">
     
     <div class="border-b border-gray-100 pb-4 mb-6">
-        <h2 class="text-xl font-bold text-gray-900">사이트 기본정보 설정</h2>
+        <h2 class="text-xl font-bold text-gray-900">교회 기본정보 설정</h2>
         <p class="text-xs text-gray-500 mt-1">교회명, 연락처, 주소, 예배 시간 등 홈페이지 전체에 반영되는 정보를 실시간으로 변경합니다.</p>
     </div>
 
@@ -62,18 +62,6 @@
                 <input type="text" name="worship_study" value="<?= e($settings['worship_study'] ?? '청년 BIBLE TIME / 제자훈련') ?>" required class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm focus:ring-2 focus:ring-primary">
             </div>
 
-        </div>
-
-        <!-- Naver Map URL -->
-        <div>
-            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">네이버 지도 바로가기 링크</label>
-            <input type="url" name="naver_map_url" value="<?= e($settings['naver_map_url'] ?? 'https://naver.me/xqb2I1g5') ?>" class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm focus:ring-2 focus:ring-primary">
-        </div>
-
-        <!-- Google Map Embed URL -->
-        <div>
-            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">구글 지도 임베드 URL</label>
-            <input type="text" name="google_map_embed" value="<?= e($settings['google_map_embed'] ?? 'https://maps.google.com/maps?q=%EC%A0%84%EB%B6%81%20%EC%9D%B5%EC%82%B0%EC%8B%9C%20%EC%84%A0%ED%99%94%EB%A1%9C73%EA%B8%B8%2025&t=&z=17&ie=UTF8&iwloc=&output=embed') ?>" class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm focus:ring-2 focus:ring-primary">
         </div>
 
         <!-- Online Offering Bank Account Settings -->

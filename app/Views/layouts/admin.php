@@ -100,7 +100,7 @@
                 'community' => '나눔터 게시글 관리',
                 'admins' => '관리자/사역자 권한',
                 'hero_settings' => '메인 배너/상단 관리',
-                'settings' => '사이트 기본정보',
+                'settings' => '교회 기본정보',
                 'notifications' => '알림 발송 내역',
                 'kakao_settings' => '카카오 API 설정 (개발자)',
             ];
@@ -205,7 +205,7 @@
                     </a>
 
                     <a href="/admin/settings" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition-all <?= ($adminNav ?? '') === 'settings' ? 'bg-primary text-white shadow-sm' : 'text-gray-700 hover:bg-gray-100' ?>">
-                        <i class="fas fa-sliders-h w-5 text-center"></i> 사이트 기본정보
+                        <i class="fas fa-church text-emerald-600 w-5 text-center"></i> 교회 기본정보
                     </a>
 
                     <a href="/admin/notifications" class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition-all <?= ($adminNav ?? '') === 'notifications' ? 'bg-primary text-white shadow-sm' : 'text-gray-700 hover:bg-gray-100' ?>">

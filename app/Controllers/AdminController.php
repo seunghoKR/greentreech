@@ -211,7 +211,7 @@ class AdminController
         $settings = Setting::getAllAsMap();
 
         View::render('admin/settings', [
-            'title' => '사이트 기본정보 관리 - 푸른나무교회',
+            'title' => '교회 기본정보 관리 - 푸른나무교회',
             'adminNav' => 'settings',
             'settings' => $settings,
         ], 'layouts/admin');
@@ -244,7 +244,7 @@ class AdminController
         }
 
         Setting::updateMultiple($data);
-        Session::setFlash('success', '사이트 기본 정보가 저장되었습니다.');
+        Session::setFlash('success', '교회 기본 정보가 저장되었습니다.');
         header('Location: /admin/settings');
         exit;
     }
