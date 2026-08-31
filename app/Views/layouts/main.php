@@ -620,14 +620,19 @@
                 <p class="text-xs text-gray-500 mt-1">정성스러운 마음과 기도로 함께 동역해 주셔서 감사합니다.</p>
             </div>
             
+            <?php 
+                $givingBank = $bank_name ?? $settings['bank_name'] ?? '농협은행';
+                $givingHolder = $bank_holder ?? $settings['bank_holder'] ?? '푸른나무교회';
+                $givingAccount = $bank_account ?? $settings['bank_account'] ?? '351-9559-8623-03';
+            ?>
             <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200 text-left space-y-2">
                 <div class="flex items-center justify-between text-xs text-gray-500 font-medium">
-                    <span>농협은행</span>
-                    <span>예금주: 푸른나무교회</span>
+                    <span><?= e($givingBank) ?></span>
+                    <span>예금주: <?= e($givingHolder) ?></span>
                 </div>
                 <div class="flex items-center justify-between gap-2">
-                    <span class="font-mono font-bold text-sm sm:text-base text-gray-900 select-all">351-9559-8623-03</span>
-                    <button type="button" onclick="copyToClipboard('351-9559-8623-03', '계좌번호가 복사되었습니다!')" class="px-2.5 py-1 bg-primary text-white rounded-lg text-xs font-bold shrink-0 hover:bg-primary-dark transition-colors">
+                    <span class="font-mono font-bold text-sm sm:text-base text-gray-900 select-all"><?= e($givingAccount) ?></span>
+                    <button type="button" onclick="copyToClipboard('<?= e($givingAccount) ?>', '계좌번호가 복사되었습니다!')" class="px-2.5 py-1 bg-primary text-white rounded-lg text-xs font-bold shrink-0 hover:bg-primary-dark transition-colors">
                         복사
                     </button>
                 </div>

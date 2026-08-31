@@ -76,6 +76,36 @@
             <input type="text" name="google_map_embed" value="<?= e($settings['google_map_embed'] ?? 'https://maps.google.com/maps?q=%EC%A0%84%EB%B6%81%20%EC%9D%B5%EC%82%B0%EC%8B%9C%20%EC%84%A0%ED%99%94%EB%A1%9C73%EA%B8%B8%2025&t=&z=17&ie=UTF8&iwloc=&output=embed') ?>" class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm focus:ring-2 focus:ring-primary">
         </div>
 
+        <!-- Online Offering Bank Account Settings -->
+        <div class="bg-emerald-50/60 border border-emerald-200/80 rounded-3xl p-5 sm:p-6 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-emerald-200/60 pb-3">
+                <h3 class="text-sm font-bold text-emerald-950 flex items-center gap-2">
+                    <i class="fas fa-hand-holding-heart text-emerald-700"></i> 온라인 헌금 / 계좌 안내 설정
+                </h3>
+                <span class="text-[11px] font-bold text-emerald-800 bg-white px-2.5 py-0.5 rounded-full border border-emerald-200 shadow-2xs">
+                    홈페이지 팝업 모달 & 주보 헌금계좌에 실시간 동기화
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">은행명</label>
+                    <input type="text" name="bank_name" value="<?= e($settings['bank_name'] ?? '농협은행') ?>" placeholder="예: 농협은행, 카카오뱅크" required class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm font-bold bg-white focus:ring-2 focus:ring-primary">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">예금주</label>
+                    <input type="text" name="bank_holder" value="<?= e($settings['bank_holder'] ?? '푸른나무교회') ?>" placeholder="예: 푸른나무교회" required class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm font-bold bg-white focus:ring-2 focus:ring-primary">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">계좌번호</label>
+                    <input type="text" name="bank_account" value="<?= e($settings['bank_account'] ?? '351-9559-8623-03') ?>" placeholder="예: 351-9559-8623-03" required class="w-full px-4 py-2.5 rounded-2xl border border-gray-200 text-xs sm:text-sm font-mono font-bold bg-white focus:ring-2 focus:ring-primary">
+                </div>
+            </div>
+            <p class="text-[11px] text-emerald-900/80 leading-relaxed">
+                💡 여기서 변경하신 은행명, 예금주, 계좌번호는 <strong>홈페이지 상단 및 모바일의 [온라인 헌금 / 계좌 안내] 팝업 모달</strong>과 <strong>A4 주보 4면 헌금 계좌</strong>에 즉시 연동됩니다.
+            </p>
+        </div>
+
         <!-- Submit Button -->
         <div class="pt-4 border-t border-gray-100 flex justify-end">
             <button type="submit" class="px-6 py-3 bg-primary hover:bg-primary-dark text-white rounded-2xl text-xs sm:text-sm font-bold shadow-md transition-all">

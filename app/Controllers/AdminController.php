@@ -232,7 +232,8 @@ class AdminController
         $fields = [
             'site_name', 'pastor_name', 'phone', 'email', 'address',
             'worship_sunday', 'worship_study', 'main_slogan',
-            'naver_map_url', 'google_map_embed', 'kakao_map_key'
+            'naver_map_url', 'google_map_embed', 'kakao_map_key',
+            'bank_name', 'bank_account', 'bank_holder'
         ];
 
         $data = [];

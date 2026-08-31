@@ -218,6 +218,10 @@ class BulletinService
         // 7. [4면 전용] 교회 소개 & 예배/모임 시간표 & 계좌 안내
         $savedAbout = Setting::get('bulletin_page4_info', '');
         $customAbout = !empty($savedAbout) ? json_decode($savedAbout, true) : null;
+        $defaultBank = Setting::get('bank_name', '농협은행');
+        $defaultAccount = Setting::get('bank_account', '351-9559-8623-03');
+        $defaultHolder = Setting::get('bank_holder', '푸른나무교회');
+
         $page4Info = $customAbout ?: [
             'vision' => '푸른나무교회는 외롭고 지친 마음에 하나님의 참된 안식을 선물하고, 서로를 깊이 사랑하며 함께 자라나는 믿음의 공동체입니다.',
             'schedules' => [
@@ -227,9 +231,9 @@ class BulletinService
                 ['name' => '새벽 기도회', 'time' => '월~금 오전 06:00', 'place' => '본당'],
             ],
             'giving' => [
-                'bank' => '농협',
-                'account' => '351-9559-8623-03',
-                'holder' => '푸른나무교회',
+                'bank' => $defaultBank,
+                'account' => $defaultAccount,
+                'holder' => $defaultHolder,
             ],
             'parking' => '교회 건물 전면 및 인근 공영주차장 이용 가능',
         ];
