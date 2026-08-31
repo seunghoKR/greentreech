@@ -8,7 +8,7 @@
                 <span class="text-xs text-gray-500 font-semibold"><?= e($bulletin['bulletin_no']) ?></span>
             </div>
             <h2 class="text-xl font-bold text-gray-900 mt-1">주일예배 순서 및 A5 4면 주보 기획 대시보드</h2>
-            <p class="text-xs text-gray-500 mt-0.5">A4 1장을 반으로 접어 사용하는 4면 주보의 각 면(표지, 예배순서, 설교메모/소식, 교회소개/모임)을 편리하게 기획합니다.</p>
+            <p class="text-xs text-gray-500 mt-0.5">A4 1장을 반으로 접어 사용하는 4면 주보의 각 면(1면 표지, 2면 예배순서/섬김이, 3면 설교메모, 4면 교회소개/알리는말씀)을 편리하게 기획합니다.</p>
         </div>
         <div class="flex flex-wrap items-center gap-2">
             <a href="/admin/worship-servants" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-2xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs whitespace-nowrap">
@@ -29,13 +29,13 @@
             <span>[1면] 표지 (Cover)</span>
         </button>
         <button type="button" onclick="switchBulletinTab('tab-page2')" id="btn-tab-page2" class="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-xs font-bold transition-all text-gray-600 hover:text-primary bg-white border border-gray-200 flex items-center gap-1.5 shrink-0 whitespace-nowrap">
-            <span>[2면] 주일예배 & 말씀</span>
+            <span>[2면] 주일예배 & 섬김이</span>
         </button>
         <button type="button" onclick="switchBulletinTab('tab-page3')" id="btn-tab-page3" class="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-xs font-bold transition-all text-gray-600 hover:text-primary bg-white border border-gray-200 flex items-center gap-1.5 shrink-0 whitespace-nowrap">
-            <span>[3면] 설교메모 & 섬김이</span>
+            <span>[3면] 설교 메모</span>
         </button>
         <button type="button" onclick="switchBulletinTab('tab-page4')" id="btn-tab-page4" class="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-xs font-bold transition-all text-gray-600 hover:text-primary bg-white border border-gray-200 flex items-center gap-1.5 shrink-0 whitespace-nowrap">
-            <span>[4면] 교회소개 & 모임안내</span>
+            <span>[4면] 교회소개 & 알리는말씀</span>
         </button>
     </div>
 
