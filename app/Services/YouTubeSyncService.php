@@ -103,11 +103,8 @@ class YouTubeSyncService
                 $preacher = trim($pm[1]);
             }
 
-            // Extract sermon date from title if available (e.g. 2024.03.10)
-            $sermonDate = date('Y-m-d');
-            if (preg_match('/(202[0-9])[\.\-](0[1-9]|1[0-2])[\.\-](0[1-9]|[12][0-9]|3[01])/', $title, $dm)) {
-                $sermonDate = "{$dm[1]}-{$dm[2]}-{$dm[3]}";
-            }
+            // Extract sermon date from title if available (e.g. 2026.1.4, 2026.1.11, 2026-02-01, 2026년 3월 5일 등)
+            $sermonDate = self::parseDateFromTitle($title) ?: date('Y-m-d');
 
             // 신규 영상만 새로 INSERT
             $sql = "INSERT INTO `sermons` 
@@ -224,5 +221,32 @@ class YouTubeSyncService
         curl_close($ch);
 
         return ($status >= 200 && $status < 400 && is_string($result)) ? $result : null;
+    }
+
+    /**
+     * 영상 제목에서 날짜 추출 (다양한 한국 교회 유튜브 표기 패턴 정밀 지원)
+     * 예: 2026.1.4, 2026.01.04, 2026.1.11, 2026-02-01, 2026년 3월 5일, 26.1.4 등
+     */
+    public static function parseDateFromTitle(string $title): ?string
+    {
+        // 1) 4자리 연도: 2026.1.4, 2026-01-04, 2026년 1월 4일 등
+        if (preg_match('/(20[12][0-9])[\.\-\/년\s]+([0-1]?[0-9])[\.\-\/월\s]+([0-3]?[0-9])(?:\s*일)?/u', $title, $m)) {
+            $y = (int)$m[1];
+            $mo = (int)$m[2];
+            $d = (int)$m[3];
+            if ($mo >= 1 && $mo <= 12 && $d >= 1 && $d <= 31) {
+                return sprintf('%04d-%02d-%02d', $y, $mo, $d);
+            }
+        }
+        // 2) 2자리 연도: 26.1.4, 26.01.04 등
+        if (preg_match('/(?:^|[^0-9])(2[0-9])[\.\-\/년\s]+([0-1]?[0-9])[\.\-\/월\s]+([0-3]?[0-9])(?:\s*일)?/u', $title, $m)) {
+            $y = 2000 + (int)$m[1];
+            $mo = (int)$m[2];
+            $d = (int)$m[3];
+            if ($mo >= 1 && $mo <= 12 && $d >= 1 && $d <= 31) {
+                return sprintf('%04d-%02d-%02d', $y, $mo, $d);
+            }
+        }
+        return null;
     }
 }
