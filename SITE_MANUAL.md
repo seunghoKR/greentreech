@@ -231,7 +231,7 @@
 | **공식 도메인** | `https://greentreech.kr` (상시 HTTPS SSL 암호화 적용) |
 | **호스팅 서버** | iwinv 클라우드 고성능 웹 호스팅 (Apache + PHP 8.2+ / MariaDB 10.X) |
 | **관리자 접속 URL** | `https://greentreech.kr/admin` |
-| **기술 지원** | Connect AI LAB (누리오 & 디자인실장 영자) |
+| **제작 및 유지보수 지원** | NURIOH (누리오) | nuriohga@gmail.com |
 
 ---
 

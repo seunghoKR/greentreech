@@ -597,7 +597,7 @@
     <!-- Bottom Footer Card -->
     <div class="bg-gray-100 rounded-3xl p-6 text-center text-xs text-gray-500 space-y-2">
         <p class="font-bold text-gray-700">🌿 푸른나무교회 목회 지원 웹 시스템</p>
-        <p>문의 및 유지보수 지원: 담임목사 심민보 | 제작 및 솔루션: 누리오 (Nurio)</p>
+        <p>제작 및 유지보수 지원: NURIOH | <a href="mailto:nuriohga@gmail.com" class="text-primary hover:underline font-medium">nuriohga@gmail.com</a></p>
     </div>
 
 </div>
