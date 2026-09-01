@@ -141,6 +141,7 @@ $router->get('/community/comment/delete/{id}', [CommunityController::class, 'del
 $router->get('/community/{id}', [CommunityController::class, 'show']);
 
 // --- Kakao Member Auth Routes ---
+$router->get('/login', [AuthController::class, 'login']);
 $router->get('/auth/login', [AuthController::class, 'login']);
 $router->get('/auth/kakao', [AuthController::class, 'kakao']);
 $router->get('/auth/kakao/callback', [AuthController::class, 'callback']);
