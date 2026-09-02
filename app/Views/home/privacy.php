@@ -37,27 +37,35 @@
                             <!-- 카카오 간편 로그인 회원가입 (필수) -->
                             <tr class="hover:bg-gray-50/50">
                                 <td class="p-3 sm:p-3.5 font-medium text-gray-900 align-top" rowspan="2">
-                                    <strong>카카오 간편 로그인</strong><br>
-                                    <span class="text-gray-500 font-normal">- 회원 가입 및 본인 식별<br>- 성도 나눔터(게시판/댓글) 이용<br>- 알림톡(공지·댓글 안내) 발송</span>
+                                    <strong class="text-primary text-sm">회원가입 및 회원 관리</strong><br>
+                                    <span class="text-gray-600 font-medium">(카카오 간편가입 / 로그인)</span><br>
+                                    <span class="text-gray-500 font-normal text-[11px] leading-tight block mt-1">
+                                        • 이용자 식별 및 본인 확인<br>
+                                        • 성도 나눔터(글/댓글) 서비스 제공<br>
+                                        • 알림톡(공지·댓글 안내) 발송
+                                    </span>
                                 </td>
                                 <td class="p-3 sm:p-3.5 align-top">
-                                    <span class="inline-block px-2 py-0.5 bg-red-50 text-red-600 border border-red-200 rounded font-semibold text-[11px]">필수</span>
+                                    <span class="inline-block px-2.5 py-1 bg-red-100 text-red-700 border border-red-300 rounded-md font-bold text-xs">필수</span>
                                 </td>
                                 <td class="p-3 sm:p-3.5 text-gray-800 align-top">
-                                    <strong>이름(실명), 카카오계정(전화번호)</strong>, 회원 고유 식별값(ID), 닉네임, 프로필 사진
+                                    <div class="space-y-1">
+                                        <p class="font-bold text-gray-900 text-xs sm:text-sm">이름(실명), 카카오계정(전화번호)</p>
+                                        <p class="text-gray-500 text-xs">카카오 고유 식별값(ID), 닉네임, 프로필 사진</p>
+                                    </div>
                                 </td>
                                 <td class="p-3 sm:p-3.5 text-gray-600 align-top" rowspan="2">
-                                    <strong>회원 탈퇴 시 또는 동의 철회 시 즉시 파기</strong><br>
+                                    <strong class="text-red-600">회원 탈퇴 시 즉시 파기</strong><br>
                                     <span class="text-[11px] text-gray-400">(관계 법령에 별도 규정이 있는 경우 해당 기간 보관)</span>
                                 </td>
                             </tr>
                             <!-- 카카오 간편 로그인 회원가입 (선택) -->
                             <tr class="hover:bg-gray-50/50 bg-gray-50/20">
                                 <td class="p-3 sm:p-3.5 align-top">
-                                    <span class="inline-block px-2 py-0.5 bg-blue-50 text-blue-600 border border-blue-200 rounded font-semibold text-[11px]">선택</span>
+                                    <span class="inline-block px-2.5 py-1 bg-blue-100 text-blue-700 border border-blue-300 rounded-md font-bold text-xs">선택</span>
                                 </td>
                                 <td class="p-3 sm:p-3.5 text-gray-800 align-top">
-                                    카카오계정(이메일), 배송지정보(수령인명, 배송지 주소, 전화번호 - 주보 및 교회 간행물 우편 수령 희망 시)
+                                    카카오계정(이메일)
                                 </td>
                             </tr>
 
